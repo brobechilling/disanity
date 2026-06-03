@@ -1,0 +1,25 @@
+import React from "react";
+
+interface PageShellProps {
+  children: React.ReactNode;
+  className?: string;
+  background?: "plain" | "paper" | "heritage";
+}
+
+const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
+  plain: "bg-white",
+  paper: "bg-[#f5efe6]",
+  heritage: "bg-white bg-[url('/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+};
+
+export default function PageShell({
+  children,
+  className = "",
+  background = "plain",
+}: PageShellProps) {
+  return (
+    <div className={`min-h-screen overflow-x-hidden text-[#1b1717] ${backgrounds[background]} ${className}`}>
+      {children}
+    </div>
+  );
+}

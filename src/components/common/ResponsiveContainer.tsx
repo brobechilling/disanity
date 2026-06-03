@@ -95,7 +95,9 @@ export default function ResponsiveContainer({
   return (
     <div style={outerStyle}>
       {/* 1. Main Page Background - Always unscaled horizontally, stretching 100% of viewport, but scaled vertically for coordinate mapping */}
-      {React.isValidElement(mainBgImage) && React.cloneElement(mainBgImage as React.ReactElement, {
+      {React.isValidElement(mainBgImage) && React.cloneElement(
+        mainBgImage as React.ReactElement<{ style?: React.CSSProperties }>,
+        {
         style: {
           ...originalBgStyle,
           position: "absolute",
@@ -104,7 +106,7 @@ export default function ResponsiveContainer({
           width: "100%",
           height: `${originalBgHeight * scale}px`,
           objectFit: "fill",
-          maxW: "none",
+          maxWidth: "none",
           pointerEvents: "none",
           zIndex: 0,
         }
