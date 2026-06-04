@@ -27,7 +27,7 @@ export default function SuccessCheckoutPage() {
         <Section width="screen" gutter="none" className="mt-[47px]">
           <div className="relative mx-auto h-[213px] w-[1440px] max-w-full overflow-visible">
             <div className="absolute left-[266px] top-0 z-10 flex w-[926px] flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-              <p className="w-[992px] text-center font-jaro text-[64px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
+              <p className="w-[992px] text-center font-jaro text-[54px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
                 THANH TOÁN THÀNH CÔNG
               </p>
             </div>
