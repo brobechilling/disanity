@@ -3,7 +3,7 @@ import React from "react";
 interface PageShellProps {
   children: React.ReactNode;
   className?: string;
-  background?: "plain" | "paper" | "heritage" | "artisans";
+  background?: "plain" | "paper" | "heritage" | "artisans" | "artisanStories";
 }
 
 const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
@@ -11,6 +11,7 @@ const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
   paper: "bg-[#f5efe6]",
   heritage: "bg-white bg-[url('/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
   artisans: "bg-white bg-[url('/Image144.png')] bg-[length:100%_auto] bg-repeat-y",
+  artisanStories: "bg-white bg-[url('/cauchuyennghenhan/Image161.png')] bg-[length:100%_auto] bg-repeat-y",
 };
 
 export default function PageShell({
