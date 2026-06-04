@@ -12,16 +12,33 @@ interface CheckoutFAQSectionProps {
   faqs: CheckoutFAQ[];
   defaultExpandedIndex?: number | null;
   showHotline?: boolean;
+  description?: string;
+  hotlineText?: string;
+  onToggle?: (index: number | null) => void;
   className?: string;
 }
+
+const defaultDescription =
+  "Dưới đây là những câu hỏi thường gặp khi khách hàng đang trong quá trình xác nhận giỏ hàng, điền thông tin cá nhân và thanh toán.";
+
+const defaultHotlineText = "Mọi sự cố xin vui lòng liên hệ: 03324233282";
 
 export default function CheckoutFAQSection({
   faqs,
   defaultExpandedIndex = null,
   showHotline = false,
+  description = defaultDescription,
+  hotlineText = defaultHotlineText,
+  onToggle,
   className = "",
 }: CheckoutFAQSectionProps) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(defaultExpandedIndex);
+
+  const handleToggle = (index: number) => {
+    const nextIndex = expandedFaq === index ? null : index;
+    setExpandedFaq(nextIndex);
+    onToggle?.(nextIndex);
+  };
 
   return (
     <Section width="screen" gutter="none" className={className}>
@@ -30,13 +47,13 @@ export default function CheckoutFAQSection({
           Những câu hỏi thường gặp
         </p>
         <p className="mt-4 w-[596px] text-center font-dMSans text-base font-medium leading-[30px] text-[#3E3E3E]">
-          Dưới đây là những câu hỏi thường gặp khi khách hàng đang trong quá trình xác nhận giỏ hàng, điền thông tin cá nhân và thanh toán.
+          {description}
         </p>
 
         {showHotline && (
           <div className="mt-6 mb-2 flex h-[50px] w-[461px] cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[#A6341B] px-8 py-3 shadow-md transition-all hover:bg-[#8B2C16]">
             <span className="font-beVietnamPro text-base font-bold tracking-wide text-[#FFF]">
-              Mọi sự cố xin vui lòng liên hệ: 03324233282
+              {hotlineText}
             </span>
           </div>
         )}
@@ -47,7 +64,7 @@ export default function CheckoutFAQSection({
             return (
               <div
                 key={idx}
-                onClick={() => setExpandedFaq(isExpanded ? null : idx)}
+                onClick={() => handleToggle(idx)}
                 className={`flex min-h-[142px] cursor-pointer flex-col justify-start rounded-[15px] border border-[#A6341B] bg-[#F4CA80] p-6 transition-all duration-300 hover:scale-[1.005] hover:shadow-lg ${isExpanded ? "h-auto shadow-md" : "h-[142px] overflow-hidden shadow-sm"}`}
               >
                 <div className="flex w-full items-center justify-between gap-4">

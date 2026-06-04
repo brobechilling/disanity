@@ -393,6 +393,7 @@ export default function CartPage() {
 
         <CheckoutFAQSection
           faqs={faqsData}
+          showHotline
           defaultExpandedIndex={null}
           className="mt-[85px]"
         />

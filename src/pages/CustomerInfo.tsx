@@ -8,7 +8,7 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 
-export default function CustomerInfoPage() {
+export default function CustomerInfo() {
   const navigate = useNavigate();
 
   // Stateful Form Data
@@ -261,13 +261,6 @@ export default function CustomerInfoPage() {
           <p className="mt-4 w-[596px] text-center font-dMSans text-base font-medium leading-[30px] text-[#3E3E3E]">
             Dưới đây là những câu hỏi thường gặp khi khách hàng đang trong quá trình xác nhận giỏ hàng, điền thông tin cá nhân và thanh toán.
           </p>
-
-          {/* Golden Hotline Banner - Centered below subtitle with balanced margin */}
-          <div className="mt-6 mb-2 flex h-[50px] w-[461px] cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[#A6341B] px-8 py-3 shadow-md transition-all hover:bg-[#8B2C16]">
-            <span className="font-beVietnamPro text-base font-bold tracking-wide text-[#FFF]">
-              Mọi sự cố xin vui lòng liên hệ: 03324233282
-            </span>
-          </div>
 
           {/* FAQs Accordion Grid */}
           <div className="mt-8 grid w-full grid-cols-2 gap-6 overflow-visible">
