@@ -3,15 +3,7 @@ import React from "react";
 interface PageShellProps {
   children: React.ReactNode;
   className?: string;
-  background?:
-    | "plain"
-    | "paper"
-    | "heritage"
-    | "artisans"
-    | "artisanStories"
-    | "booking"
-    | "scheduleManagement"
-    | "success";
+  background?: "plain" | "paper" | "heritage" | "artisans" | "artisanStories" | "success" | "customerInfo" | "cart" | "createWorkshop" | "booking" | "scheduleManagement";
 }
 
 const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
@@ -23,6 +15,9 @@ const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
   booking: "bg-white bg-[url('/booking/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
   scheduleManagement: "bg-white bg-[url('/quanlilichtrinh/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
   success: "bg-white bg-[url('/sucess/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  customerInfo: "bg-white bg-[url('/thongtinkhachhang/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  cart: "bg-white bg-[url('/cart/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  createWorkshop: "bg-white bg-[url('/createworkshop/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
 };
 
 export default function PageShell({

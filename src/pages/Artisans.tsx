@@ -17,7 +17,7 @@ const artisans = [
   { id: 2, img: "/Container(2).png", left: 832, top: 415, title: "Container 2", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
 ];
 
-export default function ArtisanPage() {
+export default function Artisans() {
   const [hoveredArtisan, setHoveredArtisan] = useState<number | null>(null);
 
   return (

@@ -4,10 +4,10 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import FilterBar from "@/components/domain/FilterBar";
-import UpcomingEvent from "@/components/domain/UpcomingEvent";
 import { mockWorkshops } from "@/utils/mockData";
+import UpcomingEvent from "@/components/domain/UpcomingEvent";
 
-export default function WorkshopListPage() {
+export default function WorkshopsList() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -174,11 +174,7 @@ export default function WorkshopListPage() {
           </div>
         </Section>
 
-        <Section width="full" className="relative z-10 mt-[153px]">
-          <div className="relative mx-auto h-[604px] w-[1440px] max-w-full">
-            <UpcomingEvent className="top-0" />
-          </div>
-        </Section>
+        <UpcomingEvent />
 
         <div className="mt-[155px]">
           <SiteFooter />
