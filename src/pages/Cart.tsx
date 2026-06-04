@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
-import ResponsiveContainer from "@/components/common/ResponsiveContainer";
+import PageShell from "@/components/common/PageShell";
+import Section from "@/components/common/Section";
+import SiteFooter from "@/components/common/SiteFooter";
+import SiteHeader from "@/components/common/SiteHeader";
+import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 import { mockCartItems, mockHeroSlides, mockFAQs } from "@/utils/mockData";
 
-export default function CartPage() {
+export default function Cart() {
   const navigate = useNavigate();
   // Stateful Cart Items initialized using standard mock data
   const [cartItems, setCartItems] = useState(mockCartItems);
@@ -15,18 +17,17 @@ export default function CartPage() {
   // Active step tracker state
   const [activeStep, setActiveStep] = useState("cart"); // "cart", "info", "payment"
 
-  // FAQ Accordion State
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   // Hero Banner Slide Index state
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   const heroSlides = mockHeroSlides;
 
   // Helper functions
   const handleQtyChange = (id: number, val: number) => {
+    const safeQty = Number.isFinite(val) && val > 0 ? Math.floor(val) : 1;
     setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, qty: val } : item))
+      prev.map(item => (item.id === id ? { ...item, qty: safeQty } : item))
     );
   };
 
@@ -59,32 +60,22 @@ export default function CartPage() {
   const faqsData = mockFAQs;
 
   return (
-    <div className="bg-[#120202] min-h-screen flex justify-center items-start">
-      {/* 
-        Container viewport 1440px wide by 3122px high matching absolute layout coordinates.
-        This provides a pixel-perfect, highly premium centered frame.
-      */}
-      <ResponsiveContainer originalHeight={3122}>
-        
-        {/* Mockup Background Image - Wood grain texture showing rich background details */}
-        <img
-          src="/cart/Image143.png"
-          className="w-full h-[8232px] absolute left-0 top-[181px] max-w-none opacity-100 pointer-events-none"
-          alt="image 143 background base"
-        />
+    <PageShell background="cart">
+      <SiteHeader />
 
-        {/* 1. Shared Header (0px - 181px) */}
-        <Header />
+      <main className="overflow-hidden">
+        <Section width="screen" gutter="none" className="mt-[70px]">
+          <div className="relative mx-auto h-[239px] w-[1440px] max-w-full overflow-visible">
 
         {/* 2. Page Title */}
-        <div className="flex flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)] w-[926px] absolute left-[265px] top-[226px] z-10">
-          <p className="text-[#A6341B] font-dFVNFreckleFace text-[60px] leading-[72px] w-[992px] text-center uppercase tracking-wide">
+        <div className="absolute left-[265px] top-0 z-10 flex w-[926px] flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+          <p className="w-[992px] text-center font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
             XÁC NHẬN GIỎ HÀNG
           </p>
         </div>
 
         {/* 3. Interactive Progress Step Tracker (370px) */}
-        <div className="w-[877px] h-[69px] absolute left-[290px] top-[370px] z-10">
+        <div className="absolute left-[290px] top-[120px] z-10 h-[69px] w-[877px]">
           {/* Progress Connector Lines */}
           <div className="absolute left-[37px] top-[59px] w-[381px] h-[1px] bg-[#A6341B]/30">
             <div className={`h-full bg-[#A6341B] transition-all duration-300 ${activeStep !== "cart" ? "w-full" : "w-0"}`}></div>
@@ -132,9 +123,13 @@ export default function CartPage() {
             </div>
           </button>
         </div>
+          </div>
+        </Section>
 
         {/* 4. Interactive Hero Slider Banner (493px - 1008px) */}
-        <div className="w-[1237px] h-[515px] absolute left-[102px] top-[493px] z-10 rounded-[24px] overflow-hidden shadow-2xl group border border-[#A6341B]/10">
+        <Section width="screen" gutter="none" className="mt-[24px]">
+          <div className="relative mx-auto h-[515px] w-[1440px] max-w-full overflow-visible">
+        <div className="absolute left-[102px] top-0 z-10 h-[515px] w-[1237px] overflow-hidden rounded-[24px] border border-[#A6341B]/10 shadow-2xl group">
           <div className="w-full h-full relative">
             {/* Banner Background Image */}
             <img
@@ -148,7 +143,7 @@ export default function CartPage() {
 
           {/* Floating Slide Text Overlay */}
           <div className="w-[956px] h-[120px] absolute left-[140px] top-[180px] z-20 flex flex-col items-center text-center">
-            <p className="text-[#FFF] font-dFVNFreckleFace text-[52px] leading-tight tracking-wide drop-shadow-md">
+            <p className="font-jaro text-[52px] leading-tight tracking-wide text-[#FFF] drop-shadow-md">
               {heroSlides[currentSlide].title}
             </p>
             <p className="text-[#F4CA80] font-beVietnamPro text-[22px] font-bold tracking-[0.05em] mt-3 drop-shadow-sm uppercase">
@@ -201,14 +196,18 @@ export default function CartPage() {
             </svg>
           </button>
         </div>
+          </div>
+        </Section>
 
         {/* 5. Cart Items Section (1097px - 1650px) */}
+        <Section width="screen" gutter="none" className="mt-[60px]">
+          <div className="relative mx-auto h-[810px] w-[1440px] max-w-full overflow-visible">
         {/* Top line indicator */}
-        <div className="bg-[#8B4513]/40 h-[1.5px] w-[1238px] absolute left-[102px] top-[1068px] z-10"></div>
+        <div className="absolute left-[160px] top-0 z-10 h-[1.5px] w-[1120px] bg-[#8B4513]/40"></div>
 
         {cartItems.length === 0 ? (
           // Empty Cart State
-          <div className="w-[1240px] absolute left-[100px] top-[1150px] z-10 flex flex-col items-center justify-center py-16 bg-white/40 backdrop-blur-md rounded-[24px] border border-black/5 shadow-inner">
+          <div className="absolute left-[160px] top-[82px] z-10 flex w-[1120px] flex-col items-center justify-center rounded-[24px] border border-black/5 bg-white/40 py-16 shadow-inner backdrop-blur-md">
             <span className="text-6xl">🛒</span>
             <p className="text-black font-beVietnamPro text-2xl font-bold mt-4">
               Giỏ hàng của bạn đang trống!
@@ -226,15 +225,15 @@ export default function CartPage() {
         ) : (
           cartItems.map((item, index) => {
             // Calculate absolute top position based on item index to ensure consistent formatting
-            const itemTop = index === 0 ? 1097 : 1362;
+            const itemTop = index === 0 ? 29 : 294;
             return (
               <div 
                 key={item.id} 
-                className="w-[1240px] h-[216px] absolute left-[100px] z-10 transition-all duration-300"
+                className="absolute left-[160px] z-10 h-[216px] w-[1120px] transition-all duration-300"
                 style={{ top: `${itemTop}px` }}
               >
                 {/* Product Image */}
-                <div className="rounded-[15px] w-[211px] h-[216px] absolute left-0 top-0 overflow-hidden border border-black/10 shadow-sm shrink-0">
+                <div className="absolute left-0 top-0 h-[216px] w-[200px] shrink-0 overflow-hidden rounded-[15px] border border-black/10 shadow-sm">
                   <img
                     src={item.img}
                     className="w-full h-full object-cover"
@@ -243,9 +242,9 @@ export default function CartPage() {
                 </div>
 
                 {/* Second Column: Title & Price & Qty Dropdown */}
-                <div className="w-[313px] h-[216px] absolute left-[271px] top-0 flex flex-col justify-between py-1">
+                <div className="absolute left-[250px] top-0 flex h-[216px] w-[280px] flex-col justify-between py-1">
                   <div>
-                    <p className="text-[#A6341B] font-dFVNFreckleFace text-3xl tracking-wide leading-none">
+                    <p className="font-jaro text-3xl leading-none tracking-wide text-[#A6341B]">
                       {item.title}
                     </p>
                     <p className="text-[#1F2937] font-beVietnamPro text-lg font-bold mt-3.5 tracking-[0.02em]">
@@ -266,27 +265,21 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  {/* SL selector */}
-                  <div className="relative">
-                    <select 
+                  {/* SL input */}
+                  <label className="flex h-10 w-[132px] items-center gap-2 rounded-[6px] border border-[#1F2937] bg-[#FFF] px-3 font-beVietnamPro text-sm font-semibold text-[#1F2937]">
+                    <span className="shrink-0">SL:</span>
+                    <input
+                      type="number"
+                      min={1}
                       value={item.qty}
-                      onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value))}
-                      className="border border-[#1F2937] bg-[#FFF] w-[102px] h-10 rounded-[6px] pl-3 pr-8 text-[#1F2937] font-beVietnamPro text-sm font-semibold outline-none appearance-none cursor-pointer"
-                    >
-                      <option value={1}>SL: 1</option>
-                      <option value={2}>SL: 2</option>
-                      <option value={3}>SL: 3</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 left-[76px] flex items-center">
-                      <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </div>
+                      onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value, 10))}
+                      className="min-w-0 flex-1 bg-transparent text-center outline-none"
+                    />
+                  </label>
                 </div>
 
                 {/* Third Column: Description Details */}
-                <div className="w-[353px] h-[183px] absolute left-[620px] top-[15px] leading-tight">
+                <div className="absolute left-[560px] top-[15px] h-[183px] w-[315px] leading-tight">
                   <p className="text-black font-beVietnamPro text-base font-bold leading-[29px]">
                     Mô tả:
                   </p>
@@ -300,7 +293,7 @@ export default function CartPage() {
                 </div>
 
                 {/* Fourth Column: Price Value & Removal Trigger & Button */}
-                <div className="w-[268px] h-[216px] absolute left-[972px] top-0 flex flex-col justify-between items-end py-1">
+                <div className="absolute left-[890px] top-0 flex h-[216px] w-[230px] flex-col items-end justify-between py-1">
                   
                   {/* Remove Item Button */}
                   <button 
@@ -339,30 +332,30 @@ export default function CartPage() {
         )}
 
         {/* Dynamic separating rules */}
-        <div className="bg-[#8B4513]/40 h-[1.5px] w-[1238px] absolute left-[102px] top-[1344px] z-10"></div>
-        <div className="bg-[#8B4513]/40 h-[1.5px] w-[1238px] absolute left-[102px] top-[1609px] z-10"></div>
+        <div className="absolute left-[160px] top-[276px] z-10 h-[1.5px] w-[1120px] bg-[#8B4513]/40"></div>
+        <div className="absolute left-[160px] top-[541px] z-10 h-[1.5px] w-[1120px] bg-[#8B4513]/40"></div>
 
         {/* 6. Pricing and Checkout Block (1679px - 1900px) */}
-        <div className="w-[1240px] absolute left-[100px] top-[1640px] z-10 flex justify-between items-start px-2.5">
+        <div className="absolute left-[160px] top-[572px] z-10 flex w-[1120px] flex-col px-2.5">
           {/* Left Block: Invoice Summary Text */}
-          <div className="flex flex-col gap-2.5">
-            <p className="text-[#A6341B] font-jaro text-4xl leading-tight uppercase flex items-center gap-4">
+          <div className="flex w-full flex-col gap-2.5">
+            <p className="flex w-full items-center justify-between font-jaro text-4xl uppercase leading-tight text-[#A6341B]">
               <span>Tổng giá trị đơn hàng:</span>
-              <span className="text-3xl font-black text-black ml-2">
+              <span className="text-3xl font-black text-black">
                 {currentSubtotal.toLocaleString("vi-VN")}đ
               </span>
             </p>
-            <p className="text-[#A6341B] font-jaro text-4xl leading-tight uppercase flex items-center gap-4 mt-1">
+            <p className="mt-1 flex w-full items-center justify-between font-jaro text-4xl uppercase leading-tight text-[#A6341B]">
               <span>Discount:</span>
-              <span className="text-3xl font-bold text-red-600 ml-[102px]">
+              <span className="text-right text-3xl font-bold text-red-600">
                 {currentDiscount.toLocaleString("vi-VN")}đ
               </span>
             </p>
           </div>
 
           {/* Right Block: Final cost and Step Button */}
-          <div className="flex flex-col items-end gap-5">
-            <p className="text-[#A6341B] font-jaro text-[32px] font-black">
+          <div className="mt-1 text-center">
+            <p className="flex w-full items-center justify-between font-jaro text-[32px] font-black text-[#A6341B]">
               Chi phí: <span className="text-[#000] ml-2">{currentTotal.toLocaleString("vi-VN")}đ</span>
             </p>
 
@@ -375,7 +368,7 @@ export default function CartPage() {
                 }
                 navigate("/checkout/info");
               }}
-              className="cursor-pointer text-nowrap inline-flex py-3 px-8 justify-center items-center gap-2 rounded-full bg-[#A6341B] hover:bg-[#8B2C16] active:scale-95 transition-all text-white font-beVietnamPro text-base font-bold shadow-md group"
+              className="mt-8 inline-flex cursor-pointer items-center justify-center gap-2 text-nowrap rounded-full bg-[#A6341B] px-8 py-3 font-beVietnamPro text-base font-bold text-white shadow-md transition-all hover:bg-[#8B2C16] active:scale-95 group"
             >
               <svg
                 width="24"
@@ -395,8 +388,17 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* 7. Stateful FAQs Section (1915px - 2748px) */}
-        <div className="w-[1220px] h-[833px] absolute left-[110px] top-[1915px] z-10 overflow-visible flex flex-col items-center">
+          </div>
+        </Section>
+
+        <CheckoutFAQSection
+          faqs={faqsData}
+          showHotline
+          defaultExpandedIndex={null}
+          className="mt-[85px]"
+        />
+
+        <div className="hidden">
           <p className="text-[#000] font-jaro text-4xl leading-[46px] w-[500px] text-center uppercase tracking-wide">
             Những câu hỏi thường gặp
           </p>
@@ -450,14 +452,10 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* 8. Shared Footer at bottom (2300px - 3122px) */}
-        {/* 
-           Footer offset is 432px inside component, positioning it at top-[2300px] 
-           aligns the footer maroon bar perfectly at 2732px to finish exactly at page end (3122px).
-        */}
-        <Footer className="top-[2300px]" />
-
-      </ResponsiveContainer>
-    </div>
+        <div className="mt-[120px]">
+          <SiteFooter />
+        </div>
+      </main>
+    </PageShell>
   );
 }

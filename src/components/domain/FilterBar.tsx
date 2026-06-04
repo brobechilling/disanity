@@ -47,7 +47,7 @@ export default function FilterBar({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`flex p-6 justify-center items-center gap-4 rounded-2xl border-2 border-[#A6341B] bg-white w-[1106px] h-[115px] absolute left-[172px] ${className || "top-[999px]"} shadow-[0_8px_30px_rgb(166,52,27,0.08)] z-40`}>
+    <div className={`relative z-40 mx-auto flex h-[115px] w-[1106px] items-center justify-center gap-4 rounded-2xl border-2 border-[#A6341B] bg-white p-6 shadow-[0_8px_30px_rgb(166,52,27,0.08)] ${className || ""}`}>
       
       {/* 1. Location Filter */}
       <div className="flex flex-col items-start gap-1 w-fit relative">

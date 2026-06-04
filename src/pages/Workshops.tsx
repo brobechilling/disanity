@@ -1,33 +1,40 @@
 import React from "react";
-import Header from "@/components/common/Header";
-import Hero from "@/components/domain/Hero";
-import FilterBar from "@/components/domain/FilterBar";
+import PageShell from "@/components/common/PageShell";
+import Section from "@/components/common/Section";
+import SiteFooter from "@/components/common/SiteFooter";
+import SiteHeader from "@/components/common/SiteHeader";
 import CategoryGrid from "@/components/domain/CategoryGrid";
-import Footer from "@/components/common/Footer";
-import ResponsiveContainer from "@/components/common/ResponsiveContainer";
+import FilterBar from "@/components/domain/FilterBar";
+import Hero from "@/components/domain/Hero";
 
-export default function WorkshopsDiscoveryPage() {
+export default function Workshops() {
   return (
-    <div className="bg-[#120202] min-h-screen flex justify-center items-start">
-      {/* 
-        Centered 1440px viewport frame for Workshops Category Discovery.
-      */}
-      <ResponsiveContainer originalHeight={2410}>
-        
-        {/* Figma Mockup Background */}
-        <img
-          src="/Image143.png"
-          className="w-full h-[8232px] absolute left-0 top-[181px] max-w-none opacity-100 pointer-events-none"
-          alt="DiSanity Background Mockup"
-        />
+    <PageShell background="heritage">
+      <SiteHeader />
 
-        <Header />
-        <Hero />
-        <FilterBar />
-        <CategoryGrid />
-        <Footer className="top-[1588px]" />
+      <main className="overflow-hidden">
+        <Section width="screen" gutter="none">
+          <div className="relative w-full">
+            <Hero />
+          </div>
+        </Section>
 
-      </ResponsiveContainer>
-    </div>
+        <Section width="wide" className="mt-16">
+          <div className="relative mx-auto flex min-h-[115px] items-center justify-center">
+            <FilterBar />
+          </div>
+        </Section>
+
+        <Section width="wide" className="mt-16">
+          <div className="relative mx-auto flex min-h-[640px] items-center justify-center">
+            <CategoryGrid />
+          </div>
+        </Section>
+
+        <div className="mt-16">
+          <SiteFooter />
+        </div>
+      </main>
+    </PageShell>
   );
 }
