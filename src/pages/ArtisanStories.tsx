@@ -76,7 +76,7 @@ export default function ArtisanStoriesPage() {
 
               {/* Read Article Button linked cleanly */}
               <Link
-                to="/workshops/list"
+                to="/artisan-stories/detail"
                 className="absolute right-12 bottom-12 z-30 rounded-full border border-[#FEF3B1]/30 px-6 py-3 text-base font-semibold text-[#FEF3B1] transition-all hover:border-[#FEF3B1] hover:bg-[#FEF3B1]/10"
               >
                 Đọc bài viết
