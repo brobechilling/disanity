@@ -7,7 +7,7 @@ import CategoryGrid from "@/components/domain/CategoryGrid";
 import FilterBar from "@/components/domain/FilterBar";
 import Hero from "@/components/domain/Hero";
 
-export default function WorkshopsDiscoveryPage() {
+export default function Workshops() {
   return (
     <PageShell background="heritage">
       <SiteHeader />

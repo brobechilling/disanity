@@ -7,15 +7,12 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import { mockTestimonials } from "@/utils/mockData";
+import UpcomingEvent from "@/components/domain/UpcomingEvent";
 
-export default function ArtisanStoriesPage() {
+export default function ArtisanStories() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const testimonials = mockTestimonials;
-
-  const handleBookTickets = () => {
-    alert('Đã đăng ký vé Sự Kiện SẮC DIỆN SƠN NAM thành công! Đội ngũ DiSanity sẽ liên hệ xác nhận trong 15 phút.');
-  };
 
   return (
     <PageShell background="artisanStories">
@@ -210,77 +207,7 @@ export default function ArtisanStoriesPage() {
           </div>
         </Section>
 
-        {/* 4. Staggered Stacks Event Gallery & Details Section */}
-        <Section width="wide" className="mt-[245px]">
-          <div className="relative mx-auto h-[604px] w-[1211px] max-w-full overflow-visible">
-            {/* Staggered Event Image Gallery Stack on Left */}
-            <div className="absolute left-0 top-0 h-[604px] w-[580px] overflow-visible">
-              {/* Back Small Staggered Card */}
-              <img
-                src="/cauchuyennghenhan/ImagePlaceholder.png"
-                className="absolute left-0 top-[115px] z-10 h-[399px] w-[265px] max-w-none cursor-pointer rounded-[16px] object-cover shadow-[-7px_4px_15px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-2"
-                alt="Event Stack Back"
-              />
-              {/* Middle Medium Staggered Card */}
-              <img
-                src="/cauchuyennghenhan/ImagePlaceholder(1).png"
-                className="absolute left-[61px] top-[76px] z-20 h-[477px] w-[336px] max-w-none cursor-pointer rounded-[20px] object-cover shadow-[-11px_4px_18px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-2"
-                alt="Event Stack Middle"
-              />
-              {/* Front Large Staggered Card */}
-              <img
-                src="/cauchuyennghenhan/ImagePlaceholder(2).png"
-                className="absolute left-[153px] top-0 z-30 h-[604px] w-[427px] max-w-none cursor-pointer rounded-[24px] object-cover shadow-[-17px_4px_24px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-2"
-                alt="Event Stack Front"
-              />
-
-              {/* Slider Navigation Chevron Controls */}
-              <div className="absolute left-[58px] top-[326px] z-40 flex h-[38px] w-[38px] cursor-pointer items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition-all hover:scale-105 active:scale-95">
-                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" className="h-4 w-2">
-                  <path d="M8.88755 16.7751L1 8.88755L8.88755 1" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Staggered Event Content Card on Right */}
-            <div className="absolute left-[603px] top-5 flex w-[608px] flex-col gap-4 overflow-visible">
-              <div>
-                <p className="font-jaro text-[64px] uppercase leading-tight tracking-[0.07em] text-[#1B1717]">
-                  SỰ KIỆN SẮP DIỄN RA
-                </p>
-              </div>
-
-              <p className="mt-1 font-dFVNFreckleFace text-[32px] uppercase leading-9 tracking-[0.07em] text-[#A6341B]">
-                SẮC DIỆN SƠN NAM
-              </p>
-
-              <p className="mt-1 text-justify font-beVietnam text-[15.5px] font-medium leading-[28px] text-[#555]">
-                Trải nghiệm khám phá mỹ thuật đình miếu và nghệ thuật mặt nạ hát bội miền Nam qua một buổi thực hành sáng tạo cùng nghệ nhân.
-                <br /><br />
-                • <strong>Nội dung:</strong> Giải mã màu sắc &amp; biểu tượng trong mặt nạ truyền thống. Thực hành vẽ và tạo hình mặt nạ dân gian. Nghe kể chuyện về không gian lễ hội Nam Bộ.
-                <br />
-                • <strong>Thời gian:</strong> 28.06.2026
-                <br />
-                • <strong>Địa điểm:</strong> TP. Hồ Chí Minh
-                <br /><br />
-                Một buổi chạm vào tinh thần lễ hội phương Nam — qua sắc đỏ, đường nét và ký ức văn hoá.
-              </p>
-
-              {/* Interactive Buy Tickets Button */}
-              <button
-                onClick={handleBookTickets}
-                className="group mt-2 flex h-[46px] w-[183px] cursor-pointer items-center justify-center gap-3 rounded bg-[#6C0B0B] shadow-md transition-all hover:bg-[#A6341B] active:scale-95"
-              >
-                <span className="font-poppins text-sm font-semibold uppercase tracking-[0.1em] text-[#FFF]">
-                  ĐẶT VÉ
-                </span>
-                <svg width="20" height="15" viewBox="0 0 20 15" fill="none" className="h-[15px] w-5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
-                  <path d="M13.58 12L10 9.84375L6.42 12L7.5 8.1375L4.21 5.625L8.46 5.38125L10 1.6875L11.54 5.38125L15.79 5.625L12.5 8.1375M18 7.5C18 7.00272 18.2107 6.52581 18.5858 6.17418C18.9609 5.82254 19.4696 5.625 20 5.625V1.875C20 1.37772 19.7893 0.900805 19.4142 0.549175C19.0391 0.197544 18.5304 0 18 0H2C1.46957 0 0.960859 0.197544 0.585786 0.549175C0.210714 0.900805 0 1.37772 0 1.875V5.625C0.530433 5.625 1.03914 5.82254 1.41421 6.17418C1.78929 6.52581 2 7.00272 2 7.5C2 7.99728 1.78929 8.47419 1.41421 8.82582C1.03914 9.17746 0.530433 9.375 0 9.375V13.125C0 13.6223 0.210714 14.0992 0.585786 14.4508C0.960859 14.8025 1.46957 15 2 15H18C18.5304 15 19.0391 14.8025 19.4142 14.4508C19.7893 14.0992 20 13.6223 20 13.125V9.375C19.4696 9.375 18.9609 9.17746 18.5858 8.82582C18.2107 8.47419 18 7.99728 18 7.5Z" fill="white" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </Section>
+        <UpcomingEvent />
 
         <div className="mt-[120px]">
           <SiteFooter />

@@ -5,7 +5,7 @@ import SiteHeader from "@/components/common/SiteHeader";
 import AboutUs from "@/components/domain/AboutUs";
 import ExploreTabs from "@/components/domain/ExploreTabs";
 import HomeTrending from "@/components/domain/HomeTrending";
-import HomeUpcomingEvent from "@/components/domain/HomeUpcomingEvent";
+import UpcomingEvent from "@/components/domain/UpcomingEvent";
 import IntroGrid from "@/components/domain/IntroGrid";
 import ContactUs from "@/components/domain/ContactUs";
 
@@ -18,7 +18,7 @@ export default function Home() {
         <AboutUs />
         <HomeTrending />
         <ExploreTabs />
-        <HomeUpcomingEvent />
+        <UpcomingEvent />
         <ContactUs />
       </main>
       <SiteFooter />

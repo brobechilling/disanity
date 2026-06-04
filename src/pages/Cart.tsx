@@ -9,7 +9,7 @@ import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 import { mockCartItems, mockHeroSlides, mockFAQs } from "@/utils/mockData";
 
-export default function CartPage() {
+export default function Cart() {
   const navigate = useNavigate();
   // Stateful Cart Items initialized using standard mock data
   const [cartItems, setCartItems] = useState(mockCartItems);
