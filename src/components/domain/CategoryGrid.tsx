@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ className }: { className?: string }) {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   const categories = [
@@ -33,22 +33,23 @@ export default function CategoryGrid() {
   ];
 
   return (
-    <div className="w-[1529px] h-[740px] absolute left-9 top-[1193px]">
+    <div className={`relative mx-auto h-[640px] w-[1240px] max-w-full ${className || ""}`}>
       {/* Category Cards */}
-      <div className="w-[1461px] h-[592px] absolute left-[68px] top-0">
+      <div className="absolute left-1/2 top-0 h-[500px] w-[1240px] -translate-x-1/2">
         {categories.map((cat, idx) => (
           <div
             key={idx}
-            className={`w-[468px] h-[592px] absolute ${cat.position} top-0 overflow-hidden rounded-[25px] cursor-pointer transition-all duration-500`}
+            className="absolute top-0 h-[500px] w-[397px] cursor-pointer overflow-hidden rounded-[25px] transition-all duration-500"
             onMouseEnter={() => setHoveredIdx(idx)}
             onMouseLeave={() => setHoveredIdx(null)}
             style={{
+              left: `${idx * 421}px`,
               transform: hoveredIdx === idx ? "translateY(-10px) scale(1.02)" : "translateY(0) scale(1)",
             }}
           >
             <img
               src={cat.image}
-              className={`w-[468px] h-[592px] absolute left-0 top-0 max-w-none transition-transform duration-700 ${
+              className={`absolute left-0 top-0 h-full w-full max-w-none object-cover transition-transform duration-700 ${
                 hoveredIdx === idx ? "scale-110 rotate-1" : "scale-100"
               }`}
               alt={cat.title}
@@ -60,29 +61,29 @@ export default function CategoryGrid() {
       </div>
 
       {/* Main Title "Danh mục" */}
-      <p className="text-[#A6341B] font-oi text-[56px] leading-[66px] w-[474px] h-[66px] absolute left-[74px] top-[646px]">
+      <p className="absolute left-0 top-[544px] h-[66px] w-[474px] font-oi text-[56px] leading-[66px] text-[#A6341B]">
         Danh mục{" "}
       </p>
 
       {/* Category Labels overlaying the layout */}
-      <p className="text-[#FEF3B1] font-beVietnamPro text-[40px] font-extrabold leading-[56px] w-[481px] h-[66px] absolute left-0 top-[483px] text-right pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-20">
+      <p className="pointer-events-none absolute left-0 top-[400px] z-20 h-[66px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[44px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
         Gốm truyền thống
       </p>
-      <p className="text-[#FEF3B1] font-beVietnamPro text-[40px] font-extrabold leading-[50px] w-[401px] h-[162px] absolute left-[597px] top-[419px] text-center pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-20">
+      <p className="pointer-events-none absolute left-[421px] top-[372px] z-20 h-[120px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
         Mỹ thuật truyền thống - đương đại
       </p>
-      <p className="text-[#FEF3B1] font-beVietnamPro text-[40px] font-extrabold leading-[50px] w-[421px] h-[162px] absolute left-[1093px] top-[466px] text-center pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-20">
+      <p className="pointer-events-none absolute left-[842px] top-[392px] z-20 h-[100px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
         Dệt - Lụa - Thổ Cẩm
       </p>
 
       {/* Short Description */}
-      <p className="text-[#4A5D4E] font-dMSans text-lg leading-[30px] w-[508px] h-[90px] absolute left-[597px] top-[650px] font-medium">
+      <p className="absolute left-[500px] top-[548px] h-[90px] w-[508px] font-dMSans text-lg font-medium leading-[30px] text-[#4A5D4E]">
         Mỗi triển lãm, workshop hay dự án cộng đồng đều là cơ hội để tôi học
         hỏi, hợp tác và lan toả giá trị truyền thống theo cách mới mẻ hơn.
       </p>
 
       {/* Slider Controls (Left / Right buttons) with active animations */}
-      <div className="w-[148px] h-16 absolute left-[1156px] top-[646px]">
+      <div className="absolute left-[1060px] top-[544px] h-16 w-[148px]">
         {/* Right Arrow button */}
         <div 
           onClick={() => alert("Chuyển trang danh mục kế tiếp!")}

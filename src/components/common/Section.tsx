@@ -4,7 +4,8 @@ interface SectionProps {
   children: React.ReactNode;
   className?: string;
   variant?: "default" | "dark" | "muted";
-  width?: "normal" | "wide" | "full";
+  width?: "normal" | "wide" | "full" | "screen";
+  gutter?: "normal" | "none";
 }
 
 const variants: Record<NonNullable<SectionProps["variant"]>, string> = {
@@ -17,6 +18,12 @@ const widths: Record<NonNullable<SectionProps["width"]>, string> = {
   normal: "max-w-[1240px]",
   wide: "max-w-[1320px]",
   full: "max-w-[1540px]",
+  screen: "max-w-none",
+};
+
+const gutters: Record<NonNullable<SectionProps["gutter"]>, string> = {
+  normal: "px-4 sm:px-6 lg:px-8",
+  none: "px-0",
 };
 
 export default function Section({
@@ -24,10 +31,11 @@ export default function Section({
   className = "",
   variant = "default",
   width = "normal",
+  gutter = "normal",
 }: SectionProps) {
   return (
     <section className={`${variants[variant]} ${className}`}>
-      <div className={`${widths[width]} mx-auto px-4 sm:px-6 lg:px-8`}>
+      <div className={`${widths[width]} mx-auto ${gutters[gutter]}`}>
         {children}
       </div>
     </section>

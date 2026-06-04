@@ -9,7 +9,7 @@ export default function UpcomingEvent({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`w-[1211px] h-[604px] absolute left-[110px] ${className || "top-[4772px]"} overflow-visible`}>
+    <div className={`relative mx-auto h-[604px] w-[1211px] overflow-visible ${className || ""}`}>
       <ScrollReveal className="w-full h-full relative" animation="scale-up" duration={1000}>
       
       {/* 1. Left Graphic Block: 3 Stacked Images with fanning-out hover effects */}

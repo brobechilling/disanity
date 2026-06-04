@@ -2,26 +2,26 @@
 
 import React from "react";
 
-export default function Hero() {
+export default function Hero({ className }: { className?: string }) {
   const handleFactsClick = () => {
     alert("Khám phá ngay 2.000 làng nghề truyền thống dọc khắp dải đất hình chữ S của Việt Nam!");
   };
 
   return (
-    <div className="w-full h-[746px] absolute -left-px top-[174px] overflow-hidden">
+    <div className={`relative h-[560px] w-full overflow-hidden ${className || ""}`}>
       {/* Background Image */}
       <img
         src="/Rectangle8966.png"
-        className="w-full h-[736px] absolute left-0 top-0 object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
         alt="DiSanity Làng nghề truyền thống Việt Nam"
       />
       
       {/* Overlay color gradient to make it look even more premium */}
-      <div className="absolute left-0 top-0 w-full h-[736px] bg-gradient-to-b from-transparent to-[rgba(108,11,11,0.4)] pointer-events-none"></div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(108,11,11,0.4)]"></div>
 
       {/* Hero Quote */}
-      <div className="flex flex-col items-center justify-center gap-10 w-[1197px] h-[229px] absolute left-[123px] top-[470px]">
-        <p className="text-[#FFF] font-jaro text-[46px] leading-[56px] w-[1172px] text-center drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
+      <div className="absolute inset-x-0 bottom-14 mx-auto flex max-w-[1197px] flex-col items-center justify-center gap-10 px-6">
+        <p className="max-w-[1172px] text-center font-jaro text-[42px] leading-[52px] text-[#FFF] drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
           Việt Nam tự hào với gần 2.000 làng nghề truyền thống, minh chứng cho
           bề dày văn hóa và sự khéo léo của người Việt.
         </p>
@@ -30,7 +30,7 @@ export default function Hero() {
       {/* Facts Button with hover animations */}
       <button 
         onClick={handleFactsClick}
-        className="cursor-pointer text-nowrap flex py-2.5 px-8 justify-center items-center gap-[5px] rounded-full border-[3px] border-[#D4A017] bg-[#A6341B] w-[180px] h-[50px] absolute left-[630px] top-[400px] shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#8B2C16] hover:border-white group"
+        className="group absolute left-1/2 top-[300px] flex h-[50px] w-[180px] -translate-x-1/2 cursor-pointer items-center justify-center gap-[5px] text-nowrap rounded-full border-[3px] border-[#D4A017] bg-[#A6341B] px-8 py-2.5 shadow-lg transition-all duration-300 hover:scale-105 hover:border-white hover:bg-[#8B2C16]"
       >
         <p className="text-[#FFF] font-montserrat text-lg font-bold tracking-wider mr-6 group-hover:text-white transition-colors">
           FACTS
