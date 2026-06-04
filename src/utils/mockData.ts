@@ -139,6 +139,49 @@ export const mockHeroSlides = [
   },
 ];
 
+export const mockBookingWorkshop = {
+  title: "Workshop Vẽ Lên Gốm",
+  artisan: "Cappy Dương",
+  location: "119 Phan Chu Trinh, Hải Châu, Đà Nẵng",
+  duration: "120 phút",
+  capacity: "12 người / buổi",
+  selectedTime: "11:00",
+  description:
+    "Workshop vẽ trên gốm là trải nghiệm sáng tạo, nơi bạn tự tay trang trí các sản phẩm gốm bằng màu sắc và họa tiết theo phong cách riêng. Không cần kinh nghiệm trước đó, bạn sẽ được hướng dẫn các bước cơ bản trong suốt quá trình thực hiện. Sau buổi trải nghiệm, bạn có thể mang về sản phẩm mang dấu ấn cá nhân của mình.",
+  included: ["Dụng cụ vẽ & màu", "Sản phẩm gốm mẫu", "Hướng dẫn trực tiếp", "Thành phẩm mang về"],
+  images: {
+    workshop: "/booking/Image174.png",
+    artisan: "/booking/Image176.png",
+    artifacts: [
+      "/booking/Image177.png",
+      "/booking/Image178.png",
+      "/booking/Image179.png",
+      "/booking/Image181.png",
+    ],
+  },
+};
+
+export const mockBookingCalendar = {
+  weekDays: ["MON", "TUE", "WED", "THURS", "FRI", "SAT", "SUN"],
+  rows: [
+    [1, 2, 3, 4, 5, 6, 7],
+    [8, 9, 10, 11, 12, 13, 14],
+    [15, 16, 17, 18, 19, 20, 21],
+    [22, 23, 24, 25, 26, 27, 28],
+    [29, 30, 1, 2, 3, 4, 5],
+  ],
+  fullDays: [29],
+  inactiveDays: [1, 2, 3, 4, 5],
+};
+
+export const mockBookingTimeSlots = [
+  { period: "Buổi sáng", times: ["08:00", "11:00"] },
+  { period: "Buổi chiều", times: ["13:30", "15:00", "16:30"] },
+  { period: "Buổi tối", times: ["18:30", "20:00", "21:00"] },
+];
+
+export const mockUnavailableBookingTimes = ["16:30", "20:00", "21:00"];
+
 export const mockFAQs: FAQ[] = [
   {
     q: "Điền thông tin địa chỉ sau sáp nhập hay địa chỉ cũ?",
@@ -165,6 +208,345 @@ export const mockFAQs: FAQ[] = [
     a: "Đừng lo lắng! Trong trường hợp tài khoản đã bị trừ tiền nhưng hệ thống chưa ghi nhận trạng thái thanh toán, vui lòng chụp lại biên lai giao dịch ngân hàng và liên hệ trực tiếp số Hotline trên website để được kích hoạt vé tức thì.",
   },
 ];
+
+export interface WorkshopDetailGalleryImage {
+  src: string;
+  alt: string;
+  featured?: boolean;
+}
+
+export interface WorkshopDetailFact {
+  icon: "timer" | "languages" | "users";
+  label: string;
+}
+
+export interface WorkshopDetailIncludedItem {
+  title: string;
+  description: string;
+}
+
+export interface WorkshopDetailReview {
+  rating: number;
+  quote: string;
+  title: string;
+  author: string;
+}
+
+export interface WorkshopDetailData {
+  title: string;
+  category: string;
+  location: string;
+  breadcrumb: string;
+  rating: number;
+  reviewCount: number;
+  pricePerGuest: number;
+  priceText: string;
+  taxText: string;
+  dateLabel: string;
+  guestLimit: number;
+  defaultGuestCount: number;
+  galleryImages: WorkshopDetailGalleryImage[];
+  quickFacts: WorkshopDetailFact[];
+  introTitle: string;
+  introSubtitle: string;
+  introDescription: string;
+  introImage: string;
+  introImageAlt: string;
+  includedHeading: string;
+  includedDescription: string;
+  includedItems: WorkshopDetailIncludedItem[];
+  artisanEyebrow: string;
+  artisanName: string;
+  artisanTitle: string;
+  artisanDescription: string;
+  artisanImage: string;
+  artisanImageAlt: string;
+  artisanTraits: string[];
+  artisanStats: Array<{ value: string; label: string }>;
+  reviewsHeading: string;
+  reviewsDescription: string;
+  reviews: WorkshopDetailReview[];
+  consultationImage: string;
+  consultationTitle: string;
+  consultationDescription: string;
+}
+
+export const mockWorkshopDetail: WorkshopDetailData = {
+  title: "Nhập môn làm gốm Thanh Hà",
+  category: "Gốm cơ bản",
+  location: "Hội An - Đà Nẵng",
+  breadcrumb: "Workshop > Gốm cơ bản > Nhập môn làm gốm Thanh Hà",
+  rating: 4.5,
+  reviewCount: 82,
+  pricePerGuest: 200000,
+  priceText: "200.000đ/người",
+  taxText: "Đã bao gồm thuế",
+  dateLabel: "Thứ Tư, 27 Tháng 5",
+  guestLimit: 8,
+  defaultGuestCount: 2,
+  galleryImages: [
+    {
+      src: "/chitietworkshop/Rectangle25.png",
+      alt: "Nghệ nhân hướng dẫn tạo dáng gốm Thanh Hà",
+      featured: true,
+    },
+    {
+      src: "/chitietworkshop/Rectangle25(1).png",
+      alt: "Không gian workshop làm gốm",
+    },
+    {
+      src: "/chitietworkshop/Rectangle25(2).png",
+      alt: "Sản phẩm gốm sau khi hoàn thiện",
+    },
+  ],
+  quickFacts: [
+    { icon: "timer", label: "6 tiếng" },
+    { icon: "languages", label: "Việt & Anh" },
+    { icon: "users", label: "Tối đa 8 khách" },
+  ],
+  introTitle: "Nhập môn làm gốm Thanh Hà",
+  introSubtitle: "Làng gốm Thanh Hà Hội An, nét đẹp hoài cổ đã hơn 500 năm tuổi",
+  introDescription:
+    "Làng gốm Thanh Hà là một trong số những điểm du lịch tham quan và khám phá làng nghề truyền thống tại phố cổ Hội An. Với tuổi đời hơn 500 năm, làng gốm Thanh Hà mang trong mình vẻ đẹp trầm mặc và hoài cổ mà hiếm nơi nào có được.",
+  introImage: "/chitietworkshop/PlaceholderImage.png",
+  introImageAlt: "Khung cảnh làng gốm Thanh Hà",
+  includedHeading: "Bao gồm trong chuyến đi",
+  includedDescription:
+    "Những vật phẩm này sẽ được cung cấp miễn phí khi tham gia trải nghiệm Workshop.",
+  includedItems: [
+    {
+      title: "Nguyên liệu & Dụng cụ làm gốm",
+      description:
+        "Đất sét, bàn xoay, dao chuốt, màu trang trí và vật dụng bảo hộ được chuẩn bị sẵn.",
+    },
+    {
+      title: "Tiệc trà sen & Bánh",
+      description:
+        "Khoảng nghỉ nhẹ nhàng với trà sen, bánh địa phương và trò chuyện cùng nghệ nhân.",
+    },
+    {
+      title: "Bí quyết từ Nghệ nhân Ưu tú",
+      description:
+        "Hướng dẫn trực tiếp các kỹ thuật nắn, chuốt và kể chuyện qua chất liệu gốm.",
+    },
+  ],
+  artisanEyebrow: "Nghệ nhân",
+  artisanName: "Trần Sông Lam",
+  artisanTitle:
+    "Gặp gỡ nghệ nhân: Trần Sông Lam và khám phá những câu chuyện độc đáo về làm gốm",
+  artisanDescription:
+    "Không chỉ đơn thuần là người thợ, nghệ nhân làm gốm còn là người kể chuyện bằng chất liệu truyền thống. Mỗi tác phẩm là sự kết hợp giữa kỹ thuật thủ công lâu đời và cảm hứng sáng tạo cá nhân.",
+  artisanImage: "/chitietworkshop/ImagePlaceHolder.png",
+  artisanImageAlt: "Nghệ nhân Trần Sông Lam trong xưởng gốm",
+  artisanTraits: [
+    "Uy tín",
+    "Trách nhiệm",
+    "Tận tâm",
+    "Chuyên môn cao",
+    "Kỹ thuật tốt",
+    "Giải thưởng danh giá",
+  ],
+  artisanStats: [
+    { value: "15 năm", label: "Kinh nghiệm" },
+    { value: "15+", label: "Giải thưởng" },
+    { value: "50+", label: "Workshop" },
+  ],
+  reviewsHeading: "Phản hồi của khách hàng",
+  reviewsDescription:
+    "Những đánh giá thực tế của khách hàng đã trải nghiệm Workshop này.",
+  reviews: [
+    {
+      rating: 4,
+      quote:
+        "Trải nghiệm tuyệt vời, tôi khó tính nên 4 sao là cao nhất rồi đó. Hy vọng gốm Thanh Hà sẽ được nhiều người biết đến hơn trong tương lai.",
+      title: "Một buổi chiều rất đáng nhớ",
+      author: "Phung Le Hoang Nhi",
+    },
+    {
+      rating: 5,
+      quote:
+        "Tôi cảm thấy mình như được chậm lại, kiên nhẫn hơn. Thầy Lam rất dễ thương và nhiệt tình, 5 sao cho thầy.",
+      title: "Tôi rất thích trải nghiệm này",
+      author: "Duong Hoang Bao Tran",
+    },
+    {
+      rating: 5,
+      quote:
+        "Không gian yên bình, hướng dẫn rõ ràng, thành phẩm mang về có câu chuyện riêng. Tôi sẽ ghé lại thêm lần nữa.",
+      title: "Cảm thấy rất tuyệt vời",
+      author: "Pham Le Minh Nguyet",
+    },
+  ],
+  consultationImage: "/chitietworkshop/Rectangle17527.png",
+  consultationTitle: "Cần tư vấn riêng?",
+  consultationDescription:
+    "Nhận lịch trình cá nhân hóa từ chuyên gia văn hóa của chúng tôi.",
+};
+
+export interface ArtisanProfileStat {
+  value: string;
+  label: string;
+  tone?: "teal" | "gold";
+}
+
+export interface ArtisanProfileEvent {
+  title: string;
+  image: string;
+  alt: string;
+}
+
+export interface ArtisanProfileReview {
+  rating: number;
+  quote: string;
+  author: string;
+  role: string;
+}
+
+export interface ArtisanProfileData {
+  heroImage: string;
+  heroTitleSmall: string;
+  heroTitleLarge: string;
+  profileName: string;
+  profileSubtitle: string;
+  profileImage: string;
+  profileImageAlt: string;
+  bioTitle: string;
+  bioDescription: string;
+  stats: ArtisanProfileStat[];
+  storyCards: Array<{ index: string; title: string; description: string }>;
+  transmissionTitle: string;
+  transmissionDescription: string;
+  eventHeroImage: string;
+  eventHeroAlt: string;
+  eventHeading: string;
+  eventDescription: string;
+  eventImages: ArtisanProfileEvent[];
+  galleryImages: ArtisanProfileEvent[];
+  reviewsHeading: string;
+  reviewsDescription: string;
+  reviews: ArtisanProfileReview[];
+  contactQuote: string;
+  contactHeading: string;
+  contactInfo: {
+    email: string;
+    phone: string;
+    address: string;
+  };
+}
+
+export const mockArtisanProfile: ArtisanProfileData = {
+  heroImage: "/hosonghenhan/Image169.png",
+  heroTitleSmall: "Nghệ nhân",
+  heroTitleLarge: "Làm gốm",
+  profileName: "Nghệ nhân Thái Thị Hòe",
+  profileSubtitle: "Người giữ lửa làng gốm Thanh Hà",
+  profileImage: "/hosonghenhan/20_06_17 4 thg 6, 2026.png",
+  profileImageAlt: "Nghệ nhân Thái Thị Hòe đang vẽ họa tiết trên bình gốm",
+  bioTitle: "Nghệ nhân Thái Thị Hòe",
+  bioDescription:
+    "Bà Thái Thị Hòe là một nghệ nhân làng gốm với hơn 30 năm gắn bó cùng đất và lửa. Sinh ra trong một gia đình có truyền thống làm gốm, bà dành phần lớn cuộc đời để gìn giữ những kỹ thuật thủ công truyền thống và truyền lại nghề cho thế hệ trẻ.",
+  stats: [
+    { value: "40+", label: "Năm gắn bó với nghề", tone: "teal" },
+    { value: "5700+", label: "Sản phẩm thủ công", tone: "gold" },
+    { value: "12", label: "Triển lãm nghệ thuật", tone: "gold" },
+    { value: "27", label: "Học viên truyền nghề", tone: "teal" },
+  ],
+  storyCards: [
+    {
+      index: "1",
+      title: "Gìn giữ tinh hoa",
+      description:
+        "Những nghệ nhân là người bảo tồn kỹ thuật truyền thống qua nhiều thế hệ, được gìn giữ bằng ký ức nghề.",
+    },
+    {
+      index: "2",
+      title: "Truyền dạy & lan toả",
+      description:
+        "Không chỉ làm nghề, họ còn mở lớp, tổ chức workshop và hướng dẫn thế hệ trẻ để văn hoá được tiếp nối.",
+    },
+    {
+      index: "3",
+      title: "Sáng tạo & thích ứng",
+      description:
+        "Nghệ nhân không ngừng đổi mới nhưng vẫn giữ cốt lõi. Đó là cách làng nghề tồn tại và phát triển bền vững.",
+    },
+  ],
+  transmissionTitle: "Truyền nghề",
+  transmissionDescription:
+    "Truyền nghề không chỉ là dạy lại một kỹ thuật, mà là trao đi cả kinh nghiệm, ký ức và tình yêu dành cho nghề. Mỗi thế hệ được tiếp nối là một lần làng nghề được thắp sáng thêm một lần nữa.",
+  eventHeroImage: "/hosonghenhan/Image158.png",
+  eventHeroAlt: "Làng gốm Thanh Hà",
+  eventHeading: "Sự kiện",
+  eventDescription:
+    "Mỗi sự kiện là một bước tiến trong hành trình làm nghề, từ việc học hỏi, thử nghiệm ý tưởng đến kết nối cộng đồng và mở rộng ảnh hưởng cá nhân.",
+  eventImages: [
+    {
+      title: "Danang Plaza",
+      image: "/hosonghenhan/Container.png",
+      alt: "Bìa tạp chí về lồng đèn Hội An",
+    },
+    {
+      title: "Vietnam Hoi An Pottery Village",
+      image: "/hosonghenhan/Container(1).png",
+      alt: "Tượng gốm truyền thống Hội An",
+    },
+    {
+      title: "Thanh Hà Craft Fair",
+      image: "/hosonghenhan/Container(2).png",
+      alt: "Sự kiện gốm thủ công",
+    },
+  ],
+  galleryImages: [
+    {
+      title: "Gốm trang trí",
+      image: "/hosonghenhan/Image159.png",
+      alt: "Bộ sưu tập gốm trang trí nhiều màu",
+    },
+    {
+      title: "Chuốt gốm",
+      image: "/hosonghenhan/Image160.png",
+      alt: "Đôi tay nghệ nhân chuốt bát gốm",
+    },
+    {
+      title: "Khắc hoa văn",
+      image: "/hosonghenhan/Image161.png",
+      alt: "Khắc hoa văn trên thân bình gốm",
+    },
+  ],
+  reviewsHeading: "Phản hồi của khách hàng",
+  reviewsDescription:
+    "Những cảm nhận chân thật từ du khách sau khi trải nghiệm và học nghề cùng các nghệ nhân.",
+  reviews: [
+    {
+      rating: 5,
+      quote:
+        "Trải nghiệm rất thú vị, mình lần đầu được tự tay nặn và tạo hình gốm. Không khí gần gũi và dễ tham gia.",
+      author: "Minh Anh",
+      role: "Du khách Hà Nội",
+    },
+    {
+      rating: 5,
+      quote:
+        "Workshop được hướng dẫn chi tiết, phù hợp cả với người chưa từng làm gốm. Câu chuyện của cô Hòe rất truyền cảm hứng.",
+      author: "Hoàng Nam",
+      role: "Sinh viên mỹ thuật",
+    },
+    {
+      rating: 4,
+      quote:
+        "Không gian mang lại cảm giác thư giãn, hoạt động vừa vui vừa có tính khám phá. Mình rất muốn quay lại.",
+      author: "Bảo Trân",
+      role: "Du khách TP.HCM",
+    },
+  ],
+  contactQuote: "“Giữ nghề là giữ hồn đất, để ký ức còn chỗ quay về.”",
+  contactHeading: "Trở thành người giữ nghề",
+  contactInfo: {
+    email: "contact@disanity.com",
+    phone: "(123) 456 - 789",
+    address: "58 Middle Point Rd, San Francisco, 94124",
+  },
+};
 
 // Additional mock data sets added to align disanity-frontend precisely to the decoupled boilerplate architecture:
 
@@ -248,6 +630,106 @@ export const mockBookedWorkshops: BookedWorkshop[] = [
     date: "28/3/2026",
   },
 ];
+
+export interface ArtisanStoryArticleBlock {
+  title?: string;
+  body: string[];
+  image?: string;
+  imageAlt?: string;
+  caption?: string;
+}
+
+export interface RelatedArtisanStory {
+  name: string;
+  subtitle: string;
+  image: string;
+  alt: string;
+}
+
+export interface ArtisanStoryDetailData {
+  title: string;
+  excerpt: string;
+  author: string;
+  blocks: ArtisanStoryArticleBlock[];
+  relatedHeading: string;
+  relatedStories: RelatedArtisanStory[];
+}
+
+export const mockArtisanStoryDetail: ArtisanStoryDetailData = {
+  title: "Nghệ thuật làm gốm của người Chăm được UNESCO ghi danh",
+  excerpt:
+    "Tối 29/11/2022 (giờ Việt Nam), di sản Nghệ thuật làm gốm của người Chăm đã được UNESCO ghi danh vào Danh sách di sản văn hóa phi vật thể cần bảo vệ khẩn cấp.",
+  author: "Bài và ảnh: HỒNG PHÚC",
+  blocks: [
+    {
+      body: [
+        "Thông tin từ Bộ Văn hóa, Thể thao và Du lịch cho biết, vào hồi 16 giờ 12 phút, ngày 29/11/2022 giờ địa phương (tức 22 giờ 12 phút ngày 29/11/2022 giờ Việt Nam), tại phiên họp của Ủy ban Liên chính phủ Công ước 2003 về bảo vệ di sản văn hóa phi vật thể lần thứ 17 của UNESCO diễn ra tại Rabat, thủ đô của Vương quốc Maroc, di sản Nghệ thuật làm gốm của người Chăm chính thức được UNESCO ghi danh vào Danh sách di sản văn hóa phi vật thể cần bảo vệ khẩn cấp.",
+        "Đây là một trong 56 hồ sơ được xem xét trong kỳ họp này. Nghề làm gốm truyền thống của người Chăm có vai trò to lớn trong đời sống kinh tế, văn hóa, xã hội. Gốm là vật dụng không thể thiếu trong sinh hoạt hằng ngày của mỗi gia đình và trong văn hóa tín ngưỡng của cộng đồng người Chăm.",
+      ],
+      image: "/cauchuyen/Image164.png",
+      imageAlt: "Nghệ nhân gốm Bàu Trúc tại Làng gốm Chăm Bàu Trúc",
+      caption:
+        "Nghệ nhân gốm Bàu Trúc tại Làng gốm Chăm Bàu Trúc, thị trấn Phước Dân, huyện Ninh Phước, tỉnh Ninh Thuận. Ảnh: Thanh Hà/TTXVN",
+    },
+    {
+      title: "Cái tâm với nghề, vẹn tròn như một",
+      body: [
+        "Gốm Chăm hiện nay còn hiện diện chủ yếu ở hai làng là Ligok (Trì Đức, tỉnh Bình Thuận) và Hamu Crok (Bàu Trúc, tỉnh Ninh Thuận). Trong đó, tồn tại từ khoảng cuối thế kỷ 12 đến nay, Bàu Trúc được xem là một trong số rất ít những làng gốm cổ ở Đông Nam Á còn giữ lại cách sản xuất thô sơ từ ngàn xưa.",
+        "Toàn bộ quy trình làm gốm của đồng bào Chăm toát lên một giá trị nghệ thuật đặc trưng. Chính nhờ vậy, dù trải qua bao thăng trầm trong tiến trình phát triển, gốm truyền thống của người Chăm vẫn tồn tại với thời gian, giữ được hồn cốt tinh túy và vẻ đẹp hoang sơ của gốm cổ cách đây hàng trăm năm.",
+      ],
+      image: "/cauchuyen/Image165.png",
+      imageAlt: "Nghệ nhân yêu nghề truyền thống với đồ dân gian",
+      caption:
+        "Yêu nghề truyền thống, yêu trẻ em và yêu những món đồ dân gian ấy, nghệ nhân Nguyễn Thị Tuyến đã thổi vào mỗi chiếc đèn ông sao thần thái, cảm xúc, linh hồn thật tinh tế và sinh động.",
+    },
+    {
+      title: "Nỗi lòng nghệ nhân “lấy công làm lãi”",
+      body: [
+        "Gốm không tráng men và được phơi khô, nung ở ngoài trời bằng củi và rơm trong 7 - 8 giờ ở nhiệt độ khoảng 800 độ C. Nguyên liệu (đất sét, cát, nước, củi và rơm) được khai thác tại chỗ. Đất sét được tái sinh theo chu kỳ vài ba năm sau khi khai thác tại các cánh đồng truyền thống của cộng đồng.",
+        "Dụng cụ làm gốm đơn giản do nghệ nhân tận dụng vật liệu tại chỗ như vòng quơ, vòng cạo bằng tre để cạo mỏng thân gốm, vỏ sò và vải cuộn thấm nước để chà láng thân gốm.",
+        "Tri thức và kỹ năng làm gốm được trao truyền cho các thế hệ trong gia đình thông qua thực hành. Việc làm nghề tạo cơ hội cho người phụ nữ Chăm giao lưu, tương tác trong lao động sản xuất, sinh hoạt xã hội, cũng như trong việc giáo dục nghề nghiệp cho con cái.",
+      ],
+      image: "/cauchuyen/Image166.png",
+      imageAlt: "Đoàn Việt Nam tại kỳ họp UNESCO",
+      caption:
+        "Đoàn Việt Nam tại kỳ họp lần thứ 17 của Ủy ban liên chính phủ Công ước 2003 về bảo vệ di sản văn hóa phi vật thể.",
+    },
+    {
+      body: [
+        "Việc UNESCO ghi danh nghệ thuật làm gốm của người Chăm vào danh sách di sản văn hóa cần bảo vệ khẩn cấp một lần nữa khẳng định sự đánh giá cao của quốc tế đối với những giá trị văn hóa của người dân tỉnh Ninh Thuận và tỉnh Bình Thuận nói riêng và của người dân Việt Nam nói chung.",
+        "Qua đó, góp phần giới thiệu đến bạn bè quốc tế về những di sản văn hóa đặc sắc của vùng đất duyên hải Nam Trung Bộ, giúp cộng đồng nhận thức đầy đủ hơn về giá trị của nghề làm gốm truyền thống của người Chăm trong kho tàng di sản văn hóa phi vật thể Việt Nam.",
+        "Việc ghi danh sẽ thúc đẩy các biện pháp thiết thực nhằm bảo tồn, vực dậy sức sống của di sản, tạo thêm nguồn lực cho bảo tồn và phát huy giá trị di sản này, hỗ trợ phát triển kinh tế, văn hóa theo hướng bền vững, bao trùm ở các địa phương và cộng đồng dân cư.",
+      ],
+    },
+  ],
+  relatedHeading: "Xem thêm Câu chuyện nghệ nhân",
+  relatedStories: [
+    {
+      name: "Trần Độ",
+      subtitle: "“Vua men gốm”",
+      image: "/cauchuyen/Rectangle29.png",
+      alt: "Nghệ nhân Trần Độ",
+    },
+    {
+      name: "Nguyễn Thị Hồng",
+      subtitle: "Người giữ lửa cho làng gốm Phù Lãng Bắc Ninh",
+      image: "/cauchuyen/Rectangle29(2).png",
+      alt: "Nghệ nhân Nguyễn Thị Hồng",
+    },
+    {
+      name: "Giàng Thị Páo",
+      subtitle: "“Những bức tượng kể chuyện văn hoá người Chăm”",
+      image: "/cauchuyen/Rectangle29(1).png",
+      alt: "Nghệ nhân Giàng Thị Páo",
+    },
+    {
+      name: "Phùng Bích Yên",
+      subtitle: "Hướng đi mới cho làng nghề gốm Phù Lãng, Quế Võ, Bắc Ninh",
+      image: "/cauchuyen/Rectangle29(3).png",
+      alt: "Nghệ nhân Phùng Bích Yên",
+    },
+  ],
+};
 
 export interface WrittenReview {
   title: string;
@@ -360,3 +842,162 @@ export const mockOwnedWorkshops: OwnedWorkshop[] = [
     description: "Tự tay nhào nặn và vẽ men gốm truyền thống",
   },
 ];
+
+export type ScheduleEventStatus = "available" | "full" | "private" | "locked" | "holiday";
+
+export interface ScheduleDay {
+  weekday: string;
+  date: string;
+  isWeekend?: boolean;
+}
+
+export interface ScheduleEvent {
+  id: number;
+  dayIndex: number;
+  startHour: number;
+  durationHours: number;
+  title: string;
+  detail: string;
+  status: ScheduleEventStatus;
+  waitlist?: boolean;
+  locked?: boolean;
+  attendees?: string[];
+}
+
+export interface RecentScheduleBooking {
+  name: string;
+  detail: string;
+  initials?: string;
+  avatar?: string;
+}
+
+export interface ScheduleLegendItem {
+  label: string;
+  status: ScheduleEventStatus | "waitlist";
+}
+
+export interface ScheduleManagementData {
+  weekLabel: string;
+  times: string[];
+  days: ScheduleDay[];
+  events: ScheduleEvent[];
+  bookedRate: number;
+  recentBookings: RecentScheduleBooking[];
+  acceptsPrivateBookings: boolean;
+  legend: ScheduleLegendItem[];
+}
+
+export const mockScheduleManagement: ScheduleManagementData = {
+  weekLabel: "Tuần này, 12 - 18 Tháng 5",
+  times: ["08:00", "10:00", "12:00", "14:00", "16:00"],
+  days: [
+    { weekday: "T.Hai", date: "12" },
+    { weekday: "T.Ba", date: "13" },
+    { weekday: "T.Tư", date: "14" },
+    { weekday: "T.Năm", date: "15" },
+    { weekday: "T.Sáu", date: "16" },
+    { weekday: "T.Bảy", date: "17" },
+    { weekday: "C.Nhật", date: "18", isWeekend: true },
+  ],
+  events: [
+    {
+      id: 1,
+      dayIndex: 0,
+      startHour: 8.2,
+      durationHours: 1.7,
+      title: "Nhập môn làm gốm Thanh Hà",
+      detail: "8/10 Slot",
+      status: "available",
+      waitlist: true,
+    },
+    {
+      id: 2,
+      dayIndex: 1,
+      startHour: 8.2,
+      durationHours: 2.6,
+      title: "Trải nghiệm phối màu trên gốm",
+      detail: "Đã hết chỗ",
+      status: "full",
+      locked: true,
+      attendees: ["A", "B", "+8"],
+    },
+    {
+      id: 3,
+      dayIndex: 2,
+      startHour: 8.55,
+      durationHours: 1.5,
+      title: "Chuẩn bị nguyên liệu",
+      detail: "",
+      status: "private",
+    },
+    {
+      id: 4,
+      dayIndex: 3,
+      startHour: 8.2,
+      durationHours: 1.5,
+      title: "Khắc gốm",
+      detail: "4/6 Slot",
+      status: "available",
+    },
+    {
+      id: 5,
+      dayIndex: 3,
+      startHour: 11.1,
+      durationHours: 2.4,
+      title: "Thử sức làm tò he từ đất nung",
+      detail: "Đã hết chỗ",
+      status: "full",
+      locked: true,
+      attendees: ["A", "B", "+8"],
+    },
+    {
+      id: 6,
+      dayIndex: 4,
+      startHour: 8.0,
+      durationHours: 1.1,
+      title: "Đã Khóa",
+      detail: "",
+      status: "locked",
+      locked: true,
+    },
+    {
+      id: 7,
+      dayIndex: 5,
+      startHour: 8.0,
+      durationHours: 1.7,
+      title: "Trải nghiệm làm gốm đương đại",
+      detail: "8/10 Slot",
+      status: "available",
+      waitlist: true,
+    },
+    {
+      id: 8,
+      dayIndex: 6,
+      startHour: 9.1,
+      durationHours: 2.6,
+      title: "Nghỉ lễ hàng tuần",
+      detail: "",
+      status: "holiday",
+    },
+  ],
+  bookedRate: 85,
+  recentBookings: [
+    {
+      name: "Lê Minh",
+      detail: "Thử sức làm tò he từ ddaasrt nung • 10:30",
+      initials: "LM",
+    },
+    {
+      name: "Trần Thanh Vân",
+      detail: "Trải nghiệm làm gốm đương đại • 8:00",
+      avatar: "/quanlilichtrinh/Rectangle4445.png",
+    },
+  ],
+  acceptsPrivateBookings: true,
+  legend: [
+    { label: "Đang nhận khách", status: "available" },
+    { label: "Đã kín lịch", status: "full" },
+    { label: "Thời gian riêng / Chuẩn bị", status: "private" },
+    { label: "Hàng chờ (Waitlist) đang mở", status: "waitlist" },
+  ],
+};
