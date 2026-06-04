@@ -6,6 +6,7 @@ import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
+import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 
 export default function CustomerInfoPage() {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ export default function CustomerInfoPage() {
     message: ""
   });
 
-  // FAQ Accordion State (Item 0 expanded by default)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
   // Stateful modal for checking out / payment step
@@ -248,9 +248,13 @@ export default function CustomerInfoPage() {
           </div>
         </Section>
 
-        {/* 3. Stateful FAQs Section with Support Hotline incorporated */}
-        <Section width="screen" gutter="none" className="mt-[62px]">
-        <div className="z-10 mx-auto flex w-[1220px] max-w-full flex-col items-center overflow-visible">
+        <CheckoutFAQSection
+          faqs={faqsData}
+          defaultExpandedIndex={null}
+          showHotline
+          className="mt-[62px]"
+        />
+        <div className="hidden">
           <p className="w-[500px] text-center font-jaro text-4xl uppercase leading-[46px] tracking-wide text-[#000]">
             Những câu hỏi thường gặp
           </p>
@@ -312,7 +316,6 @@ export default function CustomerInfoPage() {
             })}
           </div>
         </div>
-        </Section>
 
         <div className="mt-[120px]">
           <SiteFooter />
