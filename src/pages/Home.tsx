@@ -4,10 +4,10 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import AboutUs from "@/components/domain/AboutUs";
 import ExploreTabs from "@/components/domain/ExploreTabs";
-import HomeContactUs from "@/components/domain/HomeContactUs";
 import HomeTrending from "@/components/domain/HomeTrending";
 import HomeUpcomingEvent from "@/components/domain/HomeUpcomingEvent";
 import IntroGrid from "@/components/domain/IntroGrid";
+import ContactUs from "@/components/domain/ContactUs";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
         <HomeTrending />
         <ExploreTabs />
         <HomeUpcomingEvent />
-        <HomeContactUs />
+        <ContactUs />
       </main>
       <SiteFooter />
     </PageShell>
