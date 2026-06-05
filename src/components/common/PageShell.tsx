@@ -3,7 +3,7 @@ import React from "react";
 interface PageShellProps {
   children: React.ReactNode;
   className?: string;
-  background?: "plain" | "paper" | "heritage" | "artisans" | "artisanStories" | "success" | "customerInfo" | "cart" | "createWorkshop" | "booking" | "scheduleManagement";
+  background?: "plain" | "paper" | "heritage" | "artisans" | "artisanStories" | "success" | "customerInfo" | "cart" | "createWorkshop" | "booking" | "scheduleManagement" | "artisanAccount" | "userAccount" | "ticketQr";
 }
 
 const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
@@ -18,6 +18,9 @@ const backgrounds: Record<NonNullable<PageShellProps["background"]>, string> = {
   customerInfo: "bg-white bg-[url('/thongtinkhachhang/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
   cart: "bg-white bg-[url('/cart/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
   createWorkshop: "bg-white bg-[url('/createworkshop/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  artisanAccount: "bg-white bg-[url('/tknghenhan/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  userAccount: "bg-white bg-[url('/tkkhachhang/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
+  ticketQr: "bg-white bg-[url('/ticketqr/Image143.png')] bg-[length:100%_auto] bg-repeat-y",
 };
 
 export default function PageShell({
