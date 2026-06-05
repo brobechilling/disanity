@@ -18,7 +18,7 @@ export default function FilterBar({ className }: { className?: string }) {
   // Filter options lists
   const options = {
     location: ["Tất cả địa điểm", "Hà Nội", "Hội An", "Bình Dương", "Huế", "Sài Gòn"],
-    craft: ["Tất cả nghề", "Làm gốm", "Dệt lụa tơ tằm", "Làm đèn lồng", "Sơn mài độc bản"],
+    craft: ["Tất cả nghề", "Gốm Thanh Hà", "Dệt lụa tơ tằm", "Làm đèn lồng", "Sơn mài độc bản"],
     price: ["Mọi mức giá", "Dưới 500k", "500k - 1M", "Trên 1M"],
     duration: ["Phút", "30 phút", "60 phút", "120 phút", "Cả ngày"],
     date: ["28/3", "29/3", "30/3", "Hôm nay", "Ngày mai"],
@@ -47,7 +47,7 @@ export default function FilterBar({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`relative z-40 mx-auto flex h-[115px] w-[1106px] items-center justify-center gap-4 rounded-2xl border-2 border-[#A6341B] bg-white p-6 shadow-[0_8px_30px_rgb(166,52,27,0.08)] ${className || ""}`}>
+    <div className={`relative z-40 mx-auto flex h-[115px] w-[1106px] items-center justify-center gap-4 rounded-2xl border-2 border-[#A6341B]  p-6 shadow-[0_8px_30px_rgb(166,52,27,0.08)] ${className || ""}`}>
       
       {/* 1. Location Filter */}
       <div className="flex flex-col items-start gap-1 w-fit relative">

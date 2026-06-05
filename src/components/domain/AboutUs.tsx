@@ -18,7 +18,7 @@ export default function AboutUs() {
         </div>
 
         <div className="space-y-8">
-          <h1 className="max-w-3xl font-jaro text-4xl font-bold leading-tight text-[#A6341B] drop-shadow-sm sm:text-[46px]">
+          <h1 className="max-w-3xl font-jaro text-4xl font-bold leading-tight drop-shadow-sm sm:text-[46px]">
             WE ARE DISANITY - The first social enterprise in Vietnam.
           </h1>
 
@@ -31,7 +31,7 @@ export default function AboutUs() {
               including other vocational teachings, gender equality, and
               environmental impact.
             </p>
-            <p className="border-l-4 border-[#A6341B] pl-5 font-bold italic text-[#4A5D4E]">
+            <p className="font-medium">
               We are different not because we claim to be the best in what we do,
               but we effortlessly want to go beyond the expectation of our
               stakeholders and have you say...
