@@ -16,6 +16,9 @@ import WorkshopDetail from "@/pages/WorkshopDetail";
 import ArtisanProfile from "@/pages/ArtisanProfile";
 import ArtisanStoryDetail from "@/pages/ArtisanStoryDetail";
 import ScheduleManagement from "@/pages/ScheduleManagement";
+import ArtisanAccount from "@/pages/ArtisanAccount";
+import UserAccount from "@/pages/UserAccount";
+import TicketQr from "@/pages/TicketQr";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -35,6 +38,9 @@ export const AppRouter: React.FC = () => {
         <Route path="/artisans/profile" element={<ArtisanProfile />} />
         <Route path="/artisan-stories/detail" element={<ArtisanStoryDetail />} />
         <Route path="/schedule-management" element={<ScheduleManagement />} />
+        <Route path="/artisan-account" element={<ArtisanAccount />} />
+        <Route path="/user-account" element={<UserAccount />} />
+        <Route path="/ticketqr" element={<TicketQr />} />
       </Routes>
     </BrowserRouter>
   );
