@@ -182,6 +182,212 @@ export const mockBookingTimeSlots = [
 
 export const mockUnavailableBookingTimes = ["16:30", "20:00", "21:00"];
 
+export const mockArtisanAccount = {
+  profile: {
+    name: "Cappy Dương",
+    role: "Nghệ nhân",
+    avatar: "/tknghenhan/ChnDungNghNhn.png",
+    greeting: "Xin chào, nghệ nhân Cappy Dương!",
+    statusMessage:
+      "Hiện tại bạn đang có 3 Workshop đang chờ được tổ chức. Hãy chuẩn bị thật tốt nhé. Đội ngũ DISANITY chúc bạn những điều tốt đẹp nhất.",
+  },
+  metrics: [
+    { label: "Tổng số Workshop", value: "5", tone: "terracotta" },
+    { label: "Buổi sắp tới", value: "3", tone: "sage" },
+    { label: "Tổng lượt đặt", value: "5", tone: "slate" },
+    { label: "Thu nhập", value: "2.000.000đ", tone: "terracotta" },
+  ],
+  personalInfo: [
+    { label: "Họ và tên", value: "Cappy Dương" },
+    { label: "Email", value: "Duong1234@gmail.com" },
+    { label: "Địa chỉ", value: "Phường Hải Châu, thành phố Đà Nẵng" },
+    { label: "SDT", value: "0946443560" },
+  ],
+  bookings: [
+    { code: "#DS-8921", customer: "Elena Murphy", initials: "EM", status: "Đã xác nhận", price: "850.000đ", payment: "Đã thanh toán" },
+    { code: "#DS-8922", customer: "Julian Schmidt", initials: "JS", status: "Chờ xử lý", price: "1.200.000đ", payment: "Đang chờ" },
+    { code: "#DS-8923", customer: "Aiko Kawai", initials: "AK", status: "Đã xác nhận", price: "850.000đ", payment: "Đã thanh toán" },
+  ],
+  reviews: [
+    {
+      workshop: "Làm gốm men lam",
+      author: "Cappy Dương",
+      quote:
+        "Trải nghiệm thật sự đáng nhớ. Tôi không chỉ được tự tay làm sản phẩm mà còn hiểu thêm về câu chuyện phía sau mỗi làng nghề.",
+    },
+    {
+      workshop: "Dệt thổ cẩm",
+      author: "Cappy Dương",
+      quote:
+        "Không gian workshop rất truyền thống và ấm cúng. Nghệ nhân hướng dẫn tận tình, ngay cả người mới cũng có thể tạo ra tác phẩm của riêng mình.",
+    },
+    {
+      workshop: "Khắc tranh Đông Hồ",
+      author: "Cappy Dương",
+      quote:
+        "Chuyến đi giúp tôi cảm nhận rõ hơn giá trị của nghề thủ công. Mỗi công đoạn đều chứa đựng sự kiên nhẫn và tay nghề của người nghệ nhân.",
+    },
+  ],
+  workshopCards: [
+    {
+      title: "Gốm Bát Tràng",
+      description: "Tự tay nhào nặn và vẽ men gốm truyền thống",
+      price: "1.100.000đ",
+      rating: "4.9",
+      image: "/tknghenhan/Image.png",
+      badge: "Đánh giá cao",
+    },
+    {
+      title: "Lụa Vạn Phúc",
+      description: "Kỹ thuật dệt khung cửi và nhuộm lụa tơ tằm",
+      price: "1.350.000đ",
+      rating: "4.8",
+      image: "/tknghenhan/Image(1).png",
+    },
+    {
+      title: "Đèn Lồng Hội An",
+      description: "Làm khung tre và dán lụa ngũ sắc",
+      price: "750.000đ",
+      rating: "5.0",
+      image: "/tknghenhan/Image(2).png",
+    },
+    {
+      title: "Sơn Mài Bình Dương",
+      description: "Nghệ thuật cẩn vỏ trứng và mài sơn độc bản",
+      price: "1.450.000đ",
+      rating: "4.7",
+      image: "/tknghenhan/Image(3).png",
+    },
+  ],
+  cta: {
+    title: "Tạo thêm các Workshop mới",
+    description: "Dành cho các nghệ nhân có nhu cầu tạo thêm các sự kiện mới",
+    action: "Tạo ngay",
+  },
+};
+
+export const mockUserAccount = {
+  profile: {
+    name: "Cappy Dương",
+    role: "Lữ khách",
+    avatar: "/tkkhachhang/ChnDungNghNhn.png",
+    greeting: "Xin chào, lữ khách Cappy Dương!",
+    statusMessage:
+      "Hiện tại bạn đang có 2 địa điểm cần ghé thăm. Hãy để ý lịch trình của mình nhé. Chúc bạn có những trải nghiệm tuyệt vời cùng DISANITY.",
+  },
+  metrics: [
+    { label: "Số Workshop đã đặt", value: "3", tone: "terracotta" },
+    { label: "Buổi sắp tới", value: "3", tone: "terracotta" },
+    { label: "Tổng lượt đặt", value: "5", tone: "terracotta" },
+    { label: "Chi tiêu", value: "800.000đ", tone: "terracotta" },
+  ],
+  personalInfo: [
+    { label: "Họ và tên", value: "Cappy Dương" },
+    { label: "Email", value: "Duong1234@gmail.com" },
+    { label: "Địa chỉ", value: "Phường Hải Châu, thành phố Đà Nẵng" },
+    { label: "SDT", value: "0946443560" },
+  ],
+  upcomingWorkshops: [
+    {
+      title: "Nhập môn sáng tác...",
+      image: "/tkkhachhang/Rectangle9.png",
+      packageName: "Trọn gói",
+      quantity: 1,
+      price: "200.000đ",
+      details: [
+        "Thể loại: Mỹ thuật truyền thống - đương đại",
+        "Loại hình: Sơn mài",
+        "Địa điểm: Làng Hạ Thái - Hà Nội",
+        "Nghệ nhân: Trần Sông Lam",
+        "Thời lượng: 6 tiếng",
+        "Ngày 28/3/2026",
+      ],
+    },
+    {
+      title: "Nhập môn sáng tác...",
+      image: "/tkkhachhang/Rectangle9(1).png",
+      packageName: "Trọn gói",
+      quantity: 1,
+      price: "200.000đ",
+      details: [
+        "Thể loại: Mỹ thuật truyền thống - đương đại",
+        "Loại hình: Sơn mài",
+        "Địa điểm: Làng Hạ Thái - Hà Nội",
+        "Nghệ nhân: Trần Sông Lam",
+        "Thời lượng: 6 tiếng",
+        "Ngày 28/3/2026",
+      ],
+    },
+  ],
+  reviews: [
+    {
+      workshop: "Làm gốm men lam",
+      author: "Cappy Dương",
+      quote:
+        "Trải nghiệm thật sự đáng nhớ. Tôi không chỉ được tự tay làm sản phẩm mà còn hiểu thêm về câu chuyện phía sau mỗi làng nghề.",
+    },
+    {
+      workshop: "Dệt thổ cẩm",
+      author: "Cappy Dương",
+      quote:
+        "Không gian workshop rất truyền thống và ấm cúng. Nghệ nhân hướng dẫn tận tình, ngay cả người mới cũng có thể tạo ra tác phẩm của riêng mình.",
+    },
+    {
+      workshop: "Khắc tranh Đông Hồ",
+      author: "Cappy Dương",
+      quote:
+        "Chuyến đi giúp tôi cảm nhận rõ hơn giá trị của nghề thủ công. Mỗi công đoạn đều chứa đựng sự kiên nhẫn và tay nghề của người nghệ nhân.",
+    },
+  ],
+  cta: {
+    title: "Đặt lịch riêng với nghệ nhân ngay!",
+    description: "Dành cho các nhóm khách hàng từ 4 người trở lên",
+    action: "Tạo ngay",
+  },
+};
+
+export const mockTicketQr = {
+  title: "Thanh Toán Thành Công",
+  subtitle: "Chúc mừng bạn đã mua vé thành công!",
+  progressSteps: ["Giỏ hàng", "Thông tin khách hàng", "Thanh toán"],
+  ticket: {
+    image: "/ticketqr/Rectangle8966.png",
+    qr: "/ticketqr/Image180.png",
+    brand: "DiSanity",
+    destinationTop: "Làng Gốm",
+    destinationBottom: "Thanh Hà",
+    barcodeValue: "39238749834547241",
+  },
+  details: {
+    title: "Thông tin chi tiết",
+    background: "/ticketqr/Rectangle4445.png",
+    items: [
+      { label: "Mã đơn", value: "2037834500" },
+      { label: "Loại vé", value: "WORKSHOP" },
+      { label: "Khu vực", value: "KHU_SANHTANGA_LANGGOMTHANHHA" },
+      { label: "Số thứ tự", value: "2 & 3" },
+    ],
+  },
+  terms: {
+    title: "Điều khoản và điều kiện",
+    background: "/ticketqr/Rectangle17534.png",
+    items: [
+      "Vui lòng đến trước giờ workshop ít nhất 15 phút.",
+      "Xuất trình vé điện tử hoặc mã QR khi check-in.",
+      "Vé chỉ áp dụng cho người đã đăng ký trước.",
+      "Có thể hủy miễn phí trước 48 giờ diễn ra workshop.",
+      "Việc đến muộn có thể ảnh hưởng đến trải nghiệm của những người tham gia khác.",
+      "Vui lòng tôn trọng nghệ nhân, không gian workshop và văn hóa địa phương.",
+      "Một số workshop sử dụng vật liệu thủ công và công cụ truyền thống.",
+      "Khuyến khích mặc trang phục thoải mái để thuận tiện trải nghiệm thực hành.",
+      "Trong trường hợp thay đổi lịch trình, người tham gia sẽ được thông báo trước.",
+      "Cảm ơn bạn đã góp phần gìn giữ và lan tỏa giá trị di sản văn hóa.",
+    ],
+  },
+  supportText: "Mọi sự cố xin vui lòng liên hệ: 03324233282",
+  nextLabel: "TIẾP THEO",
+};
+
 export const mockFAQs: FAQ[] = [
   {
     q: "Điền thông tin địa chỉ sau sáp nhập hay địa chỉ cũ?",
