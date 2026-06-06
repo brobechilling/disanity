@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ArrowRightLeft,
   Bell,
@@ -305,9 +306,12 @@ function CreateBookingCallout() {
     <div className="mx-auto max-w-[980px] rounded-[14px] bg-[#F4CA80] px-5 py-16 text-center sm:px-10">
       <h2 className="font-jaro text-4xl leading-tight text-black sm:text-5xl">{cta.title}</h2>
       <p className="mx-auto mt-3 max-w-2xl font-roboto text-base leading-7 text-black/75">{cta.description}</p>
-      <button className="mt-6 rounded-[10px] bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]">
+      <Link
+        to="/booking"
+        className="mt-6 inline-flex rounded-[10px] bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]"
+      >
         {cta.action}
-      </button>
+      </Link>
     </div>
   );
 }
@@ -326,7 +330,7 @@ function UserSidebar() {
       </div>
 
       <nav className="mt-4 space-y-3">
-        <SidebarButton icon={ArrowRightLeft} label="Chuyển qua chế độ nghệ nhân" active />
+        <SidebarButton icon={ArrowRightLeft} label="Chuyển qua chế độ nghệ nhân" to="/artisan-account" active />
         <SidebarButton icon={History} label="Lịch sử mua hàng" />
       </nav>
 
@@ -341,22 +345,37 @@ function UserSidebar() {
 function SidebarButton({
   icon: Icon,
   label,
+  to,
   active = false,
   centered = false,
 }: {
   icon: React.ElementType<{ size?: number; className?: string }>;
   label: string;
+  to?: string;
   active?: boolean;
   centered?: boolean;
 }) {
-  return (
-    <button
-      className={`flex w-full items-center gap-3 rounded-full px-4 py-3 font-beVietnamPro text-base transition-colors ${
-        active ? "bg-[#C65C39] text-white hover:bg-[#b24f31]" : "text-[#CBD5E1] hover:bg-white/10"
-      } ${centered ? "justify-center font-bold" : ""}`}
-    >
+  const className = `flex w-full items-center gap-3 rounded-full px-4 py-3 font-beVietnamPro text-base transition-colors ${
+    active ? "bg-[#C65C39] text-white hover:bg-[#b24f31]" : "text-[#CBD5E1] hover:bg-white/10"
+  } ${centered ? "justify-center font-bold" : ""}`;
+  const content = (
+    <>
       <Icon size={18} />
       <span className="min-w-0 text-left">{label}</span>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button type="button" className={className}>
+      {content}
     </button>
   );
 }
