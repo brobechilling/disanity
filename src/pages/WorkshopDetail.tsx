@@ -14,6 +14,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import WorkshopDetailBooking from "@/components/domain/WorkshopDetailBooking";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { mockWorkshopDetail } from "@/utils/mockData";
 
 const factIcons = {
@@ -31,17 +32,19 @@ export default function WorkshopDetailPage() {
 
       <main className="overflow-hidden">
         <Section width="wide" className="pt-10 sm:pt-14 lg:pt-16">
-          <Link
-            to="/workshops/list"
-            className="inline-flex items-center gap-2 border border-[#A6341B] px-4 py-2 font-beVietnamPro text-sm font-semibold uppercase text-[#1b1717] transition-colors hover:bg-[#A6341B] hover:text-white"
-          >
-            <ChevronLeft size={18} />
-            Trở về
-          </Link>
+          <ScrollReveal animation="slide-down" duration={650}>
+            <Link
+              to="/workshops/list"
+              className="inline-flex items-center gap-2 border border-[#A6341B] px-4 py-2 font-beVietnamPro text-sm font-semibold uppercase text-[#1b1717] transition-colors hover:bg-[#A6341B] hover:text-white"
+            >
+              <ChevronLeft size={18} />
+              Trở về
+            </Link>
 
-          <p className="mt-7 font-inter text-base font-semibold text-[#A6341B] sm:text-xl">
-            {workshop.breadcrumb}
-          </p>
+            <p className="mt-7 font-inter text-base font-semibold text-[#A6341B] sm:text-xl">
+              {workshop.breadcrumb}
+            </p>
+          </ScrollReveal>
         </Section>
 
         <Section
@@ -50,29 +53,31 @@ export default function WorkshopDetailPage() {
           className="mt-8 !bg-[rgba(89,166,156,0.21)] py-10 lg:py-14"
         >
           <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[1.4fr_0.95fr] lg:items-start lg:px-8">
-            <div className="grid gap-5 md:grid-cols-[1.25fr_0.9fr]">
+            <ScrollReveal className="grid gap-5 md:grid-cols-[1.25fr_0.9fr]" animation="fade-in" duration={900}>
               {workshop.galleryImages.map((image) => (
                 <div
                   key={image.src}
-                  className={`min-h-[260px] overflow-hidden rounded-[15px] bg-[#e8e1d4] shadow-sm ${
+                  className={`group min-h-[260px] overflow-hidden rounded-[15px] bg-[#e8e1d4] shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(71,45,24,0.22)] ${
                     image.featured ? "md:row-span-2" : ""
                   }`}
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="h-full min-h-[260px] w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                    className="h-full min-h-[260px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
 
-            <WorkshopDetailBooking workshop={workshop} />
+            <ScrollReveal animation="slide-left" duration={850} delay={120}>
+              <WorkshopDetailBooking workshop={workshop} />
+            </ScrollReveal>
           </div>
         </Section>
 
         <Section width="wide" className="pt-20 lg:pt-28">
-          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+          <ScrollReveal className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
             <div>
               <h2 className="font-dFVNFreckleFace text-[42px] leading-tight text-[#A6341B] sm:text-[54px]">
                 {workshop.introTitle}
@@ -103,14 +108,16 @@ export default function WorkshopDetailPage() {
             </div>
             <img
               src={workshop.introImage}
-              className="min-h-[420px] rounded-[15px] object-cover shadow-sm"
+              className="min-h-[420px] rounded-[15px] object-cover shadow-sm transition-transform duration-700 hover:scale-[1.015]"
               alt={workshop.introImageAlt}
+              loading="lazy"
+              decoding="async"
             />
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section width="wide" className="pt-20 lg:pt-24">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:items-start">
+          <ScrollReveal className="grid gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:items-start">
             <div>
               <h2 className="font-jaro text-4xl leading-tight text-[#8B4513]">
                 {workshop.includedHeading}
@@ -135,7 +142,7 @@ export default function WorkshopDetailPage() {
                 </article>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section
@@ -143,12 +150,14 @@ export default function WorkshopDetailPage() {
           gutter="none"
           className="mt-24 !bg-[rgba(89,166,156,0.21)] py-16 lg:py-20"
         >
-          <div className="mx-auto grid max-w-[1440px] gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr] lg:px-8">
+          <ScrollReveal className="mx-auto grid max-w-[1440px] gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr] lg:px-8">
             <div className="relative overflow-hidden rounded-[15px]">
               <img
                 src={workshop.artisanImage}
                 className="h-[520px] w-full object-cover lg:h-[720px]"
                 alt={workshop.artisanImageAlt}
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 grid place-items-center bg-black/10">
                 <button
@@ -172,7 +181,7 @@ export default function WorkshopDetailPage() {
               </p>
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {workshop.artisanTraits.map((trait) => (
-                  <div key={trait} className="flex items-center gap-3 font-poppins text-[15px] text-[#6E6E6E]">
+                  <div key={trait} className="flex items-center gap-3 font-poppins text-[15px] text-[#6E6E6E] transition-transform duration-300 hover:translate-x-1">
                     <CheckCircle2 size={20} className="text-[#757575]" />
                     {trait}
                   </div>
@@ -184,11 +193,11 @@ export default function WorkshopDetailPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section width="wide" className="pt-20 lg:pt-24">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <ScrollReveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <h2 className="font-jaro text-4xl leading-tight text-[#8B4513]">
                 {workshop.reviewsHeading}
@@ -205,11 +214,12 @@ export default function WorkshopDetailPage() {
                 Liên hệ chúng tôi
               </button>
             </div>
-          </div>
+          </ScrollReveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {workshop.reviews.map((review) => (
-              <article key={review.author} className="rounded-3xl bg-white p-8 shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+            {workshop.reviews.map((review, index) => (
+              <ScrollReveal key={review.author} delay={index * 90} duration={700}>
+                <article className="rounded-3xl bg-white p-8 shadow-[0_10px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(0,0,0,0.16)]">
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, index) => (
                     <Star
@@ -230,16 +240,19 @@ export default function WorkshopDetailPage() {
                   {review.author}
                 </p>
               </article>
+              </ScrollReveal>
             ))}
           </div>
         </Section>
 
         <Section width="wide" className="py-20 lg:py-24">
-          <div className="relative h-[328px] overflow-hidden px-6 py-12 text-center text-white">
+          <ScrollReveal className="relative h-[328px] overflow-hidden px-6 py-12 text-center text-white" animation="scale-up">
             <img
               src={workshop.consultationImage}
               className="absolute inset-0 h-full w-full object-cover opacity-70"
               alt=""
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-[rgba(89,166,156,0.36)]" />
             <div className="relative mx-auto flex max-w-md flex-col items-center">
@@ -254,7 +267,7 @@ export default function WorkshopDetailPage() {
                 Trò chuyện qua Zalo
               </button>
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <SiteFooter />

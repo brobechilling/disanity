@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
+  id?: string;
   className?: string;
   style?: React.CSSProperties;
   animation?: "fade-in" | "slide-up" | "slide-down" | "slide-left" | "slide-right" | "scale-up";
@@ -12,6 +13,7 @@ interface ScrollRevealProps {
 
 export default function ScrollReveal({
   children,
+  id,
   className = "",
   style = {},
   animation = "slide-up",
@@ -61,29 +63,15 @@ export default function ScrollReveal({
       };
     }
 
-    // Initial hidden state
-    let transform = "translateY(50px)";
-    switch (animation) {
-      case "fade-in":
-        transform = "none";
-        break;
-      case "slide-down":
-        transform = "translateY(-50px)";
-        break;
-      case "slide-left":
-        transform = "translateX(50px)";
-        break;
-      case "slide-right":
-        transform = "translateX(-50px)";
-        break;
-      case "scale-up":
-        transform = "scale(0.96)";
-        break;
-      case "slide-up":
-      default:
-        transform = "translateY(50px)";
-        break;
-    }
+    const transformByAnimation = {
+      "fade-in": "none",
+      "slide-down": "translateY(-50px)",
+      "slide-left": "translateX(50px)",
+      "slide-right": "translateX(-50px)",
+      "scale-up": "scale(0.96)",
+      "slide-up": "translateY(50px)",
+    };
+    const transform = transformByAnimation[animation];
 
     return {
       ...baseStyle,
@@ -94,6 +82,7 @@ export default function ScrollReveal({
 
   return (
     <div
+      id={id}
       ref={domRef}
       className={className}
       style={{

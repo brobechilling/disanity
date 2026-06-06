@@ -984,12 +984,39 @@ export interface ArtisanCard {
 }
 
 export const mockArtisans: ArtisanCard[] = [
-  { id: 0, img: "/Container.png", left: 0, top: 0, title: "Container 0" },
-  { id: 3, img: "/Container(3).png", left: 416, top: 0, title: "Container 3", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-  { id: 1, img: "/Container(1).png", left: 832, top: 0, title: "Container 1" },
-  { id: 4, img: "/Container(4).png", left: 0, top: 415, title: "Container 4" },
-  { id: 5, img: "/Container(5).png", left: 416, top: 415, title: "Container 5" },
-  { id: 2, img: "/Container(2).png", left: 832, top: 415, title: "Container 2" },
+  { id: 0, img: "/Container.png", left: 0, top: 0, title: "Container 0", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+  { id: 3, img: "/Container(2).png", left: 416, top: 0, title: "Container 3", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+  { id: 1, img: "/Container(1).png", left: 832, top: 0, title: "Container 1", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+  { id: 4, img: "/Container(4).png", left: 0, top: 415, title: "Container 4", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+  { id: 5, img: "/Container(5).png", left: 416, top: 415, title: "Container 5", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+  { id: 2, img: "/Container(2).png", left: 832, top: 415, title: "Container 2", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
+];
+
+export const mockCustomerInfoFAQs: FAQ[] = [
+  {
+    q: "Điền thông tin địa chỉ sau sáp nhập hay địa chỉ cũ",
+    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium risus euismod dictum egestas orci netus feugiat ut egestas ut."
+  },
+  {
+    q: "Tôi có thể thay đổi thông tin thanh toán sau khi đặt chỗ không?",
+    a: "Sau khi đơn hàng đã hoàn tất thanh toán thành công, bạn không thể thay đổi thông tin thanh toán trực tiếp. Tuy nhiên, bạn có thể liên hệ với số Hotline hỗ trợ để được nhân viên hỗ trợ cập nhật thủ công thông tin hóa đơn đỏ VAT nếu cần."
+  },
+  {
+    q: "Tôi có thể hủy workshop và nhận hoàn tiền không?",
+    a: "Vé workshop di sản có thể được hỗ trợ hủy và hoàn tiền 100% khi yêu cầu được gửi trước giờ diễn ra workshop tối thiểu 48 tiếng. Các yêu cầu hủy muộn hơn sẽ không thể hoàn tiền nhưng có thể dời lịch sang buổi kế tiếp."
+  },
+  {
+    q: "Có ưu đãi cho nhóm hoặc đặt nhiều vé không?",
+    a: "DiSanity luôn có chính sách chiết khấu rất tốt từ 10% - 15% cho các đoàn khách đi nhóm từ 5 người trở lên, hoặc đặt combo từ 2 workshop di sản cùng lúc. Liên hệ hotline để nhận mã ưu đãi đoàn thể."
+  },
+  {
+    q: "Thanh toán thất bại nhưng tiền đã trừ thì phải làm sao?",
+    a: "Trường hợp tài khoản ngân hàng của bạn đã bị trừ tiền nhưng giao dịch hiển thị thất bại, vui lòng liên hệ Hotline 03324233282 ngay lập tức, cung cấp biên lai chuyển khoản ngân hàng (bill chuyển tiền) để hệ thống kích hoạt vé thủ công."
+  },
+  {
+    q: "Tôi có thể xuất hóa đơn cho công ty không?",
+    a: "Hoàn toàn có thể. Vui lòng ghi chú mã số thuế, tên công ty và địa chỉ doanh nghiệp chính xác tại khung 'Để lại lời nhắn...' để bộ phận kế toán của DiSanity hỗ trợ xuất hóa đơn điện tử e-VAT kịp thời."
+  }
 ];
 
 export interface CustomerReview {

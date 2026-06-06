@@ -7,6 +7,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { mockUploadedImages, mockArtisanFAQs } from "@/utils/mockData";
 
 const artisanFaqs = mockArtisanFAQs.map((faq) => ({
@@ -59,73 +60,83 @@ export default function CreateWorkshop() {
       <SiteHeader />
 
       {/* 1. Stateful Detailed Tutorial Banner */}
-      <Section width="screen" gutter="none" className="relative z-20">
-        <div className="relative mx-auto h-[738px] w-[1440px] max-w-full overflow-hidden">
+      <ScrollReveal animation="fade-in" duration={900}>
+        <Section width="screen" gutter="none" className="relative z-20">
           <div
-            className={`absolute left-0 top-0 z-20 w-full overflow-hidden transition-all duration-500 ${
-              isTutorialMinimized ? "h-[80px]" : "h-[738px]"
-            }`}
+            className="relative mx-auto w-[1440px] max-w-full overflow-hidden transition-all duration-500"
+            style={{ height: isTutorialMinimized ? "80px" : "738px" }}
           >
-            <div className="relative h-full w-full">
-              {/* Background Tutorial Image */}
-              <img
-                src="/createworkshop/ImageContainer.png"
-                className="absolute left-0 top-0 h-[738px] w-full max-w-none object-cover"
-                alt="Image Container"
-              />
+            <div
+              className={`absolute left-0 top-0 z-20 w-full overflow-hidden transition-all duration-500 ${
+                isTutorialMinimized ? "h-[80px]" : "h-[738px]"
+              }`}
+            >
+              <div className="relative h-full w-full">
+                {/* Background Tutorial Image */}
+                <img
+                  src="/createworkshop/ImageContainer.png"
+                  className="absolute left-0 top-0 h-[738px] w-full max-w-none object-cover"
+                  alt="Image Container"
+                />
 
-              {/* Translucent overlay for minimized state */}
-              {isTutorialMinimized && (
-                <div className="absolute inset-0 z-10 flex items-center justify-between bg-[#000]/60 px-[110px] backdrop-blur-sm">
-                  <p className="select-none font-beVietnamPro text-base font-bold text-[#FFF]">
-                    💡 Hướng dẫn tạo Workshop đã được ẩn. Bạn có thể mở lại bất cứ lúc nào.
-                  </p>
-                  <button
-                    onClick={() => setIsTutorialMinimized(false)}
-                    className="cursor-pointer rounded-full border border-[#F4CA80] px-5 py-2 text-xs font-bold text-[#F4CA80] transition-all hover:bg-[#F4CA80]/15 active:scale-95"
-                  >
-                    Hiển thị hướng dẫn
-                  </button>
-                </div>
-              )}
-
-              {!isTutorialMinimized && (
-                <div className="absolute inset-0 z-10 px-[110px] pt-[234px]">
-                  <p className="h-[132px] w-[620px] select-none font-jaro text-[56px] leading-[66px] tracking-wide text-[#FFF]">
-                    Hướng dẫn chi tiết cách tạo Workshop cho nghệ nhân
-                  </p>
-                  <p className="mt-6 h-[90px] w-[574px] select-none font-beVietnamPro text-lg font-medium leading-[30px] text-[#F4CA80]">
-                    Hãy kể lại câu chuyện di sản và chia sẻ kỹ nghệ đặc trưng của bạn. DiSanity đồng hành cùng nghệ nhân đưa tinh hoa truyền thống tiếp cận thế hệ trẻ Việt Nam.
-                  </p>
-
-                  {/* Action buttons inside banner */}
-                  <div className="mt-8 flex gap-4">
+                {/* Translucent overlay for minimized state */}
+                {isTutorialMinimized && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-between bg-[#000]/60 px-[110px] backdrop-blur-sm">
+                    <p className="select-none font-beVietnamPro text-base font-bold text-[#FFF]">
+                      💡 Hướng dẫn tạo Workshop đã được ẩn. Bạn có thể mở lại bất cứ lúc nào.
+                    </p>
                     <button
-                      onClick={() => alert("Chúng mình đã chuẩn bị sẵn tài liệu hướng dẫn chuyên sâu. Đang mở tab tài liệu mới...")}
-                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-[40px] bg-[#F4CA80] px-8 py-4 font-beVietnamPro text-base font-bold text-[#A6341B] shadow-md transition-all hover:bg-[#E5BD6C] active:scale-95"
+                      onClick={() => setIsTutorialMinimized(false)}
+                      className="cursor-pointer rounded-full border border-[#F4CA80] px-5 py-2 text-xs font-bold text-[#F4CA80] transition-all hover:bg-[#F4CA80]/15 active:scale-95"
                     >
-                      <span>Xem ngay</span>
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-                        <path d="M7 3l5 5-5 5" stroke="#A6341B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-
-                    <button
-                      onClick={() => setIsTutorialMinimized(true)}
-                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-[36.5px] border-2 border-white bg-transparent px-8 py-4 font-beVietnamPro text-base font-bold text-[#FFF] transition-all hover:bg-white/10 active:scale-95"
-                    >
-                      <span>Tôi đã biết</span>
+                      Hiển thị hướng dẫn
                     </button>
                   </div>
-                </div>
-              )}
+                )}
+
+                {!isTutorialMinimized && (
+                  <div className="absolute inset-0 z-10 px-[110px] pt-[234px]">
+                    <p className="h-[132px] w-[620px] select-none font-jaro text-[56px] leading-[66px] tracking-wide text-[#FFF]">
+                      Hướng dẫn chi tiết cách tạo Workshop cho nghệ nhân
+                    </p>
+                    <p className="mt-6 h-[90px] w-[574px] select-none font-beVietnamPro text-lg font-medium leading-[30px] text-[#F4CA80]">
+                      Hãy kể lại câu chuyện di sản và chia sẻ kỹ nghệ đặc trưng của bạn. DiSanity đồng hành cùng nghệ nhân đưa tinh hoa truyền thống tiếp cận thế hệ trẻ Việt Nam.
+                    </p>
+
+                    {/* Action buttons inside banner */}
+                    <div className="mt-8 flex gap-4">
+                      <button
+                        onClick={() => alert("Chúng mình đã chuẩn bị sẵn tài liệu hướng dẫn chuyên sâu. Đang mở tab tài liệu mới...")}
+                        className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-[40px] bg-[#F4CA80] px-8 py-4 font-beVietnamPro text-base font-bold text-[#A6341B] shadow-md transition-all hover:bg-[#E5BD6C] active:scale-95"
+                      >
+                        <span>Xem ngay</span>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
+                          <path d="M7 3l5 5-5 5" stroke="#A6341B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+
+                      <button
+                        onClick={() => setIsTutorialMinimized(true)}
+                        className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-[36.5px] border-2 border-white bg-transparent px-8 py-4 font-beVietnamPro text-base font-bold text-[#FFF] transition-all hover:bg-white/10 active:scale-95"
+                      >
+                        <span>Tôi đã biết</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      </ScrollReveal>
 
       <Section width="screen" gutter="none" className="relative z-10">
-        <div className="relative mx-auto h-[1690px] w-[1440px] max-w-full">
+        <ScrollReveal
+          animation="slide-up"
+          duration={900}
+          threshold={0.05}
+          className="relative mx-auto h-[1690px] w-[1440px] max-w-full"
+        >
           {/* Decorative Frame Background Overlay */}
           <img
             src="/createworkshop/Rectangle4445.png"
@@ -484,17 +495,19 @@ export default function CreateWorkshop() {
               </svg>
             </button>
           </div>
-        </div>
+        </ScrollReveal>
       </Section>
 
-      <CheckoutFAQSection
-        faqs={artisanFaqs}
-        description="Dưới đây là những câu hỏi thường gặp khi nghệ nhân đối tác bắt đầu đăng ký khởi tạo lịch trình workshop di sản mới trên nền tảng của DiSanity."
-        showHotline
-        hotlineText="Mọi sự cố xin vui lòng liên hệ: 03324233282"
-        onToggle={() => setActiveStage(5)}
-        className="relative z-10 pb-[170px] pt-[90px]"
-      />
+      <ScrollReveal animation="slide-up" duration={900}>
+        <CheckoutFAQSection
+          faqs={artisanFaqs}
+          description="Dưới đây là những câu hỏi thường gặp khi nghệ nhân đối tác bắt đầu đăng ký khởi tạo lịch trình workshop di sản mới trên nền tảng của DiSanity."
+          showHotline
+          hotlineText="Mọi sự cố xin vui lòng liên hệ: 03324233282"
+          onToggle={() => setActiveStage(5)}
+          className="relative z-10 pb-[170px] pt-[90px]"
+        />
+      </ScrollReveal>
 
       <SiteFooter />
     </PageShell>

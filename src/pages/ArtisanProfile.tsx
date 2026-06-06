@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
-  CheckCircle2,
   Mail,
   MapPin,
   Phone,
@@ -14,6 +13,7 @@ import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { mockArtisanProfile } from "@/utils/mockData";
 import ContactUs from "@/components/domain/ContactUs";
 
@@ -32,10 +32,10 @@ export default function ArtisanProfilePage() {
 
       <main className="overflow-hidden">
         <Section width="screen" gutter="none">
-          <div className="relative overflow-hidden text-white shadow-sm">
+          <ScrollReveal className="relative overflow-hidden text-white shadow-sm" animation="fade-in" duration={900}>
             <img
               src={artisan.heroImage}
-              className="block h-auto w-full max-w-none"
+              className="block h-auto w-full max-w-none transition-transform duration-1000 hover:scale-[1.01]"
               alt="Bộ sưu tập gốm thủ công"
             />
 
@@ -57,13 +57,14 @@ export default function ArtisanProfilePage() {
                 </h1>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section width="wide" className="py-16 lg:py-20">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {artisan.stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+            {artisan.stats.map((stat, index) => (
+              <ScrollReveal key={stat.label} delay={index * 70} duration={650}>
+                <div className="text-center transition-transform duration-300 hover:-translate-y-1">
                 <p
                   className={`font-poppins text-5xl font-black tracking-[0.07em] ${
                     stat.tone === "teal" ? "text-[#355D67]" : "text-[#D4A017]"
@@ -79,28 +80,37 @@ export default function ArtisanProfilePage() {
                   {stat.label}
                 </p>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </Section>
 
         <Section width="wide" className="py-12 lg:py-20">
-          <img
-            src={artisan.eventHeroImage}
-            className="h-[260px] w-full rounded-[15px] object-cover shadow-sm sm:h-[320px] lg:h-[456px]"
-            alt={artisan.eventHeroAlt}
-          />
+          <ScrollReveal animation="scale-up">
+            <img
+              src={artisan.eventHeroImage}
+              className="h-[260px] w-full rounded-[15px] object-cover shadow-sm transition-transform duration-700 hover:scale-[1.01] sm:h-[320px] lg:h-[456px]"
+              alt={artisan.eventHeroAlt}
+              loading="lazy"
+              decoding="async"
+            />
+          </ScrollReveal>
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {artisan.eventImages.map((event) => (
-              <article key={event.title} className="overflow-hidden rounded-[25px] bg-white shadow-sm">
+            {artisan.eventImages.map((event, index) => (
+              <ScrollReveal key={event.title} delay={index * 90} duration={750}>
+                <article className="group overflow-hidden rounded-[25px] bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(71,45,24,0.18)]">
                 <img
                   src={event.image}
-                  className="h-[430px] w-full object-cover sm:h-[520px] lg:h-[599px]"
+                  className="h-[430px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] sm:h-[520px] lg:h-[599px]"
                   alt={event.alt}
+                  loading="lazy"
+                  decoding="async"
                 />
               </article>
+              </ScrollReveal>
             ))}
           </div>
-          <div className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_1fr_0.4fr] lg:items-start">
+          <ScrollReveal className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_1fr_0.4fr] lg:items-start">
             <h2 className="font-jaro text-7xl uppercase leading-none text-[#5A1818]">
               {artisan.eventHeading}
             </h2>
@@ -111,11 +121,11 @@ export default function ArtisanProfilePage() {
               <CircleArrow direction="left" />
               <CircleArrow direction="right" active />
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section width="wide" className="py-16 lg:py-24">
-          <div className="mx-auto max-w-[1240px]">
+          <ScrollReveal className="mx-auto max-w-[1240px]">
             <p className="text-center font-oi text-6xl uppercase leading-none text-[#A6341B]/90 sm:text-7xl lg:text-8xl">
               Nghệ nhân
             </p>
@@ -123,8 +133,10 @@ export default function ArtisanProfilePage() {
               <div className="grid gap-8 lg:grid-cols-[0.9fr_1fr] lg:items-start">
                 <img
                   src={artisan.profileImage}
-                  className="h-[380px] w-full object-cover object-center shadow-sm sm:h-[500px] lg:h-[560px]"
+                  className="h-[380px] w-full object-cover object-center shadow-sm transition-transform duration-700 hover:scale-[1.015] sm:h-[500px] lg:h-[560px]"
                   alt={artisan.profileImageAlt}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="pt-4 lg:pt-8">
                   <h2 className="font-jaro text-4xl uppercase tracking-[0.07em] text-[#000] sm:text-5xl">
@@ -152,18 +164,20 @@ export default function ArtisanProfilePage() {
                   <img
                     key={image.image}
                     src={image.image}
-                    className="h-[190px] w-full object-cover shadow-sm sm:h-[220px] lg:h-[284px]"
+                    className="h-[190px] w-full object-cover shadow-sm transition-transform duration-500 hover:-translate-y-1 hover:scale-[1.02] sm:h-[220px] lg:h-[284px]"
                     alt={image.alt}
+                    loading="lazy"
+                    decoding="async"
                   />
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </Section>
 
         <Section width="screen" gutter="none" className="!bg-[rgba(89,166,156,0.21)] py-20">
           <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <ScrollReveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <h2 className="font-jaro text-4xl leading-tight text-[#3D3D3D]">
                   {artisan.reviewsHeading}
@@ -180,17 +194,19 @@ export default function ArtisanProfilePage() {
                   Trò chuyện với chúng tôi
                 </button>
               </div>
-            </div>
+            </ScrollReveal>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {artisan.reviews.map((review) => (
-                <ReviewCard key={review.author} review={review} />
+              {artisan.reviews.map((review, index) => (
+                <ScrollReveal key={review.author} delay={index * 90} duration={700}>
+                  <ReviewCard review={review} />
+                </ScrollReveal>
               ))}
             </div>
           </div>
         </Section>
-
+        
         <ContactUs />
-
+        
         <SiteFooter />
       </main>
     </PageShell>
@@ -208,7 +224,7 @@ function SocialBadge({ label }: { label: string }) {
 function CircleArrow({ active = false, direction }: { active?: boolean; direction: "left" | "right" }) {
   return (
     <button
-      className={`grid h-16 w-16 place-items-center rounded-full border transition-colors ${
+      className={`grid h-16 w-16 place-items-center rounded-full border transition-all duration-300 hover:-translate-y-0.5 ${
         active
           ? "border-[#6C0B0B] bg-[#6C0B0B] text-white"
           : "border-[#6C0B0B] bg-white/50 text-[#1b1717]"
@@ -222,7 +238,7 @@ function CircleArrow({ active = false, direction }: { active?: boolean; directio
 
 function ReviewCard({ review }: { review: (typeof mockArtisanProfile.reviews)[number] }) {
   return (
-    <article className="rounded-3xl bg-white p-8 shadow-[0_4px_14px_rgba(0,0,0,0.15)]">
+    <article className="rounded-3xl bg-white p-8 shadow-[0_4px_14px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(0,0,0,0.16)]">
       <div className="flex gap-1">
         {Array.from({ length: 5 }).map((_, index) => (
           <Star
