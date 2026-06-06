@@ -7,15 +7,13 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
+import CheckoutStepper from "@/components/domain/CheckoutStepper";
 import { mockCartItems, mockHeroSlides, mockFAQs } from "@/utils/mockData";
 
 export default function Cart() {
   const navigate = useNavigate();
   // Stateful Cart Items initialized using standard mock data
   const [cartItems, setCartItems] = useState(mockCartItems);
-
-  // Active step tracker state
-  const [activeStep, setActiveStep] = useState("cart"); // "cart", "info", "payment"
 
   // Hero Banner Slide Index state
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -49,7 +47,6 @@ export default function Cart() {
 
   // Math Calculations for pricing blocks
   const subtotal = 2000000; // Mock subtotal from mockup
-  const discountRate = 0.8; // 80% discount matching original "-1.600.000đ" on "2.000.000đ" subtotal
   
   // Calculate pricing based on items in cart
   const hasItems = cartItems.length > 0;
@@ -64,65 +61,15 @@ export default function Cart() {
       <SiteHeader />
 
       <main className="overflow-hidden">
-        <Section width="screen" gutter="none" className="mt-[70px]">
-          <div className="relative mx-auto h-[239px] w-[1440px] max-w-full overflow-visible">
-
-        {/* 2. Page Title */}
-        <div className="absolute left-[265px] top-0 z-10 flex w-[926px] flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-          <p className="w-[992px] text-center font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
-            XÁC NHẬN GIỎ HÀNG
-          </p>
-        </div>
-
-        {/* 3. Interactive Progress Step Tracker (370px) */}
-        <div className="absolute left-[290px] top-[120px] z-10 h-[69px] w-[877px]">
-          {/* Progress Connector Lines */}
-          <div className="absolute left-[37px] top-[59px] w-[381px] h-[1px] bg-[#A6341B]/30">
-            <div className={`h-full bg-[#A6341B] transition-all duration-300 ${activeStep !== "cart" ? "w-full" : "w-0"}`}></div>
-          </div>
-          <div className="absolute left-[436px] top-[59px] w-[373px] h-[1px] bg-[#A6341B]/30">
-            <div className={`h-full bg-[#A6341B] transition-all duration-300 ${activeStep === "payment" ? "w-full" : "w-0"}`}></div>
-          </div>
-
-          {/* Step 1: Giỏ hàng */}
-          <button 
-            onClick={() => setActiveStep("cart")}
-            className="absolute left-0 top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-black tracking-[0.02em] transition-colors ${activeStep === "cart" ? "text-[#A6341B]" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Giỏ hàng
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[9px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "cart" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B] bg-white"}`}>
-              {activeStep === "cart" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+        <Section width="screen" gutter="none" className="mt-[47px]">
+          <div className="mx-auto w-full max-w-[1680px] px-6">
+            <div className="text-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+              <p className="font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
+                XÁC NHẬN GIỎ HÀNG
+              </p>
             </div>
-          </button>
 
-          {/* Step 2: Thông tin khách hàng */}
-          <button 
-            onClick={() => setActiveStep("info")}
-            className="absolute left-[347px] top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-semibold tracking-[0.02em] transition-colors ${activeStep === "info" ? "text-[#A6341B] font-bold" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Thông tin khách hàng
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[71px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "info" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B]/50 bg-white"}`}>
-              {activeStep === "info" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-            </div>
-          </button>
-
-          {/* Step 3: Thanh toán */}
-          <button 
-            onClick={() => setActiveStep("payment")}
-            className="absolute left-[783px] top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-semibold tracking-[0.02em] transition-colors ${activeStep === "payment" ? "text-[#A6341B] font-bold" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Thanh toán
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[26px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "payment" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B]/50 bg-white"}`}>
-              {activeStep === "payment" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-            </div>
-          </button>
-        </div>
+            <CheckoutStepper activeStep="cart" className="mt-10" />
           </div>
         </Section>
 
@@ -271,8 +218,23 @@ export default function Cart() {
                     <input
                       type="number"
                       min={1}
-                      value={item.qty}
-                      onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value, 10))}
+                      value={item.qty === 0 ? "" : item.qty}
+                      onChange={(e) => {
+                        const valStr = e.target.value;
+                        if (valStr === "") {
+                          handleQtyChange(item.id, 0);
+                        } else {
+                          const val = parseInt(valStr, 10);
+                          if (!isNaN(val)) {
+                            handleQtyChange(item.id, val);
+                          }
+                        }
+                      }}
+                      onBlur={() => {
+                        if (item.qty < 1) {
+                          handleQtyChange(item.id, 1);
+                        }
+                      }}
                       className="min-w-0 flex-1 bg-transparent text-center outline-none"
                     />
                   </label>

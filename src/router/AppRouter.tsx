@@ -8,6 +8,7 @@ import Artisans from "@/pages/Artisans";
 import Cart from "@/pages/Cart";
 import ArtisanStories from "@/pages/ArtisanStories";
 import CustomerInfo from "@/pages/CustomerInfo";
+import CheckoutPayment from "@/pages/CheckoutPayment";
 import Success from "@/pages/Success";
 import Workshops from "@/pages/Workshops";
 import Booking from "@/pages/Booking";
@@ -30,6 +31,7 @@ export const AppRouter: React.FC = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/artisan-stories" element={<ArtisanStories />} />
         <Route path="/checkout/info" element={<CustomerInfo />} />
+        <Route path="/checkout/payment" element={<CheckoutPayment />} />
         <Route path="/checkout/success" element={<Success />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/booking" element={<Booking />} />

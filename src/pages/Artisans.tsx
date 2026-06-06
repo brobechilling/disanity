@@ -7,15 +7,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import ContactUs from "@/components/domain/ContactUs";
-
-const artisans = [
-  { id: 0, img: "/Container.png", left: 0, top: 0, title: "Container 0", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he"},
-  { id: 3, img: "/Container(2).png", left: 416, top: 0, title: "Container 3", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-  { id: 1, img: "/Container(1).png", left: 832, top: 0, title: "Container 1", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-  { id: 4, img: "/Container(4).png", left: 0, top: 415, title: "Container 4", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-  { id: 5, img: "/Container(5).png", left: 416, top: 415, title: "Container 5", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-  { id: 2, img: "/Container(2).png", left: 832, top: 415, title: "Container 2", name: "Đặng Văn Hạ", sub: "nghệ nhân tò he" },
-];
+import { mockArtisans } from "@/utils/mockData";
 
 export default function Artisans() {
   const [hoveredArtisan, setHoveredArtisan] = useState<number | null>(null);
@@ -37,7 +29,7 @@ export default function Artisans() {
             </p>
 
             <div className="absolute left-0 top-[182px] h-[870px] w-[1320px] overflow-visible">
-              {artisans.map((artisan, index) => {
+              {mockArtisans.map((artisan, index) => {
                 const isHovered = hoveredArtisan === artisan.id;
 
                 return (
