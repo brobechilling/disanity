@@ -8,7 +8,7 @@ export default function Hero({ className }: { className?: string }) {
   };
 
   return (
-    <div className={`relative h-[560px] w-full overflow-hidden ${className || ""}`}>
+    <div className={`relative h-[700px] w-full overflow-hidden ${className || ""}`}>
       {/* Background Image */}
       <img
         src="/Rectangle8966.png"
@@ -30,7 +30,7 @@ export default function Hero({ className }: { className?: string }) {
       {/* Facts Button with hover animations */}
       <button 
         onClick={handleFactsClick}
-        className="group absolute left-1/2 top-[300px] flex h-[50px] w-[180px] -translate-x-1/2 cursor-pointer items-center justify-center gap-[5px] text-nowrap rounded-full border-[3px] border-[#D4A017] bg-[#A6341B] px-8 py-2.5 shadow-lg transition-all duration-300 hover:scale-105 hover:border-white hover:bg-[#8B2C16]"
+        className="group absolute left-1/2 top-[350px] flex h-[50px] w-[180px] -translate-x-1/2 cursor-pointer items-center justify-center gap-[5px] text-nowrap rounded-full border-[3px] border-[#D4A017] bg-[#A6341B] px-8 py-2.5 shadow-lg transition-all duration-300 hover:scale-105 hover:border-white hover:bg-[#8B2C16]"
       >
         <p className="text-[#FFF] font-montserrat text-lg font-bold tracking-wider mr-6 group-hover:text-white transition-colors">
           FACTS

@@ -2,35 +2,26 @@
 
 import React, { useState } from "react";
 
+const categories = [
+  {
+    title: "Gốm truyền thống",
+    label: "Cơ bản",
+    image: "/Container.png",
+  },
+  {
+    title: "Mỹ thuật truyền thống - đương đại",
+    label: "Nâng cao",
+    image: "/Container(1).png",
+  },
+  {
+    title: "Dệt - Lụa - Thổ Cẩm",
+    label: "Sáng tác",
+    image: "/Container(2).png",
+  },
+];
+
 export default function CategoryGrid({ className }: { className?: string }) {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-
-  const categories = [
-    {
-      title: "Gốm truyền thống",
-      image: "/Container.png",
-      align: "text-right",
-      position: "left-0",
-      titlePos: "left-[50px] top-[483px]",
-      shadow: "",
-    },
-    {
-      title: "Mỹ thuật truyền thống - đương đại",
-      image: "/Container(1).png",
-      align: "text-center",
-      position: "left-[497px]",
-      titlePos: "left-[530px] top-[419px]",
-      shadow: "shadow-[0_15px_35px_rgba(0,0,0,0.2)]",
-    },
-    {
-      title: "Dệt - Lụa - Thổ Cẩm",
-      image: "/Container(2).png",
-      align: "text-center",
-      position: "left-[993px]",
-      titlePos: "left-[1010px] top-[466px]",
-      shadow: "shadow-[-14px_0_12px_rgba(0,0,0,0.15)]",
-    },
-  ];
 
   return (
     <div className={`relative mx-auto h-[640px] w-[1240px] max-w-full ${className || ""}`}>
@@ -38,7 +29,7 @@ export default function CategoryGrid({ className }: { className?: string }) {
       <div className="absolute left-1/2 top-0 h-[500px] w-[1240px] -translate-x-1/2">
         {categories.map((cat, idx) => (
           <div
-            key={idx}
+            key={cat.title}
             className="absolute top-0 h-[500px] w-[397px] cursor-pointer overflow-hidden rounded-[25px] transition-all duration-500"
             onMouseEnter={() => setHoveredIdx(idx)}
             onMouseLeave={() => setHoveredIdx(null)}
@@ -54,8 +45,10 @@ export default function CategoryGrid({ className }: { className?: string }) {
               }`}
               alt={cat.title}
             />
-            {/* Elegant overlay to make text more readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(108,11,11,0.7)] via-[rgba(0,0,0,0.2)] to-transparent opacity-80 transition-opacity duration-350"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(108,11,11,0.7)] via-[rgba(0,0,0,0.2)] to-transparent opacity-80 transition-opacity duration-350" />
+            <p className="pointer-events-none absolute inset-x-0 bottom-8 z-20 px-8 text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+              {cat.label}
+            </p>
           </div>
         ))}
       </div>
@@ -65,29 +58,18 @@ export default function CategoryGrid({ className }: { className?: string }) {
         Danh mục{" "}
       </p>
 
-      {/* Category Labels overlaying the layout */}
-      <p className="pointer-events-none absolute left-0 top-[400px] z-20 h-[66px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[44px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-        Gốm truyền thống
-      </p>
-      <p className="pointer-events-none absolute left-[421px] top-[372px] z-20 h-[120px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-        Mỹ thuật truyền thống - đương đại
-      </p>
-      <p className="pointer-events-none absolute left-[842px] top-[392px] z-20 h-[100px] w-[397px] text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-        Dệt - Lụa - Thổ Cẩm
-      </p>
-
       {/* Short Description */}
       <p className="absolute left-[500px] top-[548px] h-[90px] w-[508px] font-dMSans text-lg font-medium leading-[30px] text-[#4A5D4E]">
-        Mỗi triển lãm, workshop hay dự án cộng đồng đều là cơ hội để tôi học
-        hỏi, hợp tác và lan toả giá trị truyền thống theo cách mới mẻ hơn.
+        Mỗi triển lãm, workshop hay dự án cộng đồng đều là cơ hội để tôi học hỏi, hợp tác và lan
+        toả giá trị truyền thống theo cách mới mẻ hơn.
       </p>
 
       {/* Slider Controls (Left / Right buttons) with active animations */}
       <div className="absolute left-[1060px] top-[544px] h-16 w-[148px]">
         {/* Right Arrow button */}
-        <div 
+        <div
           onClick={() => alert("Chuyển trang danh mục kế tiếp!")}
-          className="w-16 h-16 absolute left-[84px] top-0 rounded-full border border-white bg-[#A6341B] hover:bg-[#8B2C16] hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer transition-all duration-200 shadow-sm"
+          className="absolute left-[84px] top-0 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-white bg-[#A6341B] shadow-sm transition-all duration-200 hover:scale-105 hover:bg-[#8B2C16] active:scale-95"
         >
           <svg
             width="28"
@@ -95,7 +77,7 @@ export default function CategoryGrid({ className }: { className?: string }) {
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7"
+            className="h-7 w-7"
           >
             <path
               d="M8.75 24.5L19.25 14L8.75 3.5"
@@ -106,11 +88,11 @@ export default function CategoryGrid({ className }: { className?: string }) {
             />
           </svg>
         </div>
-        
+
         {/* Left Arrow button */}
-        <div 
+        <div
           onClick={() => alert("Quay lại danh mục trước!")}
-          className="w-16 h-16 absolute left-0 top-0 rounded-full border border-[rgba(166,52,27,0.2)] bg-white hover:bg-gray-50 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer transition-all duration-200 shadow-sm group"
+          className="group absolute left-0 top-0 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-[rgba(166,52,27,0.2)] bg-white shadow-sm transition-all duration-200 hover:scale-105 hover:bg-gray-50 active:scale-95"
         >
           <svg
             width="28"
@@ -118,7 +100,7 @@ export default function CategoryGrid({ className }: { className?: string }) {
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7"
+            className="h-7 w-7"
           >
             <path
               d="M19.25 3.5L8.75 14L19.25 24.5"

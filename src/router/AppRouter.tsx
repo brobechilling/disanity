@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 // Import flattened page components
 import Home from "@/pages/Home";
@@ -23,6 +23,7 @@ import TicketQr from "@/pages/TicketQr";
 export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-workshop" element={<CreateWorkshop />} />
@@ -44,4 +45,14 @@ export const AppRouter: React.FC = () => {
       </Routes>
     </BrowserRouter>
   );
+};
+
+const ScrollToTop: React.FC = () => {
+  const { pathname, search } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
+
+  return null;
 };

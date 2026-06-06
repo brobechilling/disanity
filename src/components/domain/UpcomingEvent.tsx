@@ -3,10 +3,6 @@ import Section from "@/components/common/Section";
 
 export default function UpcomingEvent() {
 
-  const handleBookTickets = () => {
-    alert("Cảm ơn bạn đã quan tâm!\nCổng đăng ký vé Sự kiện 'SẮC DIỆN SƠN NAM' sẽ chính thức mở vào ngày 01/06/2026. Hãy đăng ký email ở chân trang để nhận thông báo sớm nhất!");
-  };
-
   return (
     <Section width="screen" gutter="none" className="mt-[166px]">
         <div className="relative mx-auto h-[520px] w-[1440px] max-w-full overflow-visible">
@@ -63,7 +59,6 @@ export default function UpcomingEvent() {
 
                 {/* Maroon ĐẶT VÉ CTA Button block */}
                 <button
-                  onClick={handleBookTickets}
                   className="group mt-2 flex h-[46px] w-[183px] cursor-pointer text-nowrap items-center justify-start rounded-[12px] border border-white/5 bg-[#6C0B0B] px-5 shadow-md transition-all hover:bg-[#520808] active:scale-95"
                 >
                   <div className="flex w-full items-center gap-3">
