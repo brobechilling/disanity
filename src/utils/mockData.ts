@@ -2,12 +2,12 @@ import { Workshop, CartItem, FAQ } from "@/types";
 
 export const mockWorkshops: Workshop[] = [
   {
-    title: "Sơn Mài Truyền Thống Hạ Thái",
+    title: "Nhập môn trải nghiệm làm gốm Thanh Hà",
     artist: "Trần Sông Lam",
-    location: "Hà Nội",
+    location: "Hội An - Đà Nẵng",
     price: "200.000đ",
     originalPrice: "1.000.000đ",
-    img: "/Rectangle429.png",
+    img: "/chitietworkshop/Rectangle25(2).png",
     left: 100,
     top: 585,
     fontClass: "font-jaro",
@@ -128,15 +128,10 @@ export const mockCartItems = [
 
 export const mockHeroSlides = [
   {
-    title: "Nhập môn sáng tác sơn mài hạ thái",
-    subtitle: "changing our main processes and products",
+    title: "NHẬP MÔN LÀM GỐM THANH HÀ",
+    subtitle: "CÙNG KHÁM PHÁ TINH HOA NƠI LÀNG GỐM 500 TUỔI",
     img: "/cart/Rectangle71.png",
-  },
-  {
-    title: "Nghệ thuật khảm trai độc bản",
-    subtitle: "discovering traditional seashell inlay craft",
-    img: "/cart/Rectangle71.png",
-  },
+  }
 ];
 
 export const mockBookingWorkshop = {

@@ -10,7 +10,7 @@ type Filters = Record<SelectFilterKey, string> & {
 };
 
 const filterOptions: Record<SelectFilterKey, string[]> = {
-  location: ["Tất cả địa điểm", "Hà Nội", "Hội An", "Bình Dương", "Huế", "Sài Gòn"],
+  location: ["Tất cả địa điểm", "Hà Nội", "Đà Nẵng", "Hội An", "Huế", "Sài Gòn"],
   craft: ["Tất cả nghề", "Gốm Thanh Hà", "Dệt lụa tơ tằm", "Làm đèn lồng", "Sơn mài độc bản"],
   price: ["Mọi mức giá", "Dưới 500k", "500k - 1M", "Trên 1M"],
   duration: ["Phút", "30 phút", "60 phút", "120 phút", "Cả ngày"],

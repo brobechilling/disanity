@@ -8,26 +8,24 @@ import {
   ShoppingCart,
   XCircle,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Rating } from "@/components/ui/Rating";
 import type { WorkshopDetailData } from "@/utils/mockData";
-import { formatVND } from "@/utils/format";
 
 interface WorkshopDetailBookingProps {
   workshop: WorkshopDetailData;
 }
 
 export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookingProps) {
+  const navigate = useNavigate();
   const [guestCount, setGuestCount] = useState(workshop.defaultGuestCount);
-  const totalPrice = workshop.pricePerGuest * guestCount;
 
   const handleDecrease = () => setGuestCount((current) => Math.max(1, current - 1));
   const handleIncrease = () =>
     setGuestCount((current) => Math.min(workshop.guestLimit, current + 1));
 
   const handleBooking = () => {
-    alert(
-      `Đã thêm ${guestCount} vé vào giỏ hàng. Tổng tạm tính: ${formatVND(totalPrice)}.`,
-    );
+    navigate("/cart");
   };
 
   return (
@@ -103,7 +101,7 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
           Đặt vé ngay
         </button>
         <button
-          className="grid h-[50px] w-[50px] place-items-center rounded-[30px] border-[3px] border-[#A6341B] bg-white text-[#333] transition-colors hover:bg-[#A6341B] hover:text-white"
+          className="grid h-[50px] w-[50px] place-items-center rounded-[30px] border-[3px] border-[#A6341B] text-[#333] transition-colors hover:bg-[#A6341B] hover:text-white"
           aria-label="Lưu workshop yêu thích"
         >
           <Heart size={20} fill="currentColor" />

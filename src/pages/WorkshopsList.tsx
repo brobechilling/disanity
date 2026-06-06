@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
@@ -8,17 +9,18 @@ import { mockWorkshops } from "@/utils/mockData";
 import UpcomingEvent from "@/components/domain/UpcomingEvent";
 
 export default function WorkshopsList() {
+  const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const workshops = mockWorkshops;
 
-  const handleBookTickets = (title: string) => {
-    alert(`Đã chọn đặt vé cho: "${title}". Hệ thống đang chuyển bạn đến trang thanh toán an toàn.`);
-  };
+  const handleWorkshopAction = (index: number) => {
+    if (index !== 0) {
+      return;
+    }
 
-  const handleDetailsClick = (title: string) => {
-    alert(`Xem chi tiết tài liệu học tập & quy trình thực hành của: "${title}".`);
+    navigate("/workshops/detail");
   };
 
   return (
@@ -98,7 +100,7 @@ export default function WorkshopsList() {
                       <div className="mt-4 flex w-fit items-start gap-5">
                         {/* Book tickets */}
                         <button
-                          onClick={() => handleBookTickets(ws.title)}
+                          onClick={() => handleWorkshopAction(idx)}
                           className="flex h-11 w-[197px] cursor-pointer items-center justify-center gap-3 text-nowrap rounded-md border border-[#000] bg-transparent transition-all duration-150 hover:bg-black/5 active:scale-95"
                         >
                           <p className="w-fit font-inter text-xl font-semibold text-[#000]">
@@ -121,7 +123,7 @@ export default function WorkshopsList() {
 
                         {/* Details info */}
                         <button
-                          onClick={() => handleDetailsClick(ws.title)}
+                          onClick={() => handleWorkshopAction(idx)}
                           className="flex h-11 w-[161px] cursor-pointer items-center justify-center text-nowrap rounded-md border border-[#000] bg-transparent p-2.5 transition-all duration-150 hover:bg-black/5 active:scale-95"
                         >
                           <p className="w-fit font-inter text-xl font-semibold text-[#000]">

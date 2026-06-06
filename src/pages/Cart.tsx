@@ -143,10 +143,10 @@ export default function Cart() {
 
           {/* Floating Slide Text Overlay */}
           <div className="w-[956px] h-[120px] absolute left-[140px] top-[180px] z-20 flex flex-col items-center text-center">
-            <p className="font-jaro text-[52px] leading-tight tracking-wide text-[#FFF] drop-shadow-md">
+            <p className="font-dFVNFreckleFace text-[52px] leading-tight tracking-wide text-[#F4CA80] drop-shadow-md">
               {heroSlides[currentSlide].title}
             </p>
-            <p className="text-[#F4CA80] font-beVietnamPro text-[22px] font-bold tracking-[0.05em] mt-3 drop-shadow-sm uppercase">
+            <p className="text-[#FFF] font-beVietnamPro text-[22px] font-bold tracking-[0.05em] mt-3 drop-shadow-sm uppercase">
               {heroSlides[currentSlide].subtitle}
             </p>
           </div>

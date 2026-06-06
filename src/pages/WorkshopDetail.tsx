@@ -123,7 +123,7 @@ export default function WorkshopDetailPage() {
               {workshop.includedItems.map((item) => (
                 <article
                   key={item.title}
-                  className="rounded-lg bg-white/75 p-6 shadow-sm ring-1 ring-[#A6341B]/10"
+                  className="p-6"
                 >
                   <CheckCircle2 size={42} className="text-[#A6341B]" />
                   <h3 className="mt-5 font-beVietnamPro text-lg font-bold leading-7 text-[#4A3728]">

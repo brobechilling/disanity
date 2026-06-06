@@ -68,7 +68,6 @@ export default function CategoryGrid({ className }: { className?: string }) {
       <div className="absolute left-[1060px] top-[544px] h-16 w-[148px]">
         {/* Right Arrow button */}
         <div
-          onClick={() => alert("Chuyển trang danh mục kế tiếp!")}
           className="absolute left-[84px] top-0 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-white bg-[#A6341B] shadow-sm transition-all duration-200 hover:scale-105 hover:bg-[#8B2C16] active:scale-95"
         >
           <svg
@@ -91,7 +90,6 @@ export default function CategoryGrid({ className }: { className?: string }) {
 
         {/* Left Arrow button */}
         <div
-          onClick={() => alert("Quay lại danh mục trước!")}
           className="group absolute left-0 top-0 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-[rgba(166,52,27,0.2)] bg-white shadow-sm transition-all duration-200 hover:scale-105 hover:bg-gray-50 active:scale-95"
         >
           <svg
