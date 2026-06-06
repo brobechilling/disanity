@@ -261,7 +261,7 @@ export default function CustomerInfo() {
               </svg>
             </div>
 
-            <h3 className="text-[#A6341B] font-dFVNFreckleFace text-3xl tracking-wide uppercase mb-3">
+            <h3 className="text-[#A6341B] font-jaro text-3xl tracking-wide uppercase mb-3">
               Thông tin hợp lệ!
             </h3>
             

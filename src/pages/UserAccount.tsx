@@ -18,6 +18,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { useBooking } from "@/context/BookingContext";
 import { mockUserAccount } from "@/utils/mockData";
 
 const metricIcons = [Palette, CalendarDays, Ticket, Wallet];
@@ -179,24 +180,43 @@ function PersonalInfo() {
 }
 
 function UpcomingWorkshops() {
-  const [workshops, setWorkshops] = useState(mockUserAccount.upcomingWorkshops);
+  const { cart, updateCartItemQty } = useBooking();
+  const workshops = cart.map((item) => ({
+    id: item.workshopId,
+    title: item.title,
+    image: item.img,
+    packageName: "Trọn gói",
+    quantity: item.qty,
+    unitPrice: item.price,
+    details: [
+      `Thể loại: ${item.genre}`,
+      `Loại hình: ${item.type}`,
+      `Địa điểm: ${item.location}`,
+      `Nghệ nhân: ${item.artisan}`,
+      `Thời lượng: ${item.duration}`,
+      item.date ? `Ngày ${item.date}` : "Ngày chưa chọn",
+    ],
+  }));
 
-  const handleQtyChange = (title: string, image: string, newQty: number) => {
-    setWorkshops((prev) =>
-      prev.map((w) =>
-        w.title === title && w.image === image ? { ...w, quantity: newQty } : w
-      )
-    );
+  const handleQtyChange = (id: string, newQty: number) => {
+    updateCartItemQty(id, newQty);
   };
 
   return (
     <DashboardPanel title="Các Workshop sắp tới">
       <div className="space-y-8">
+        {workshops.length === 0 && (
+          <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+            <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+              Bạn chưa có workshop sắp tới.
+            </p>
+          </div>
+        )}
+
         {workshops.map((workshop) => {
-          const pickerId = `${workshop.title}-${workshop.image}`;
           return (
             <article
-              key={pickerId}
+              key={workshop.id}
               className="border-y-2 border-[#8B4513] py-7 transition-all duration-300 hover:bg-[#8B4513]/5 rounded-lg px-2"
             >
               <div className="grid gap-6 lg:grid-cols-[170px_minmax(0,240px)_minmax(220px,1fr)_220px] lg:items-start">
@@ -234,17 +254,17 @@ function UpcomingWorkshops() {
                       onChange={(e) => {
                         const valStr = e.target.value;
                         if (valStr === "") {
-                          handleQtyChange(workshop.title, workshop.image, 0);
+                          handleQtyChange(workshop.id, 0);
                         } else {
                           const val = parseInt(valStr, 10);
                           if (!isNaN(val)) {
-                            handleQtyChange(workshop.title, workshop.image, val);
+                            handleQtyChange(workshop.id, val);
                           }
                         }
                       }}
                       onBlur={() => {
                         if (workshop.quantity < 1) {
-                          handleQtyChange(workshop.title, workshop.image, 1);
+                          handleQtyChange(workshop.id, 1);
                         }
                       }}
                       className="min-w-0 flex-1 bg-transparent text-center outline-none"
@@ -263,7 +283,7 @@ function UpcomingWorkshops() {
 
                 <div className="flex flex-col items-start gap-8 lg:items-center">
                   <p className="max-w-[210px] text-center font-dMSans text-2xl font-bold leading-tight tracking-[0.12em] text-black">
-                    Giá: {(200000 * workshop.quantity).toLocaleString("vi-VN")}đ
+                    Giá: {(workshop.unitPrice * workshop.quantity).toLocaleString("vi-VN")}đ
                   </p>
                   <button className="rounded-[15px] border-2 border-[#A6341B] bg-[#D4A017] px-5 py-4 font-beVietnamPro text-base font-medium text-white transition-colors hover:bg-[#c29214]">
                     Xem chi tiết đơn hàng

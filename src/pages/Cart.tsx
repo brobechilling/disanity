@@ -8,12 +8,14 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 import CheckoutStepper from "@/components/domain/CheckoutStepper";
+import { useBooking } from "@/context/BookingContext";
 import { mockCartItems, mockHeroSlides, mockFAQs } from "@/utils/mockData";
 
 export default function Cart() {
   const navigate = useNavigate();
-  // Stateful Cart Items initialized using standard mock data
-  const [cartItems, setCartItems] = useState(mockCartItems);
+  const { cart, updateCartItemQty, removeFromCart } = useBooking();
+  const [mockCartState, setMockCartState] = useState(mockCartItems);
+  const cartItems = cart.length > 0 ? cart : mockCartState;
 
   // Hero Banner Slide Index state
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -24,13 +26,25 @@ export default function Cart() {
   // Helper functions
   const handleQtyChange = (id: number, val: number) => {
     const safeQty = Number.isFinite(val) && val > 0 ? Math.floor(val) : 1;
-    setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, qty: safeQty } : item))
-    );
+    const bookingItem = cart.find((item) => item.id === id);
+
+    if (bookingItem) {
+      updateCartItemQty(bookingItem.workshopId, safeQty);
+      return;
+    }
+
+    setMockCartState((prev) => prev.map((item) => (item.id === id ? { ...item, qty: safeQty } : item)));
   };
 
   const handleRemoveItem = (id: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    const bookingItem = cart.find((item) => item.id === id);
+
+    if (bookingItem) {
+      removeFromCart(bookingItem.workshopId);
+      return;
+    }
+
+    setMockCartState((prev) => prev.filter((item) => item.id !== id));
   };
 
   const handleNextSlide = () => {
@@ -45,14 +59,11 @@ export default function Cart() {
     setExpandedFaq(prev => (prev === index ? null : index));
   };
 
-  // Math Calculations for pricing blocks
-  const subtotal = 2000000; // Mock subtotal from mockup
-  
-  // Calculate pricing based on items in cart
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
   const hasItems = cartItems.length > 0;
   const currentSubtotal = hasItems ? subtotal : 0;
-  const currentDiscount = hasItems ? -1600000 : 0;
-  const currentTotal = hasItems ? 400000 : 0;
+  const currentDiscount = 0;
+  const currentTotal = currentSubtotal + currentDiscount;
 
   const faqsData = mockFAQs;
 
