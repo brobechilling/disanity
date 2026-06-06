@@ -29,21 +29,17 @@ const groups = [
     title: "LÀNG NGHỀ TIÊU BIỂU",
     categoryName: "Làng nghề",
     cards: [
-      { label: "Sports wear", img: "/Rectangle217(6).png" },
-      { label: "Lounge wear", img: "/Rectangle217(8).png" },
-      { label: "Kids wear", img: "/Rectangle217(10).png" },
-      { label: "Footwear", img: "/Rectangle217(12).png" },
-      { label: "Formal wear", img: "/Rectangle217(14).png" },
+      { label: "I", img: "/Rectangle217(6).png" },
+      { label: "Dont", img: "/Rectangle217(8).png" },
+      { label: "Know", img: "/Rectangle217(10).png" },
+      { label: "A", img: "/Rectangle217(12).png" },
+      { label: "Thing", img: "/Rectangle217(14).png" },
     ],
   },
 ];
 
 export default function ExploreTabs() {
   const [hoveredIdx, setHoveredIdx] = useState<string | null>(null);
-
-  const handleCardClick = (category: string, label: string) => {
-    alert(`Khám phá chi tiết ${category}: "${label}"\nTính năng này đang được phát triển để kết nối bạn trực tiếp với nghệ nhân và làng nghề.`);
-  };
 
   return (
     <Section variant="dark" width="wide" className="py-16 sm:py-20 lg:py-24">
@@ -63,7 +59,6 @@ export default function ExploreTabs() {
                   <button
                     key={key}
                     type="button"
-                    onClick={() => handleCardClick(group.categoryName, card.label)}
                     onMouseEnter={() => setHoveredIdx(key)}
                     onMouseLeave={() => setHoveredIdx(null)}
                     className="group relative h-[271px] w-[217px] shrink-0 cursor-pointer overflow-hidden rounded-[20px] text-left shadow-[0_4px_10px_rgba(0,0,0,0.15)] transition-all duration-300 lg:w-full"

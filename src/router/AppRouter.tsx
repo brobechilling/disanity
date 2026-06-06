@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 // Import flattened page components
 import Home from "@/pages/Home";
@@ -8,6 +8,7 @@ import Artisans from "@/pages/Artisans";
 import Cart from "@/pages/Cart";
 import ArtisanStories from "@/pages/ArtisanStories";
 import CustomerInfo from "@/pages/CustomerInfo";
+import CheckoutPayment from "@/pages/CheckoutPayment";
 import Success from "@/pages/Success";
 import Workshops from "@/pages/Workshops";
 import Booking from "@/pages/Booking";
@@ -23,6 +24,7 @@ import TicketQr from "@/pages/TicketQr";
 export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-workshop" element={<CreateWorkshop />} />
@@ -30,6 +32,7 @@ export const AppRouter: React.FC = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/artisan-stories" element={<ArtisanStories />} />
         <Route path="/checkout/info" element={<CustomerInfo />} />
+        <Route path="/checkout/payment" element={<CheckoutPayment />} />
         <Route path="/checkout/success" element={<Success />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/booking" element={<Booking />} />
@@ -44,4 +47,14 @@ export const AppRouter: React.FC = () => {
       </Routes>
     </BrowserRouter>
   );
+};
+
+const ScrollToTop: React.FC = () => {
+  const { pathname, search } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
+
+  return null;
 };

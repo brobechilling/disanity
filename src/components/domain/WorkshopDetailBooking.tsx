@@ -8,26 +8,42 @@ import {
   ShoppingCart,
   XCircle,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Rating } from "@/components/ui/Rating";
+import { useBooking } from "@/context/BookingContext";
 import type { WorkshopDetailData } from "@/utils/mockData";
-import { formatVND } from "@/utils/format";
 
 interface WorkshopDetailBookingProps {
   workshop: WorkshopDetailData;
 }
 
 export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookingProps) {
+  const navigate = useNavigate();
+  const { addToCart } = useBooking();
   const [guestCount, setGuestCount] = useState(workshop.defaultGuestCount);
-  const totalPrice = workshop.pricePerGuest * guestCount;
+  const [journeyDate, setJourneyDate] = useState("");
 
   const handleDecrease = () => setGuestCount((current) => Math.max(1, current - 1));
   const handleIncrease = () =>
     setGuestCount((current) => Math.min(workshop.guestLimit, current + 1));
 
   const handleBooking = () => {
-    alert(
-      `Đã thêm ${guestCount} vé vào giỏ hàng. Tổng tạm tính: ${formatVND(totalPrice)}.`,
-    );
+    addToCart({
+      id: 1,
+      workshopId: "workshop-detail",
+      title: workshop.title,
+      price: workshop.pricePerGuest,
+      unitPriceText: workshop.priceText,
+      img: workshop.galleryImages[2]?.src ?? workshop.galleryImages[0]?.src ?? "",
+      qty: guestCount,
+      genre: workshop.category,
+      type: "Gốm",
+      location: workshop.location,
+      artisan: workshop.artisanName,
+      duration: workshop.quickFacts.find((fact) => fact.icon === "timer")?.label ?? "",
+      date: journeyDate,
+    });
+    navigate("/cart");
   };
 
   return (
@@ -66,10 +82,9 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
       </div>
 
       <div className="mt-6 space-y-4">
-        <BookingInfoCard
-          eyebrow="Ngày hành trình"
-          title={workshop.dateLabel}
-          icon={<Calendar size={22} />}
+        <DatePickerCard
+          value={journeyDate}
+          onChange={(event) => setJourneyDate(event.target.value)}
         />
         <div className="rounded-[10px] bg-white/75 p-5 shadow-sm">
           <p className="font-beVietnamPro text-[10px] font-black uppercase leading-[15px] tracking-[0.2em] text-[rgba(139,69,19,0.80)]">
@@ -103,7 +118,7 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
           Đặt vé ngay
         </button>
         <button
-          className="grid h-[50px] w-[50px] place-items-center rounded-[30px] border-[3px] border-[#A6341B] bg-white text-[#333] transition-colors hover:bg-[#A6341B] hover:text-white"
+          className="grid h-[50px] w-[50px] place-items-center rounded-[30px] border-[3px] border-[#A6341B] text-[#333] transition-colors hover:bg-[#A6341B] hover:text-white"
           aria-label="Lưu workshop yêu thích"
         >
           <Heart size={20} fill="currentColor" />
@@ -118,27 +133,28 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
   );
 }
 
-function BookingInfoCard({
-  eyebrow,
-  title,
-  icon,
+function DatePickerCard({
+  value,
+  onChange,
 }: {
-  eyebrow: string;
-  title: string;
-  icon: React.ReactNode;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="rounded-[10px] bg-white/75 p-5 shadow-sm">
-      <p className="font-beVietnamPro text-[10px] font-black uppercase leading-[15px] tracking-[0.2em] text-[rgba(139,69,19,0.80)]">
-        {eyebrow}
-      </p>
+    <label className="block rounded-[10px] bg-white/75 p-5 shadow-sm">
+      <span className="font-beVietnamPro text-[10px] font-black uppercase leading-[15px] tracking-[0.2em] text-[rgba(139,69,19,0.80)]">
+        Ngày hành trình
+      </span>
       <div className="mt-4 flex items-center justify-between gap-4 text-[#8B4513]">
-        <p className="font-beVietnamPro text-base font-bold text-[#2D1E12]">
-          {title}
-        </p>
-        {icon}
+        <input
+          type="date"
+          value={value}
+          onChange={onChange}
+          className="min-w-0 flex-1 bg-transparent font-beVietnamPro text-base font-bold text-[#2D1E12] outline-none transition-colors hover:text-[#A6341B] focus:text-[#A6341B]"
+        />
+        <Calendar size={22} className="shrink-0" />
       </div>
-    </div>
+    </label>
   );
 }
 

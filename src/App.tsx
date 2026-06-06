@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { BookingProvider } from "@/context/BookingContext";
 import { AppRouter } from "@/router/AppRouter";
 
 export default function App() {
@@ -25,5 +26,9 @@ export default function App() {
     };
   }, []);
 
-  return <AppRouter />;
+  return (
+    <BookingProvider>
+      <AppRouter />
+    </BookingProvider>
+  );
 }

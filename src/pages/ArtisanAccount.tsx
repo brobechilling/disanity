@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ArrowRightLeft,
   Bell,
@@ -15,6 +16,7 @@ import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { mockArtisanAccount } from "@/utils/mockData";
 
 const metricIcons = [Palette, CalendarDays, Ticket, Wallet];
@@ -27,17 +29,27 @@ export default function ArtisanAccount() {
         <Section width="screen" gutter="none">
           <div className="grid w-full lg:grid-cols-[minmax(0,1fr)_288px]">
             <div className="mx-auto min-w-0 w-full max-w-[1120px] space-y-11 px-6 py-10 sm:px-10 lg:px-[88px] lg:py-12">
-              <WelcomePanel />
-              <AccountActions />
-              <MetricGrid />
+              <ScrollReveal animation="fade-in" duration={600}>
+                <WelcomePanel />
+                <AccountActions />
+              </ScrollReveal>
+              <ScrollReveal animation="slide-up" duration={800} delay={100}>
+                <MetricGrid />
+              </ScrollReveal>
               <PersonalInfo />
               <BookingsTable />
               <Reviews />
-              <StatusNote />
-              <CreateWorkshopCallout />
+              <ScrollReveal animation="fade-in" duration={800}>
+                <StatusNote />
+              </ScrollReveal>
+              <ScrollReveal animation="scale-up" duration={800}>
+                <CreateWorkshopCallout />
+              </ScrollReveal>
             </div>
 
-            <ArtisanSidebar />
+            <ScrollReveal className="h-full" animation="slide-left" duration={800}>
+              <ArtisanSidebar />
+            </ScrollReveal>
           </div>
         </Section>
       </main>
@@ -106,7 +118,7 @@ function MetricCard({
         : "bg-[#f8e7df] text-[#C65C39]";
 
   return (
-    <article className="min-h-[168px] rounded-[44px] bg-[#C65C39]/10 p-6">
+    <article className="min-h-[168px] rounded-[44px] bg-[#C65C39]/10 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:bg-[#C65C39]/15">
       <div className={`mb-4 grid h-9 w-9 place-items-center rounded-full bg-white ${toneClass}`}>
         <Icon size={18} />
       </div>
@@ -119,20 +131,51 @@ function MetricCard({
 }
 
 function PersonalInfo() {
+  const [personalInfo, setPersonalInfo] = useState(mockArtisanAccount.personalInfo);
+  const [editingLabel, setEditingLabel] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState("");
+
+  const handleToggleEdit = (label: string, currentValue: string) => {
+    if (editingLabel === label) {
+      setPersonalInfo((prev) =>
+        prev.map((item) => (item.label === label ? { ...item, value: editValue } : item))
+      );
+      setEditingLabel(null);
+    } else {
+      setEditingLabel(label);
+      setEditValue(currentValue);
+    }
+  };
+
   return (
     <DashboardPanel title="Thông tin cá nhân">
       <div className="grid gap-4">
-        {mockArtisanAccount.personalInfo.map((item) => (
+        {personalInfo.map((item) => {
+          const isEditing = editingLabel === item.label;
+          return (
             <div key={item.label} className="grid gap-2 md:grid-cols-[150px_minmax(0,1fr)_100px] md:items-center">
-            <p className="font-beVietnamPro text-base font-black text-[#0F172A]">{item.label}:</p>
-            <div className="min-w-0 border border-[#A6341B] bg-transparent px-4 py-3 text-center font-beVietnamPro text-sm font-medium text-[#0F172A]">
-              {item.value}
+              <p className="font-beVietnamPro text-base font-black text-[#0F172A]">{item.label}:</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  className="min-w-0 border-2 border-[#A6341B] bg-white px-4 py-2 text-center font-beVietnamPro text-sm font-medium text-[#0F172A] rounded-md outline-none focus:ring-1 focus:ring-[#A6341B]"
+                />
+              ) : (
+                <div className="min-w-0 border border-[#A6341B] bg-transparent px-4 py-3 text-center font-beVietnamPro text-sm font-medium text-[#0F172A] rounded-sm">
+                  {item.value}
+                </div>
+              )}
+              <button
+                onClick={() => handleToggleEdit(item.label, item.value)}
+                className="w-fit font-beVietnamPro text-sm font-medium text-[#A6341B] underline-offset-4 hover:underline md:justify-self-center"
+              >
+                {isEditing ? "Lưu" : "Thay đổi"}
+              </button>
             </div>
-            <button className="w-fit font-beVietnamPro text-sm font-medium text-[#A6341B] underline-offset-4 hover:underline md:justify-self-center">
-              Thay đổi
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </DashboardPanel>
   );
@@ -197,7 +240,7 @@ function Reviews() {
     <DashboardPanel title="Các đánh giá từ khách hàng">
       <div className="grid gap-7 pt-10 lg:grid-cols-3">
         {mockArtisanAccount.reviews.map((review, index) => (
-          <article key={review.workshop} className="relative min-h-[290px] bg-[#F5F5F5] px-6 pb-6 pt-24 text-center">
+          <article key={review.workshop} className="relative min-h-[290px] bg-[#F5F5F5] px-6 pb-6 pt-24 text-center transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:bg-[#eaeaea]">
             <div
               className={`absolute left-1/2 top-0 grid h-[116px] w-[116px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-white ${circleClasses[index % circleClasses.length]}`}
             >
@@ -230,9 +273,12 @@ function CreateWorkshopCallout() {
     <div className="mx-auto max-w-[980px] rounded-[14px] bg-[#B1B08B] px-5 py-16 text-center sm:px-10">
       <h2 className="font-jaro text-4xl leading-tight text-black sm:text-5xl">{cta.title}</h2>
       <p className="mx-auto mt-3 max-w-2xl font-roboto text-base leading-7 text-black/75">{cta.description}</p>
-      <button className="mt-6 border border-black bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]">
+      <Link
+        to="/create-workshop"
+        className="mt-6 inline-flex border border-black bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]"
+      >
         {cta.action}
-      </button>
+      </Link>
     </div>
   );
 }
@@ -251,8 +297,8 @@ function ArtisanSidebar() {
       </div>
 
       <nav className="mt-4 space-y-3">
-        <SidebarButton icon={ArrowRightLeft} label="Chuyển qua chế độ lữ khách" active />
-        <SidebarButton icon={LayoutDashboard} label="Quản lý lịch trình" active />
+        <SidebarButton icon={ArrowRightLeft} label="Chuyển qua chế độ lữ khách" to="/user-account" active />
+        <SidebarButton icon={LayoutDashboard} label="Quản lý lịch trình" to="/schedule-management" active />
       </nav>
 
       <div className="mt-10 border-t border-white/15 pt-5 lg:mt-auto">
@@ -266,22 +312,37 @@ function ArtisanSidebar() {
 function SidebarButton({
   icon: Icon,
   label,
+  to,
   active = false,
   centered = false,
 }: {
   icon: React.ElementType<{ size?: number; className?: string }>;
   label: string;
+  to?: string;
   active?: boolean;
   centered?: boolean;
 }) {
-  return (
-    <button
-      className={`flex w-full items-center gap-3 rounded-full px-4 py-3 font-beVietnamPro text-base transition-colors ${
-        active ? "bg-[#C65C39] text-white hover:bg-[#b24f31]" : "text-[#CBD5E1] hover:bg-white/10"
-      } ${centered ? "justify-center font-bold" : ""}`}
-    >
+  const className = `flex w-full items-center gap-3 rounded-full px-4 py-3 font-beVietnamPro text-base transition-colors ${
+    active ? "bg-[#C65C39] text-white hover:bg-[#b24f31]" : "text-[#CBD5E1] hover:bg-white/10"
+  } ${centered ? "justify-center font-bold" : ""}`;
+  const content = (
+    <>
       <Icon size={18} />
       <span className="min-w-0 text-left">{label}</span>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button type="button" className={className}>
+      {content}
     </button>
   );
 }
@@ -294,9 +355,11 @@ function DashboardPanel({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <h2 className="mb-8 font-jaro text-3xl leading-tight text-[#A6341B]">{title}</h2>
-      {children}
-    </section>
+    <ScrollReveal animation="slide-up" duration={800}>
+      <section>
+        <h2 className="mb-8 font-jaro text-3xl leading-tight text-[#A6341B]">{title}</h2>
+        {children}
+      </section>
+    </ScrollReveal>
   );
 }

@@ -25,7 +25,7 @@ export default function HomeTrending() {
           </p>
           <Link
             to="/workshops"
-            className="inline-flex h-[50px] items-center justify-center rounded-full border-2 border-[#A6341B] px-10 font-beVietnamPro text-base font-bold text-[#A6341B] transition-all duration-300 hover:scale-105 hover:bg-[#A6341B] hover:text-white active:scale-95"
+            className="inline-flex h-[50px] items-center justify-center border-2 px-10 font-beVietnamPro text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Xem thêm
           </Link>
@@ -39,8 +39,8 @@ export default function HomeTrending() {
                 key={image.src}
                 onMouseEnter={() => setHoveredIdx(index)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className={`group relative min-h-[440px] cursor-pointer overflow-hidden rounded-[28px] transition-all duration-500 sm:min-h-[560px] ${
-                  index === 1 ? "lg:min-h-[640px]" : "lg:min-h-[560px]"
+                className={`group relative min-h-[440px] cursor-pointer overflow-hidden transition-all duration-500 sm:min-h-[560px] lg:min-h-[560px] ${
+                  index === 1 ? "lg:mb-20" : ""
                 }`}
                 style={{
                   transform: isHovered ? "translateY(-15px) scale(1.025)" : "translateY(0) scale(1)",
@@ -51,7 +51,7 @@ export default function HomeTrending() {
               >
                 <img
                   src={image.src}
-                  className={`h-full w-full object-cover transition-transform duration-700 ${
+                  className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ${
                     isHovered ? "scale-105" : "scale-100"
                   }`}
                   alt={image.alt}

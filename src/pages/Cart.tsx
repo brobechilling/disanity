@@ -7,15 +7,15 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
+import CheckoutStepper from "@/components/domain/CheckoutStepper";
+import { useBooking } from "@/context/BookingContext";
 import { mockCartItems, mockHeroSlides, mockFAQs } from "@/utils/mockData";
 
 export default function Cart() {
   const navigate = useNavigate();
-  // Stateful Cart Items initialized using standard mock data
-  const [cartItems, setCartItems] = useState(mockCartItems);
-
-  // Active step tracker state
-  const [activeStep, setActiveStep] = useState("cart"); // "cart", "info", "payment"
+  const { cart, updateCartItemQty, removeFromCart } = useBooking();
+  const [mockCartState, setMockCartState] = useState(mockCartItems);
+  const cartItems = cart.length > 0 ? cart : mockCartState;
 
   // Hero Banner Slide Index state
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,13 +26,25 @@ export default function Cart() {
   // Helper functions
   const handleQtyChange = (id: number, val: number) => {
     const safeQty = Number.isFinite(val) && val > 0 ? Math.floor(val) : 1;
-    setCartItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, qty: safeQty } : item))
-    );
+    const bookingItem = cart.find((item) => item.id === id);
+
+    if (bookingItem) {
+      updateCartItemQty(bookingItem.workshopId, safeQty);
+      return;
+    }
+
+    setMockCartState((prev) => prev.map((item) => (item.id === id ? { ...item, qty: safeQty } : item)));
   };
 
   const handleRemoveItem = (id: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    const bookingItem = cart.find((item) => item.id === id);
+
+    if (bookingItem) {
+      removeFromCart(bookingItem.workshopId);
+      return;
+    }
+
+    setMockCartState((prev) => prev.filter((item) => item.id !== id));
   };
 
   const handleNextSlide = () => {
@@ -47,15 +59,11 @@ export default function Cart() {
     setExpandedFaq(prev => (prev === index ? null : index));
   };
 
-  // Math Calculations for pricing blocks
-  const subtotal = 2000000; // Mock subtotal from mockup
-  const discountRate = 0.8; // 80% discount matching original "-1.600.000đ" on "2.000.000đ" subtotal
-  
-  // Calculate pricing based on items in cart
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
   const hasItems = cartItems.length > 0;
   const currentSubtotal = hasItems ? subtotal : 0;
-  const currentDiscount = hasItems ? -1600000 : 0;
-  const currentTotal = hasItems ? 400000 : 0;
+  const currentDiscount = 0;
+  const currentTotal = currentSubtotal + currentDiscount;
 
   const faqsData = mockFAQs;
 
@@ -64,65 +72,15 @@ export default function Cart() {
       <SiteHeader />
 
       <main className="overflow-hidden">
-        <Section width="screen" gutter="none" className="mt-[70px]">
-          <div className="relative mx-auto h-[239px] w-[1440px] max-w-full overflow-visible">
-
-        {/* 2. Page Title */}
-        <div className="absolute left-[265px] top-0 z-10 flex w-[926px] flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-          <p className="w-[992px] text-center font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
-            XÁC NHẬN GIỎ HÀNG
-          </p>
-        </div>
-
-        {/* 3. Interactive Progress Step Tracker (370px) */}
-        <div className="absolute left-[290px] top-[120px] z-10 h-[69px] w-[877px]">
-          {/* Progress Connector Lines */}
-          <div className="absolute left-[37px] top-[59px] w-[381px] h-[1px] bg-[#A6341B]/30">
-            <div className={`h-full bg-[#A6341B] transition-all duration-300 ${activeStep !== "cart" ? "w-full" : "w-0"}`}></div>
-          </div>
-          <div className="absolute left-[436px] top-[59px] w-[373px] h-[1px] bg-[#A6341B]/30">
-            <div className={`h-full bg-[#A6341B] transition-all duration-300 ${activeStep === "payment" ? "w-full" : "w-0"}`}></div>
-          </div>
-
-          {/* Step 1: Giỏ hàng */}
-          <button 
-            onClick={() => setActiveStep("cart")}
-            className="absolute left-0 top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-black tracking-[0.02em] transition-colors ${activeStep === "cart" ? "text-[#A6341B]" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Giỏ hàng
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[9px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "cart" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B] bg-white"}`}>
-              {activeStep === "cart" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+        <Section width="screen" gutter="none" className="mt-[47px]">
+          <div className="mx-auto w-full max-w-[1680px] px-6">
+            <div className="text-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+              <p className="font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
+                XÁC NHẬN GIỎ HÀNG
+              </p>
             </div>
-          </button>
 
-          {/* Step 2: Thông tin khách hàng */}
-          <button 
-            onClick={() => setActiveStep("info")}
-            className="absolute left-[347px] top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-semibold tracking-[0.02em] transition-colors ${activeStep === "info" ? "text-[#A6341B] font-bold" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Thông tin khách hàng
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[71px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "info" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B]/50 bg-white"}`}>
-              {activeStep === "info" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-            </div>
-          </button>
-
-          {/* Step 3: Thanh toán */}
-          <button 
-            onClick={() => setActiveStep("payment")}
-            className="absolute left-[783px] top-0 text-left outline-none cursor-pointer group"
-          >
-            <p className={`font-beVietnamPro text-base font-semibold tracking-[0.02em] transition-colors ${activeStep === "payment" ? "text-[#A6341B] font-bold" : "text-[#A6341B]/60 group-hover:text-[#A6341B]"}`}>
-              Thanh toán
-            </p>
-            <div className={`w-5 h-5 rounded-full absolute left-[26px] top-[49px] border-2 transition-all flex items-center justify-center ${activeStep === "payment" ? "border-[#A6341B] bg-[#A6341B]" : "border-[#A6341B]/50 bg-white"}`}>
-              {activeStep === "payment" && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-            </div>
-          </button>
-        </div>
+            <CheckoutStepper activeStep="cart" className="mt-10" />
           </div>
         </Section>
 
@@ -143,10 +101,10 @@ export default function Cart() {
 
           {/* Floating Slide Text Overlay */}
           <div className="w-[956px] h-[120px] absolute left-[140px] top-[180px] z-20 flex flex-col items-center text-center">
-            <p className="font-jaro text-[52px] leading-tight tracking-wide text-[#FFF] drop-shadow-md">
+            <p className="font-dFVNFreckleFace text-[52px] leading-tight tracking-wide text-[#F4CA80] drop-shadow-md">
               {heroSlides[currentSlide].title}
             </p>
-            <p className="text-[#F4CA80] font-beVietnamPro text-[22px] font-bold tracking-[0.05em] mt-3 drop-shadow-sm uppercase">
+            <p className="text-[#FFF] font-beVietnamPro text-[22px] font-bold tracking-[0.05em] mt-3 drop-shadow-sm uppercase">
               {heroSlides[currentSlide].subtitle}
             </p>
           </div>
@@ -271,8 +229,23 @@ export default function Cart() {
                     <input
                       type="number"
                       min={1}
-                      value={item.qty}
-                      onChange={(e) => handleQtyChange(item.id, parseInt(e.target.value, 10))}
+                      value={item.qty === 0 ? "" : item.qty}
+                      onChange={(e) => {
+                        const valStr = e.target.value;
+                        if (valStr === "") {
+                          handleQtyChange(item.id, 0);
+                        } else {
+                          const val = parseInt(valStr, 10);
+                          if (!isNaN(val)) {
+                            handleQtyChange(item.id, val);
+                          }
+                        }
+                      }}
+                      onBlur={() => {
+                        if (item.qty < 1) {
+                          handleQtyChange(item.id, 1);
+                        }
+                      }}
                       className="min-w-0 flex-1 bg-transparent text-center outline-none"
                     />
                   </label>

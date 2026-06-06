@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
+import CheckoutStepper from "@/components/domain/CheckoutStepper";
+import { mockCustomerInfoFAQs } from "@/utils/mockData";
 
 export default function CustomerInfo() {
   const navigate = useNavigate();
@@ -42,32 +44,7 @@ export default function CustomerInfo() {
     setShowPaymentSuccess(true);
   };
 
-  const faqsData = [
-    {
-      q: "Điền thông tin địa chỉ sau sáp nhập hay địa chỉ cũ",
-      a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium risus euismod dictum egestas orci netus feugiat ut egestas ut."
-    },
-    {
-      q: "Tôi có thể thay đổi thông tin thanh toán sau khi đặt chỗ không?",
-      a: "Sau khi đơn hàng đã hoàn tất thanh toán thành công, bạn không thể thay đổi thông tin thanh toán trực tiếp. Tuy nhiên, bạn có thể liên hệ với số Hotline hỗ trợ để được nhân viên hỗ trợ cập nhật thủ công thông tin hóa đơn đỏ VAT nếu cần."
-    },
-    {
-      q: "Tôi có thể hủy workshop và nhận hoàn tiền không?",
-      a: "Vé workshop di sản có thể được hỗ trợ hủy và hoàn tiền 100% khi yêu cầu được gửi trước giờ diễn ra workshop tối thiểu 48 tiếng. Các yêu cầu hủy muộn hơn sẽ không thể hoàn tiền nhưng có thể dời lịch sang buổi kế tiếp."
-    },
-    {
-      q: "Có ưu đãi cho nhóm hoặc đặt nhiều vé không?",
-      a: "DiSanity luôn có chính sách chiết khấu rất tốt từ 10% - 15% cho các đoàn khách đi nhóm từ 5 người trở lên, hoặc đặt combo từ 2 workshop di sản cùng lúc. Liên hệ hotline để nhận mã ưu đãi đoàn thể."
-    },
-    {
-      q: "Thanh toán thất bại nhưng tiền đã trừ thì phải làm sao?",
-      a: "Trường hợp tài khoản ngân hàng của bạn đã bị trừ tiền nhưng giao dịch hiển thị thất bại, vui lòng liên hệ Hotline 03324233282 ngay lập tức, cung cấp biên lai chuyển khoản ngân hàng (bill chuyển tiền) để hệ thống kích hoạt vé thủ công."
-    },
-    {
-      q: "Tôi có thể xuất hóa đơn cho công ty không?",
-      a: "Hoàn toàn có thể. Vui lòng ghi chú mã số thuế, tên công ty và địa chỉ doanh nghiệp chính xác tại khung 'Để lại lời nhắn...' để bộ phận kế toán của DiSanity hỗ trợ xuất hóa đơn điện tử e-VAT kịp thời."
-    }
-  ];
+  const faqsData = mockCustomerInfoFAQs;
 
   return (
     <PageShell background="customerInfo">
@@ -76,69 +53,26 @@ export default function CustomerInfo() {
       <main className="overflow-hidden">
         {/* 1. Page Typography Title Area, Checkout Step Timeline Tracker, and subtitle */}
         <Section width="screen" gutter="none" className="mt-[47px]">
-          <div className="relative mx-auto h-[475px] w-[1440px] max-w-full overflow-visible">
-
-        {/* 2. Page Typography Title Area */}
-        <div className="absolute left-[266px] top-0 z-10 flex w-[926px] flex-col items-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-          <p className="w-[992px] text-center font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
-            XÁC NHẬN THÔNG TIN KHÁCH HÀNG
-          </p>
-        </div>
-
-        {/* 3. Progress Checkout Step Timeline Tracker (top-[347px]) */}
-        <div className="absolute left-[291px] top-[120px] z-10 h-[69px] w-[877px]">
-          {/* Progress Connector Lines */}
-          <div className="absolute left-[37px] top-[59px] h-[1px] w-[381px] bg-[#A6341B]">
-            <div className="h-full w-full bg-[#A6341B]"></div>
-          </div>
-          <div className="absolute left-[436px] top-[59px] h-[1px] w-[373px] bg-[#A6341B]/30"></div>
-
-          {/* Step 1: Giỏ hàng */}
-          <Link 
-            to="/cart"
-            className="group absolute left-0 top-0 cursor-pointer text-left outline-none"
-          >
-            <p className="font-beVietnamPro text-base font-semibold text-[#A6341B]/70 transition-colors group-hover:text-[#A6341B]">
-              Giỏ hàng
-            </p>
-            <div className="absolute left-[17px] top-[49px] flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#A6341B] bg-white">
-              <div className="h-1.5 w-1.5 rounded-full bg-[#A6341B]"></div>
+          <div className="mx-auto w-full max-w-[1680px] px-6 pb-24">
+            <div className="text-center shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+              <p className="font-jaro text-[50px] uppercase leading-[72px] tracking-wide text-[#A6341B]">
+                XÁC NHẬN THÔNG TIN KHÁCH HÀNG
+              </p>
             </div>
-          </Link>
 
-          {/* Step 2: Thông tin khách hàng */}
-          <div className="absolute left-[338px] top-0 cursor-default text-left">
-            <p className="font-beVietnamPro text-base font-black tracking-[0.02em] text-[#A6341B]">
-              Thông tin khách hàng
+            <CheckoutStepper activeStep="info" className="mt-10" />
+
+            <p className="mt-12 text-center font-jaro text-[28px] uppercase tracking-wide text-[#000]">
+              vui lòng điền đầy đủ các thông tin dưới đây
             </p>
-            <div className="absolute left-[80px] top-[49px] flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#A6341B] bg-[#A6341B] shadow-sm">
-              <div className="h-1.5 w-1.5 rounded-full bg-white"></div>
-            </div>
-          </div>
-
-          {/* Step 3: Thanh toán */}
-          <div className="absolute left-[783px] top-0 text-left opacity-60">
-            <p className="font-beVietnamPro text-base font-semibold text-[#A6341B]/50">
-              Thanh toán
+            <p className="mt-5 text-center font-raleway text-lg font-semibold italic leading-[27px] text-[#777]">
+              Just enter your details below!
             </p>
-            <div className="absolute left-[26px] top-[49px] h-5 w-5 rounded-full border-2 border-[#A6341B]/30 bg-white"></div>
-          </div>
-        </div>
-
-        {/* 4. Subtitles & Cursive Raleway description */}
-        <p className="absolute left-[394px] top-[220px] z-10 h-[45px] w-[655px] text-center font-jaro text-[28px] uppercase tracking-wide text-[#000]">
-          vui lòng điền đầy đủ các thông tin dưới đây
-        </p>
-        <p className="absolute left-[420px] top-[290px] z-10 h-[27px] w-[600px] text-nowrap text-center font-raleway text-lg font-semibold italic leading-[27px] text-[#777]">
-          Just enter your details below!
-        </p>
-
-        {/* 5 Cursive golden circles under subtitle */}
           </div>
         </Section>
 
         {/* 2. Stateful Form Area with Translucent Background Overlay Rectangle4445 */}
-        <Section width="screen" gutter="none" className="mt-[-125px]">
+        <Section width="screen" gutter="none" className="mt-[-80px]">
           <div className="relative mx-auto h-[500px] w-[1440px] max-w-full overflow-visible">
           
           {/* Translucent overlay backdrop */}
@@ -327,7 +261,7 @@ export default function CustomerInfo() {
               </svg>
             </div>
 
-            <h3 className="text-[#A6341B] font-dFVNFreckleFace text-3xl tracking-wide uppercase mb-3">
+            <h3 className="text-[#A6341B] font-jaro text-3xl tracking-wide uppercase mb-3">
               Thông tin hợp lệ!
             </h3>
             
@@ -339,7 +273,7 @@ export default function CustomerInfo() {
               <button
                 onClick={() => {
                   setShowPaymentSuccess(false);
-                  navigate("/checkout/success");
+                  navigate("/checkout/payment");
                 }}
                 className="bg-[#A6341B] hover:bg-[#8B2C16] text-white font-beVietnamPro font-bold py-3 px-6 rounded-full cursor-pointer transition-all active:scale-95 shadow-md w-full"
               >
