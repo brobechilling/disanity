@@ -43,13 +43,14 @@ export default function ContactUs() {
         <div className="absolute inset-0 bg-white/20" />
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 py-12 text-center sm:px-8 lg:py-16">
-          <p className="max-w-xl font-beVietnam text-xl font-bold italic leading-8 text-[#A6341B]">
-            “Giữ nghề là giữ hồn đất, để ký ức còn chỗ quay về.”
-          </p>
-
+          
           <h2 className="mt-8 font-jaro text-4xl uppercase leading-tight tracking-wide text-black sm:text-[56px]">
             TRỞ THÀNH NGƯỜI GIỮ NGHỀ
           </h2>
+    
+          <p className="max-w-xl font-beVietnam text-xl font-bold italic leading-8 ">
+            “Giữ nghề là giữ hồn đất, để ký ức còn chỗ quay về.”
+          </p>
 
           <form onSubmit={handleSubmit} className="mt-10 grid w-full gap-6 text-left sm:grid-cols-2">
             <label className="space-y-3 font-dMSans text-lg font-bold text-black">

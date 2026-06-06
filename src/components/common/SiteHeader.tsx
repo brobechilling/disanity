@@ -2,11 +2,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { to: "/workshops", label: "KHÁM PHÁ", width: "w-[173px]", left: "left-0" },
-  { to: "/workshops/list", label: "WORKSHOP", width: "w-[164px]", left: "left-[199px]" },
+  { to: "/", label: "KHÁM PHÁ", width: "w-[173px]", left: "left-0" },
+  { to: "/workshops", label: "WORKSHOP", width: "w-[164px]", left: "left-[199px]" },
   { to: "/artisans", label: "NGHỆ NHÂN", width: "w-[151px]", left: "left-[389px]" },
   { to: "/artisan-stories", label: "CÂU CHUYỆN", width: "w-[166px]", left: "left-[566px]" },
-  { to: "/account", label: "TÀI KHOẢN", width: "w-[133px]", left: "left-[758px]" },
+  { to: "/booking", label: "ĐẶT LỊCH RIÊNG", width: "w-[133px]", left: "left-[758px]" },
 ];
 
 export default function SiteHeader() {
@@ -27,15 +27,15 @@ export default function SiteHeader() {
             <HomeMark className="h-9 w-[38px]" />
             <span className="font-courierNew text-2xl font-bold">DiSanity</span>
           </Link>
-          <button
-            type="button"
+          <Link
+            to="/user-account"
             className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-[#F4CA80]/60"
-            aria-label="Open navigation menu"
+            aria-label="Go to user account"
           >
             <span className="h-[3px] w-[22px] bg-[#F4CA80]" />
             <span className="h-[3px] w-[22px] bg-[#F4CA80]" />
             <span className="h-[3px] w-[22px] bg-[#F4CA80]" />
-          </button>
+          </Link>
         </div>
 
         <div className="flex gap-3 overflow-x-auto pb-1">
@@ -60,21 +60,25 @@ export default function SiteHeader() {
 
 function DesktopNav({ pathname }: { pathname: string }) {
   return (
-    <nav className="absolute left-[275px] top-[42px] h-[39px] w-[891px]">
-      {navItems.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          className={`absolute top-0 flex h-[39px] cursor-pointer items-center justify-center gap-2.5 text-nowrap transition-all hover:-translate-y-0.5 hover:opacity-90 ${item.left} ${item.width} ${
-            isActivePath(pathname, item.to) ? "rounded-full border border-[#F4CA80]" : ""
-          }`}
-        >
-          <span className="w-fit font-beVietnamPro text-xl font-medium leading-[18px] text-white">
-            {item.label}
-          </span>
-          <ChevronDown />
-        </Link>
-      ))}
+    <nav className="absolute left-[255px] top-[38px] flex h-[46px] w-[950px] items-center justify-center gap-3">
+      {navItems.map((item) => {
+        const isLongLabel = item.label.length > 12;
+
+        return (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`flex h-[42px] min-w-0 cursor-pointer items-center justify-center gap-2.5 border px-3 text-center transition-all hover:-translate-y-0.5 hover:opacity-90 ${
+              isLongLabel ? "flex-[1.25]" : "flex-1"
+            } ${isActivePath(pathname, item.to) ? "border-[#F4CA80]" : "border-transparent"}`}
+          >
+            <span className="shrink-0 whitespace-nowrap font-beVietnamPro text-lg font-medium leading-[18px] text-white">
+              {item.label}
+            </span>
+            <ChevronDown />
+          </Link>
+        );
+      })}
     </nav>
   );
 }
@@ -97,15 +101,15 @@ function Brand() {
 
 function Hamburger() {
   return (
-    <button
-      type="button"
+    <Link
+      to="/user-account"
       className="group absolute left-[1313px] top-[44px] h-[25px] w-[27px] cursor-pointer"
-      aria-label="Open navigation menu"
+      aria-label="Go to user account"
     >
       <span className="absolute left-0 top-0 h-[3px] w-[27px] bg-[#F4CA80] transition-all group-hover:bg-white" />
       <span className="absolute left-0 top-[11px] h-[3px] w-[27px] bg-[#F4CA80] transition-all group-hover:bg-white" />
       <span className="absolute left-0 top-[22px] h-[3px] w-[27px] bg-[#F4CA80] transition-all group-hover:bg-white" />
-    </button>
+    </Link>
   );
 }
 

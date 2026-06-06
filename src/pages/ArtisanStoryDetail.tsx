@@ -26,10 +26,10 @@ export default function ArtisanStoryDetailPage() {
 
           <article className="mt-12 grid gap-10 lg:grid-cols-[820px_1fr]">
             <div>
-              <h1 className="max-w-[1260px] font-jaro text-5xl leading-tight text-[#FEF3B1] sm:text-[64px] sm:leading-[70px]">
+              <h1 className="max-w-[1260px] font-jaro text-5xl leading-tight text-[#FEF3B1] sm:text-[64px] sm:leading-[70px] ">
                 {story.title}
               </h1>
-              <p className="ml-0 mt-8 max-w-[750px] text-justify font-serif text-xl leading-[26px] text-white sm:ml-16">
+              <p className="ml-0 mt-8 max-w-[750px] text-justify  text-xl leading-[26px] text-white sm:ml-16 ">
                 {story.excerpt}
               </p>
 
@@ -38,7 +38,7 @@ export default function ArtisanStoryDetailPage() {
                   <ArticleBlock key={`${block.title ?? "section"}-${index}`} block={block} />
                 ))}
 
-                <p className="font-dMSans text-xl font-black leading-[26px] text-white">
+                <p className=" text-xl font-black leading-[26px] text-white">
                   {story.author}
                 </p>
               </div>
@@ -48,12 +48,12 @@ export default function ArtisanStoryDetailPage() {
 
         <Section width="wide" className="pb-20 pt-8 lg:pb-24">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="font-raleway text-lg font-medium leading-[27px] text-[#777]">
+            <h2 className=" text-lg font-medium leading-[27px] text-[#777] ">
               {story.relatedHeading}
             </h2>
             <Link
               to="/artisan-stories"
-              className="inline-flex w-fit items-center gap-2 rounded-full bg-[#355D67] px-10 py-3 font-montserrat text-lg font-medium uppercase text-white transition-colors hover:bg-[#416f7a]"
+              className="inline-flex w-fit items-center gap-2 rounded-full bg-[#355D67] px-10 py-3  text-lg font-medium uppercase text-white transition-colors hover:bg-[#416f7a]"
             >
               Thêm
               <ArrowRight size={20} />
@@ -81,7 +81,7 @@ function ArticleBlock({
   return (
     <section className="space-y-6">
       {block.title && (
-        <h2 className="font-serif text-xl leading-[26px] text-white">
+        <h2 className=" text-xl leading-[26px] text-white ">
           {block.title}
         </h2>
       )}
@@ -89,7 +89,7 @@ function ArticleBlock({
       {block.body.map((paragraph) => (
         <p
           key={paragraph}
-          className="text-justify font-serif text-base leading-[22px] text-[#DDE1E6]"
+          className="text-justify  text-base leading-[22px] text-[#DDE1E6]"
         >
           {paragraph}
         </p>
@@ -103,7 +103,7 @@ function ArticleBlock({
             alt={block.imageAlt}
           />
           {block.caption && (
-            <figcaption className="font-serif text-xs leading-[22px] text-[#FEF3B1]">
+            <figcaption className=" text-xs leading-[22px] text-[#FEF3B1]">
               {block.caption}
             </figcaption>
           )}

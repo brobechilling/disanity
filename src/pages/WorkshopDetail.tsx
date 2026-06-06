@@ -130,7 +130,7 @@ export default function WorkshopDetailPage() {
               {workshop.includedItems.map((item) => (
                 <article
                   key={item.title}
-                  className="rounded-lg bg-white/75 p-6 shadow-sm ring-1 ring-[#A6341B]/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(71,45,24,0.16)]"
+                  className="p-6"
                 >
                   <CheckCircle2 size={42} className="text-[#A6341B]" />
                   <h3 className="mt-5 font-beVietnamPro text-lg font-bold leading-7 text-[#4A3728]">

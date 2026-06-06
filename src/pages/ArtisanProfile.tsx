@@ -15,6 +15,7 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { mockArtisanProfile } from "@/utils/mockData";
+import ContactUs from "@/components/domain/ContactUs";
 
 export default function ArtisanProfilePage() {
   const artisan = mockArtisanProfile;
@@ -203,61 +204,9 @@ export default function ArtisanProfilePage() {
             </div>
           </div>
         </Section>
-
-        <Section width="wide" className="py-20 lg:py-24">
-          <ScrollReveal id="contact-section" className="relative overflow-hidden px-5 py-14 sm:px-10" animation="scale-up">
-            <img
-              src="/hosonghenhan/Rectangle4445.png"
-              className="absolute inset-0 h-full w-full object-cover opacity-55"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="relative mx-auto max-w-[1140px]">
-              <h2 className="text-center font-jaro text-5xl uppercase leading-tight text-[#000] sm:text-[56px]">
-                {artisan.contactHeading}
-              </h2>
-              <p className="mx-auto mt-8 max-w-xl text-center font-beVietnamPro text-lg font-light leading-[30px] text-[#000]">
-                {artisan.contactQuote}
-              </p>
-
-              <form onSubmit={handleSubmit} className="mx-auto mt-10 grid max-w-[620px] gap-5 sm:grid-cols-2">
-                <LabeledInput label="Name" placeholder="John Carter" />
-                <LabeledInput label="Email" placeholder="example@email.com" type="email" />
-                <label className="sm:col-span-2">
-                  <span className="font-dMSans text-lg font-semibold leading-[18px] text-[#000]">
-                    Message
-                  </span>
-                  <textarea
-                    placeholder="Please type your message here..."
-                    className="mt-3 min-h-[150px] w-full resize-none rounded-[20px] border border-[#000] bg-[#F9F9FF] px-6 py-5 font-dMSans text-lg text-[#333] outline-none placeholder:text-[#666]"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  className="mx-auto inline-flex items-center gap-2 rounded-[40px] bg-[#000] px-9 py-5 font-dMSans text-lg font-semibold text-white sm:col-span-2"
-                >
-                  Send message
-                  <Send size={18} />
-                </button>
-                {messageSent && (
-                  <p className="text-center font-beVietnamPro text-sm font-medium text-[#355D67] sm:col-span-2">
-                    Cảm ơn bạn, tin nhắn đã được ghi nhận.
-                  </p>
-                )}
-              </form>
-
-              <div className="my-12 h-px bg-[#666]/35" />
-
-              <div className="mx-auto grid max-w-md gap-4 text-center font-dMSans text-lg text-[#000]">
-                <ContactLine icon={<Mail size={20} />} text={artisan.contactInfo.email} />
-                <ContactLine icon={<Phone size={20} />} text={artisan.contactInfo.phone} />
-                <ContactLine icon={<MapPin size={20} />} text={artisan.contactInfo.address} />
-              </div>
-            </div>
-          </ScrollReveal>
-        </Section>
-
+        
+        <ContactUs />
+        
         <SiteFooter />
       </main>
     </PageShell>
