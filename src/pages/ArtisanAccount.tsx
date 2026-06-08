@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRightLeft,
   Bell,
   CalendarDays,
   LayoutDashboard,
+  LogOut,
   Palette,
   Plus,
   Settings,
@@ -17,6 +18,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { useAuth } from "@/context/AuthContext";
 import { mockArtisanAccount } from "@/utils/mockData";
 
 const metricIcons = [Palette, CalendarDays, Ticket, Wallet];
@@ -59,12 +61,14 @@ export default function ArtisanAccount() {
 }
 
 function WelcomePanel() {
+  const { user } = useAuth();
   const { profile } = mockArtisanAccount;
+  const displayName = user?.name ?? profile.name;
 
   return (
     <div className="pt-1">
       <h1 className="break-words font-jaro text-[28px] leading-tight text-[#A6341B] sm:text-4xl">
-        {profile.greeting}
+        Xin chao, nghe nhan {displayName}!
       </h1>
     </div>
   );
@@ -131,9 +135,27 @@ function MetricCard({
 }
 
 function PersonalInfo() {
-  const [personalInfo, setPersonalInfo] = useState(mockArtisanAccount.personalInfo);
+  const { user } = useAuth();
+  const initialPersonalInfo = React.useMemo(() => {
+    return mockArtisanAccount.personalInfo.map((item, index) => {
+      if (index === 0 && user?.name) {
+        return { ...item, value: user.name };
+      }
+
+      if (item.label === "Email" && user?.email) {
+        return { ...item, value: user.email };
+      }
+
+      return item;
+    });
+  }, [user]);
+  const [personalInfo, setPersonalInfo] = useState(initialPersonalInfo);
   const [editingLabel, setEditingLabel] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
+
+  React.useEffect(() => {
+    setPersonalInfo(initialPersonalInfo);
+  }, [initialPersonalInfo]);
 
   const handleToggleEdit = (label: string, currentValue: string) => {
     if (editingLabel === label) {
@@ -284,14 +306,23 @@ function CreateWorkshopCallout() {
 }
 
 function ArtisanSidebar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const { profile } = mockArtisanAccount;
+  const displayName = user?.name ?? profile.name;
+  const avatar = user?.picture || profile.avatar;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/", { replace: true });
+  };
 
   return (
     <aside className="flex h-full min-h-[420px] flex-col bg-[#8B4513] p-6 text-white lg:min-h-[calc(100vh-156px)]">
       <div className="flex items-center gap-3 rounded-full bg-[#7a3d12] p-2">
-        <img src={profile.avatar} alt={profile.name} className="h-10 w-10 rounded-full object-cover" />
+        <img src={avatar} alt={displayName} className="h-10 w-10 rounded-full object-cover" />
         <div className="min-w-0">
-          <p className="truncate font-beVietnamPro text-sm font-medium">{profile.name}</p>
+          <p className="truncate font-beVietnamPro text-sm font-medium">{displayName}</p>
           <p className="font-beVietnamPro text-xs text-[#CBD5E1]">{profile.role}</p>
         </div>
       </div>
@@ -304,6 +335,7 @@ function ArtisanSidebar() {
       <div className="mt-10 border-t border-white/15 pt-5 lg:mt-auto">
         <SidebarButton icon={Plus} label="Workshop Mới" active centered />
         <SidebarButton icon={Settings} label="Cài Đặt" />
+        <SidebarButton icon={LogOut} label="Đăng xuất" onClick={handleLogout} />
       </div>
     </aside>
   );
@@ -315,12 +347,14 @@ function SidebarButton({
   to,
   active = false,
   centered = false,
+  onClick,
 }: {
   icon: React.ElementType<{ size?: number; className?: string }>;
   label: string;
   to?: string;
   active?: boolean;
   centered?: boolean;
+  onClick?: () => void;
 }) {
   const className = `flex w-full items-center gap-3 rounded-full px-4 py-3 font-beVietnamPro text-base transition-colors ${
     active ? "bg-[#C65C39] text-white hover:bg-[#b24f31]" : "text-[#CBD5E1] hover:bg-white/10"
@@ -341,7 +375,7 @@ function SidebarButton({
   }
 
   return (
-    <button type="button" className={className}>
+    <button type="button" className={className} onClick={onClick}>
       {content}
     </button>
   );

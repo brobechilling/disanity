@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { AuthProvider } from "@/context/AuthContext";
 import { BookingProvider } from "@/context/BookingContext";
 import { AppRouter } from "@/router/AppRouter";
 
@@ -27,8 +28,10 @@ export default function App() {
   }, []);
 
   return (
-    <BookingProvider>
-      <AppRouter />
-    </BookingProvider>
+    <AuthProvider>
+      <BookingProvider>
+        <AppRouter />
+      </BookingProvider>
+    </AuthProvider>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import RequireAuth from "@/components/auth/RequireAuth";
 
 // Import flattened page components
 import Home from "@/pages/Home";
@@ -29,20 +30,69 @@ export const AppRouter: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/create-workshop" element={<CreateWorkshop />} />
         <Route path="/artisans" element={<Artisans />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/cart"
+          element={
+            <RequireAuth background="cart">
+              <Cart />
+            </RequireAuth>
+          }
+        />
         <Route path="/artisan-stories" element={<ArtisanStories />} />
-        <Route path="/checkout/info" element={<CustomerInfo />} />
-        <Route path="/checkout/payment" element={<CheckoutPayment />} />
-        <Route path="/checkout/success" element={<Success />} />
+        <Route
+          path="/checkout/info"
+          element={
+            <RequireAuth background="cart">
+              <CustomerInfo />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/checkout/payment"
+          element={
+            <RequireAuth background="payment">
+              <CheckoutPayment />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/checkout/success"
+          element={
+            <RequireAuth background="success">
+              <Success />
+            </RequireAuth>
+          }
+        />
         <Route path="/workshops" element={<Workshops />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route
+          path="/booking"
+          element={
+            <RequireAuth background="booking">
+              <Booking />
+            </RequireAuth>
+          }
+        />
         <Route path="/workshops/list" element={<WorkshopsList />} />
         <Route path="/workshops/detail" element={<WorkshopDetail />} />
         <Route path="/artisans/profile" element={<ArtisanProfile />} />
         <Route path="/artisan-stories/detail" element={<ArtisanStoryDetail />} />
         <Route path="/schedule-management" element={<ScheduleManagement />} />
-        <Route path="/artisan-account" element={<ArtisanAccount />} />
-        <Route path="/user-account" element={<UserAccount />} />
+        <Route
+          path="/artisan-account"
+          element={
+            <RequireAuth background="artisanAccount">
+              <ArtisanAccount />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user-account"
+          element={
+            <RequireAuth>
+              <UserAccount />
+            </RequireAuth>
+          }
+        />
         <Route path="/ticketqr" element={<TicketQr />} />
       </Routes>
     </BrowserRouter>

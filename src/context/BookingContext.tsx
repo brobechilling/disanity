@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, type ReactNode } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export interface BookingItem {
   id: number;
@@ -27,7 +28,14 @@ interface BookingContextType {
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
   const [cart, setCart] = useState<BookingItem[]>([]);
+
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      setCart([]);
+    }
+  }, [isAuthenticated]);
 
   const addToCart = (item: BookingItem) => {
     setCart((prev) => [...prev.filter((i) => i.workshopId !== item.workshopId), item]);
