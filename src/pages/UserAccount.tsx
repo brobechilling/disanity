@@ -204,6 +204,7 @@ function PersonalInfo() {
 
 function UpcomingWorkshops() {
   const { cart, updateCartItemQty } = useBooking();
+  const navigate = useNavigate();
   const workshops = cart.map((item) => ({
     id: item.workshopId,
     title: item.title,
@@ -308,7 +309,11 @@ function UpcomingWorkshops() {
                   <p className="max-w-[210px] text-center font-dMSans text-2xl font-bold leading-tight tracking-[0.12em] text-black">
                     Giá: {(workshop.unitPrice * workshop.quantity).toLocaleString("vi-VN")}đ
                   </p>
-                  <button className="rounded-[15px] border-2 border-[#A6341B] bg-[#D4A017] px-5 py-4 font-beVietnamPro text-base font-medium text-white transition-colors hover:bg-[#c29214]">
+                  <button
+                    type="button"
+                    onClick={() => navigate("/ticketqr")}
+                    className="rounded-[15px] border-2 border-[#A6341B] bg-[#D4A017] px-5 py-4 font-beVietnamPro text-base font-medium text-white transition-colors hover:bg-[#c29214]"
+                  >
                     Xem chi tiết đơn hàng
                   </button>
                 </div>

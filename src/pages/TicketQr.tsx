@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PageShell from "@/components/common/PageShell";
 import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
@@ -165,13 +166,19 @@ function PanelTitle({ title }: { title: string }) {
 }
 
 function BottomActions() {
+  const navigate = useNavigate();
+
   return (
     <ScrollReveal animation="fade-in" duration={800} className="mt-10">
       <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
         <div className="rounded-full bg-[#A6341B] px-10 py-4 text-center font-beVietnamPro text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-[#8f2c17] hover:shadow-md cursor-pointer">
           {mockTicketQr.supportText}
         </div>
-        <button className="border border-[#A6341B] px-5 py-2 font-beVietnamPro text-sm font-semibold text-[#A6341B] transition-all duration-300 hover:bg-[#A6341B] hover:text-white hover:-translate-y-1 hover:shadow-md cursor-pointer">
+        <button
+          type="button"
+          onClick={() => navigate("/checkout/success")}
+          className="border border-[#A6341B] px-5 py-2 font-beVietnamPro text-sm font-semibold text-[#A6341B] transition-all duration-300 hover:bg-[#A6341B] hover:text-white hover:-translate-y-1 hover:shadow-md cursor-pointer"
+        >
           {mockTicketQr.nextLabel}
         </button>
       </div>
