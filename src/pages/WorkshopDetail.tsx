@@ -53,19 +53,19 @@ export default function WorkshopDetailPage() {
           gutter="none"
           className="mt-8 !bg-[rgba(89,166,156,0.21)] py-10 lg:py-14"
         >
-          <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[1.4fr_0.95fr] lg:items-start lg:px-8">
-            <ScrollReveal className="grid gap-5 md:grid-cols-[1.25fr_0.9fr]" animation="fade-in" duration={900}>
+          <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[1.4fr_0.95fr] lg:items-stretch lg:px-8">
+            <ScrollReveal className="grid gap-5 md:h-[520px] md:grid-cols-[1.25fr_0.9fr] md:grid-rows-2 lg:h-[640px]" animation="fade-in" duration={900}>
               {workshop.galleryImages.map((image) => (
                 <div
                   key={image.src}
-                  className={`group min-h-[260px] overflow-hidden rounded-[15px] bg-[#e8e1d4] shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(71,45,24,0.22)] ${
+                  className={`group relative aspect-[4/3] min-h-0 overflow-hidden rounded-[15px] bg-[#e8e1d4] shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(71,45,24,0.22)] md:aspect-auto ${
                     image.featured ? "md:row-span-2" : ""
                   }`}
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="h-full min-h-[260px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                 </div>
               ))}
