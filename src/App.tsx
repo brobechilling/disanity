@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider } from "@/context/AuthContext";
 import { BookingProvider } from "@/context/BookingContext";
 import { AppRouter } from "@/router/AppRouter";
@@ -28,10 +29,13 @@ export default function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <BookingProvider>
-        <AppRouter />
-      </BookingProvider>
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <BookingProvider>
+          <AppRouter />
+        </BookingProvider>
+      </AuthProvider>
+      <Analytics />
+    </>
   );
 }
