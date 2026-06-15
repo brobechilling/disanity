@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -15,7 +15,7 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import WorkshopDetailBooking from "@/components/domain/WorkshopDetailBooking";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { mockWorkshopDetail } from "@/utils/mockData";
+import { getMockWorkshopDetail } from "@/utils/mockData";
 
 const factIcons = {
   timer: Timer,
@@ -24,7 +24,8 @@ const factIcons = {
 };
 
 export default function WorkshopDetailPage() {
-  const workshop = mockWorkshopDetail;
+  const [searchParams] = useSearchParams();
+  const workshop = getMockWorkshopDetail(searchParams.get("workshop"));
 
   return (
     <PageShell background="heritage">

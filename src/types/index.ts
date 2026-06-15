@@ -4,6 +4,7 @@ export interface FAQ {
 }
 
 export interface Workshop {
+  id: string;
   title: string;
   artist: string;
   location: string;

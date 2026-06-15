@@ -14,13 +14,12 @@ export default function WorkshopsList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const workshops = mockWorkshops;
+  const workshopRows = Array.from({ length: Math.ceil(workshops.length / 3) }, (_, rowIndex) =>
+    workshops.slice(rowIndex * 3, rowIndex * 3 + 3)
+  );
 
-  const handleWorkshopAction = (index: number) => {
-    if (index !== 0) {
-      return;
-    }
-
-    navigate("/workshops/detail");
+  const handleWorkshopAction = (workshopId: string) => {
+    navigate(`/workshops/detail?workshop=${workshopId}`);
   };
 
   return (
@@ -32,10 +31,10 @@ export default function WorkshopsList() {
         <Section width="wide" className="mt-[54px]">
           <div className="mx-auto h-[190px] w-[1240px] max-w-full overflow-visible">
             <p className="text-[#A6341B] font-beVietnamPro text-lg font-semibold tracking-wide">
-              Workshop &gt; Mỹ thuật truyền thống - đương đại
+              Workshop &gt; Làng gốm Thanh Hà
             </p>
             <p className="mx-auto mt-4 h-[72px] w-full whitespace-nowrap text-center font-jaro text-[64px] font-bold uppercase leading-[72px] tracking-[0.05em] text-[#A6341B]">
-              KHÁM PHÁ CÁC TRẢI NGHIỆM VĂN HÓA
+              KHÁM PHÁ WORKSHOP GỐM THANH HÀ
             </p>
           </div>
         </Section>
@@ -48,12 +47,12 @@ export default function WorkshopsList() {
 
         <Section width="wide" className="relative z-10 mt-10">
           <div className="mx-auto w-[1240px] max-w-full overflow-visible">
-            {[0, 1, 2].map((rowIndex) => (
+            {workshopRows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
                 className={`grid grid-cols-3 gap-x-[51px] ${rowIndex === 1 ? "mt-9" : ""}`}
               >
-                {workshops.slice(rowIndex * 3, rowIndex * 3 + 3).map((ws, cardIndex) => {
+                {row.map((ws, cardIndex) => {
                   const idx = rowIndex * 3 + cardIndex;
                   const isHovered = hoveredCard === idx;
 
@@ -100,7 +99,7 @@ export default function WorkshopsList() {
                       <div className="mt-4 flex w-fit items-start gap-5">
                         {/* Book tickets */}
                         <button
-                          onClick={() => handleWorkshopAction(idx)}
+                          onClick={() => handleWorkshopAction(ws.id)}
                           className="flex h-11 w-[197px] cursor-pointer items-center justify-center gap-3 text-nowrap rounded-md border border-[#000] bg-transparent transition-all duration-150 hover:bg-black/5 active:scale-95"
                         >
                           <p className="w-fit font-inter text-xl font-semibold text-[#000]">
@@ -123,7 +122,7 @@ export default function WorkshopsList() {
 
                         {/* Details info */}
                         <button
-                          onClick={() => handleWorkshopAction(idx)}
+                          onClick={() => handleWorkshopAction(ws.id)}
                           className="flex h-11 w-[161px] cursor-pointer items-center justify-center text-nowrap rounded-md border border-[#000] bg-transparent p-2.5 transition-all duration-150 hover:bg-black/5 active:scale-95"
                         >
                           <p className="w-fit font-inter text-xl font-semibold text-[#000]">
