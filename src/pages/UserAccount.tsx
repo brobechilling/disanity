@@ -11,7 +11,6 @@ import {
   Plus,
   Settings,
   Ticket,
-  UserRound,
   Wallet,
 } from "lucide-react";
 import PageShell from "@/components/common/PageShell";
@@ -100,9 +99,23 @@ function AccountActions() {
 }
 
 function MetricGrid() {
+  const { cart } = useBooking();
+  const metrics = React.useMemo(() => {
+    const totalQuantity = cart.reduce((total, item) => total + item.qty, 0);
+    const totalSpend = cart.reduce((total, item) => total + item.price * item.qty, 0);
+    const formattedSpend = `${totalSpend.toLocaleString("vi-VN")}đ`;
+
+    return [
+      { label: "Số Workshop đã đặt", value: cart.length.toString() },
+      { label: "Buổi sắp tới", value: cart.length.toString() },
+      { label: "Tổng lượt đặt", value: totalQuantity.toString() },
+      { label: "Chi tiêu", value: formattedSpend },
+    ];
+  }, [cart]);
+
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {mockUserAccount.metrics.map((metric, index) => {
+      {metrics.map((metric, index) => {
         const Icon = metricIcons[index] ?? LayoutDashboard;
         return <MetricCard key={metric.label} icon={Icon} {...metric} />;
       })}
@@ -117,7 +130,6 @@ function MetricCard({
 }: {
   label: string;
   value: string;
-  tone: string;
   icon: React.ElementType<{ size?: number; className?: string }>;
 }) {
   return (
@@ -329,19 +341,16 @@ function UpcomingWorkshops() {
 function Reviews() {
   return (
     <DashboardPanel title="Các đánh giá bạn đã viết">
-      <div className="grid gap-7 pt-10 lg:grid-cols-3">
-        {mockUserAccount.reviews.map((review) => (
-          <article key={review.workshop} className="relative min-h-[290px] bg-[#F5F5F5] px-6 pb-6 pt-24 text-center transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:bg-[#eaeaea]">
-            <div className="absolute left-1/2 top-0 grid h-[116px] w-[116px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#A6341B] text-white">
-              <UserRound size={22} />
-            </div>
-            <h3 className="font-jaro text-xl text-[#A6341B]">{review.author}</h3>
-            <p className="mt-5 font-beVietnamPro text-xs uppercase tracking-[0.25em] text-[#4F4F4F]">
-              {review.workshop}
-            </p>
-            <p className="mt-5 font-beVietnamPro text-sm leading-6 text-[#6E6E6E]">“{review.quote}”</p>
-          </article>
-        ))}
+      <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+        <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+          Bạn chưa viết bài đánh giá nào
+        </p>
+        <button
+          type="button"
+          className="mt-5 rounded-[10px] bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]"
+        >
+          Hãy viết đánh giá
+        </button>
       </div>
     </DashboardPanel>
   );

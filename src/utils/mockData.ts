@@ -730,9 +730,9 @@ export const mockArtisanProfile: ArtisanProfileData = {
   contactQuote: "“Giữ nghề là giữ hồn đất, để ký ức còn chỗ quay về.”",
   contactHeading: "Trở thành người giữ nghề",
   contactInfo: {
-    email: "contact@disanity.com",
-    phone: "(123) 456 - 789",
-    address: "58 Middle Point Rd, San Francisco, 94124",
+    email: "disanity@gmail.com",
+    phone: "0898462817",
+    address: "Khu đô thị FPT, Đà Nẵng, Việt Nam",
   },
 };
 

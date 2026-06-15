@@ -103,11 +103,11 @@ export default function ContactUs() {
 
           <div className="flex max-w-md flex-col gap-3 text-center">
             <p className="cursor-pointer font-dMSans text-lg font-bold text-[#1B1717] transition-colors hover:text-[#A6341B]">
-              contact@disanity.com
+              disanity@gmail.com
             </p>
-            <p className="font-dMSans text-base font-semibold text-[#555]">(123) 456 - 789</p>
+            <p className="font-dMSans text-base font-semibold text-[#555]">0898462817</p>
             <p className="font-dMSans text-base font-medium text-[#777]">
-              58 Middle Point Rd, San Francisco, 94124
+              Khu đô thị FPT, Đà Nẵng, Việt Nam
             </p>
           </div>
         </div>
