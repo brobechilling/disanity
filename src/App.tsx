@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider } from "@/context/AuthContext";
 import { BookingProvider } from "@/context/BookingContext";
+import { WorkshopCatalogProvider } from "@/context/WorkshopCatalogContext";
 import { AppRouter } from "@/router/AppRouter";
 
 export default function App() {
@@ -32,7 +33,9 @@ export default function App() {
     <>
       <AuthProvider>
         <BookingProvider>
-          <AppRouter />
+          <WorkshopCatalogProvider>
+            <AppRouter />
+          </WorkshopCatalogProvider>
         </BookingProvider>
       </AuthProvider>
       <Analytics />

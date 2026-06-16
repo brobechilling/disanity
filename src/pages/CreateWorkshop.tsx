@@ -8,15 +8,20 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { mockUploadedImages, mockArtisanFAQs } from "@/utils/mockData";
+import { useWorkshopCatalog, type WorkshopFormImage } from "@/context/WorkshopCatalogContext";
+import { mockArtisanFAQs } from "@/utils/mockData";
 
 const artisanFaqs = mockArtisanFAQs.map((faq) => ({
   q: faq.question,
   a: faq.answer,
 }));
 
+const MIN_WORKSHOP_IMAGES = 3;
+const MAX_WORKSHOP_IMAGES = 5;
+
 export default function CreateWorkshop() {
   const navigate = useNavigate();
+  const { createWorkshop } = useWorkshopCatalog();
 
   // 1. Stateful Tutorial Banner Dismissal
   const [isTutorialMinimized, setIsTutorialMinimized] = useState(false);
@@ -28,11 +33,23 @@ export default function CreateWorkshop() {
   const [workshopName, setWorkshopName] = useState("");
   const [category, setCategory] = useState("Gốm sứ & Đồ đất nung");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [artisanName, setArtisanName] = useState("");
+  const [pricePerGuest, setPricePerGuest] = useState("");
+  const [originalPrice, setOriginalPrice] = useState("");
   const [duration, setDuration] = useState(3);
+  const [guestLimit, setGuestLimit] = useState(8);
   const [heritageStory, setHeritageStory] = useState("");
+  const [includedItems, setIncludedItems] = useState([
+    { title: "Nguyên liệu & dụng cụ", description: "" },
+    { title: "Hướng dẫn trực tiếp", description: "" },
+    { title: "Thành phẩm mang về", description: "" },
+  ]);
 
   // Custom interactive mock images list
-  const [uploadedImages, setUploadedImages] = useState(mockUploadedImages);
+  const [uploadedImages, setUploadedImages] = useState<WorkshopFormImage[]>([]);
+  const [hasCreatedWorkshop, setHasCreatedWorkshop] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   // Handlers
   const handleDropdownSelect = (val: string) => {
@@ -41,18 +58,123 @@ export default function CreateWorkshop() {
     setActiveStage(2); // advance stage naturally
   };
 
-  const handleAddMockPhoto = () => {
-    alert("Hệ thống tải ảnh lên đang được kết nối với thiết bị của bạn. Vui lòng chọn ảnh chất lượng cao để tăng tỷ lệ duyệt bài.");
-    setActiveStage(3); // advance stage naturally
+  const handleIncludedItemChange = (
+    index: number,
+    field: "title" | "description",
+    value: string
+  ) => {
+    setIncludedItems((currentItems) =>
+      currentItems.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, [field]: value } : item
+      )
+    );
   };
 
-  const handleFormSubmit = () => {
-    if (!workshopName) {
-      alert("Vui lòng nhập Tên Workshop trước khi tiếp tục!");
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = "";
+
+    if (files.length === 0) {
       return;
     }
-    alert(`Chúc mừng! Workshop di sản "${workshopName}" đã được khởi tạo thành công và đang được chuyển tới hội đồng thẩm định DiSanity!`);
-    navigate("/artisan-account");
+
+    const remainingSlots = MAX_WORKSHOP_IMAGES - uploadedImages.length;
+    if (remainingSlots <= 0) {
+      alert(`Ban chi co the tai toi da ${MAX_WORKSHOP_IMAGES} anh cho moi workshop.`);
+      return;
+    }
+
+    const selectedFiles = files.slice(0, remainingSlots);
+    const oversizedFile = selectedFiles.find((file) => file.size > 1024 * 1024);
+
+    if (oversizedFile) {
+      alert("Moi anh can nho hon 1MB de co the luu tam trong trinh duyet.");
+      return;
+    }
+
+    const images = await Promise.all(
+      selectedFiles.map(async (file, index) => ({
+        id: Date.now() + index,
+        name: file.name,
+        url: await readFileAsDataUrl(file),
+        alt: file.name.replace(/\.[^.]+$/, ""),
+      }))
+    );
+
+    setUploadedImages((currentImages) => [...currentImages, ...images]);
+    setActiveStage(3);
+  };
+
+  const handleCreateWorkshop = () => {
+    if (hasCreatedWorkshop) {
+      setShowSuccessPopup(true);
+      return;
+    }
+
+    const normalizedIncludedItems = includedItems.map((item) => ({
+      title: item.title.trim(),
+      description: item.description.trim(),
+    }));
+    const priceValue = Number(pricePerGuest);
+    const originalPriceValue = Number(originalPrice);
+
+    if (!workshopName.trim()) {
+      alert("Vui long nhap Ten Workshop truoc khi tiep tuc!");
+      return;
+    }
+
+    if (!location.trim() || !artisanName.trim()) {
+      alert("Vui long nhap day du dia diem va ten nghe nhan.");
+      return;
+    }
+
+    if (
+      !Number.isFinite(priceValue) ||
+      priceValue <= 0 ||
+      !Number.isFinite(originalPriceValue) ||
+      originalPriceValue <= 0
+    ) {
+      alert("Vui long nhap gia hop le cho workshop.");
+      return;
+    }
+
+    if (!heritageStory.trim()) {
+      alert("Vui long ke cau chuyen/gia tri di san cua workshop.");
+      return;
+    }
+
+    if (normalizedIncludedItems.some((item) => !item.title || !item.description)) {
+      alert("Vui long hoan thien 3 muc bao gom trong chuyen di.");
+      return;
+    }
+
+    if (uploadedImages.length < MIN_WORKSHOP_IMAGES) {
+      alert(`Vui long tai len it nhat ${MIN_WORKSHOP_IMAGES} anh cho workshop.`);
+      return;
+    }
+
+    if (uploadedImages.length > MAX_WORKSHOP_IMAGES) {
+      alert(`Ban chi co the tai toi da ${MAX_WORKSHOP_IMAGES} anh cho moi workshop.`);
+      return;
+    }
+
+    createWorkshop({
+      title: workshopName.trim(),
+      category,
+      location: location.trim(),
+      artisanName: artisanName.trim(),
+      pricePerGuest: priceValue,
+      originalPrice: originalPriceValue,
+      durationHours: duration,
+      guestLimit,
+      story: heritageStory.trim(),
+      includedItems: normalizedIncludedItems,
+      images: uploadedImages.slice(0, MAX_WORKSHOP_IMAGES),
+    });
+
+    setActiveStage(5);
+    setHasCreatedWorkshop(true);
+    setShowSuccessPopup(true);
   };
 
   return (
@@ -64,18 +186,18 @@ export default function CreateWorkshop() {
         <Section width="screen" gutter="none" className="relative z-20">
           <div
             className="relative mx-auto w-[1440px] max-w-full overflow-hidden transition-all duration-500"
-            style={{ height: isTutorialMinimized ? "80px" : "738px" }}
+            style={{ height: isTutorialMinimized ? "80px" : "550px" }}
           >
             <div
               className={`absolute left-0 top-0 z-20 w-full overflow-hidden transition-all duration-500 ${
-                isTutorialMinimized ? "h-[80px]" : "h-[738px]"
+                isTutorialMinimized ? "h-[80px]" : "h-[550px]"
               }`}
             >
               <div className="relative h-full w-full">
                 {/* Background Tutorial Image */}
                 <img
                   src="/createworkshop/ImageContainer.png"
-                  className="absolute left-0 top-0 h-[738px] w-full max-w-none object-cover"
+                  className="absolute left-0 top-0 h-full w-full max-w-none object-cover"
                   alt="Image Container"
                 />
 
@@ -83,7 +205,7 @@ export default function CreateWorkshop() {
                 {isTutorialMinimized && (
                   <div className="absolute inset-0 z-10 flex items-center justify-between bg-[#000]/60 px-[110px] backdrop-blur-sm">
                     <p className="select-none font-beVietnamPro text-base font-bold text-[#FFF]">
-                      💡 Hướng dẫn tạo Workshop đã được ẩn. Bạn có thể mở lại bất cứ lúc nào.
+                      Hướng dẫn tạo Workshop đã được ẩn. Bạn có thể mở lại bất cứ lúc nào.
                     </p>
                     <button
                       onClick={() => setIsTutorialMinimized(false)}
@@ -95,11 +217,11 @@ export default function CreateWorkshop() {
                 )}
 
                 {!isTutorialMinimized && (
-                  <div className="absolute inset-0 z-10 px-[110px] pt-[234px]">
-                    <p className="h-[132px] w-[620px] select-none font-jaro text-[56px] leading-[66px] tracking-wide text-[#FFF]">
+                  <div className="absolute inset-0 z-10 flex max-w-[820px] flex-col justify-center px-8 py-14 sm:px-12 lg:px-[110px]">
+                    <p className="w-full select-none font-jaro text-[38px] leading-[46px] tracking-wide text-[#FFF] sm:text-[46px] sm:leading-[54px]">
                       Hướng dẫn chi tiết cách tạo Workshop cho nghệ nhân
                     </p>
-                    <p className="mt-6 h-[90px] w-[574px] select-none font-beVietnamPro text-lg font-medium leading-[30px] text-[#F4CA80]">
+                    <p className="mt-5 w-full max-w-[620px] select-none font-beVietnamPro text-base font-medium leading-7 text-[#F4CA80] sm:text-lg sm:leading-[30px]">
                       Hãy kể lại câu chuyện di sản và chia sẻ kỹ nghệ đặc trưng của bạn. DiSanity đồng hành cùng nghệ nhân đưa tinh hoa truyền thống tiếp cận thế hệ trẻ Việt Nam.
                     </p>
 
@@ -135,12 +257,12 @@ export default function CreateWorkshop() {
           animation="slide-up"
           duration={900}
           threshold={0.05}
-          className="relative mx-auto h-[1690px] w-[1440px] max-w-full"
+          className="relative mx-auto h-[2220px] w-[1440px] max-w-full"
         >
           {/* Decorative Frame Background Overlay */}
           <img
             src="/createworkshop/Rectangle4445.png"
-            className="pointer-events-none absolute left-[100px] top-[303px] z-10 h-[1374px] w-[1240px] max-w-none opacity-[40%]"
+            className="pointer-events-none absolute left-[100px] top-[303px] z-10 h-[1880px] w-[1240px] max-w-none opacity-[40%]"
             alt="Rectangle 4445 background frame decoration"
           />
 
@@ -373,8 +495,84 @@ export default function CreateWorkshop() {
             </div>
           </div>
 
+          <div className="absolute left-[205px] top-[898px] z-20 grid w-[1030px] grid-cols-2 gap-8">
+            <FormField
+              label="Địa điểm"
+              placeholder="Ví dụ: Làng gốm Thanh Hà - Hội An"
+              value={location}
+              onChange={(value) => {
+                setLocation(value);
+                setActiveStage(1);
+              }}
+            />
+            <FormField
+              label="Tên nghệ nhân"
+              placeholder="Ví dụ: Trần Sông Lam"
+              value={artisanName}
+              onChange={(value) => {
+                setArtisanName(value);
+                setActiveStage(1);
+              }}
+            />
+          </div>
+
+          <div className="absolute left-[205px] top-[1035px] z-20 grid w-[1030px] grid-cols-3 gap-8">
+            <FormField
+              inputMode="numeric"
+              label="Giá ưu đãi"
+              placeholder="Ví dụ: 200000"
+              value={pricePerGuest}
+              onChange={(value) => {
+                setPricePerGuest(value);
+                setActiveStage(4);
+              }}
+            />
+            <FormField
+              inputMode="numeric"
+              label="Giá gốc"
+              placeholder="Ví dụ: 500000"
+              value={originalPrice}
+              onChange={(value) => {
+                setOriginalPrice(value);
+                setActiveStage(4);
+              }}
+            />
+            <div className="flex flex-col items-start gap-2">
+              <label className="select-none font-beVietnamPro text-lg font-bold leading-7 text-[#1E293B]">
+                Số khách tối đa
+              </label>
+              <div className="relative flex h-16 w-full items-center justify-between overflow-hidden rounded-[48px] border border-[#E2E8F0] bg-white px-8 shadow-sm">
+                <span className="font-beVietnamPro text-lg font-bold text-[#0F172A]">
+                  {guestLimit}
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGuestLimit(Math.max(1, guestLimit - 1));
+                      setActiveStage(4);
+                    }}
+                    className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-100 font-bold text-gray-600 transition-colors hover:bg-[#A6341B]/10 hover:text-[#A6341B]"
+                  >
+                    -
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGuestLimit(Math.min(40, guestLimit + 1));
+                      setActiveStage(4);
+                    }}
+                    className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-100 font-bold text-gray-600 transition-colors hover:bg-[#A6341B]/10 hover:text-[#A6341B]"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Heritage Story Textarea */}
-          <div className="absolute left-[205px] top-[898px] z-20 flex w-[1030px] flex-col items-start gap-2">
+          <div className="absolute left-[205px] top-[1185px] z-20 flex w-[1030px] flex-col items-start gap-2">
             <label className="select-none font-beVietnamPro text-lg font-bold leading-7 text-[#1E293B]">
               Kể câu chuyện của bạn...
             </label>
@@ -394,19 +592,57 @@ export default function CreateWorkshop() {
             </div>
           </div>
 
+          <div className="absolute left-[205px] top-[1495px] z-20 flex w-[1030px] flex-col items-start gap-4">
+            <label className="select-none font-beVietnamPro text-lg font-bold leading-7 text-[#1E293B]">
+              Bao gồm trong chuyến đi
+            </label>
+            <div className="grid w-full grid-cols-3 gap-5">
+              {includedItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="rounded-[28px] border border-[#E2E8F0] bg-white p-5 shadow-sm"
+                >
+                  <input
+                    type="text"
+                    value={item.title}
+                    onChange={(event) =>
+                      handleIncludedItemChange(index, "title", event.target.value)
+                    }
+                    className="w-full bg-transparent font-beVietnamPro text-base font-bold text-[#0F172A] outline-none"
+                    placeholder="Tiêu đề"
+                  />
+                  <textarea
+                    value={item.description}
+                    onChange={(event) =>
+                      handleIncludedItemChange(index, "description", event.target.value)
+                    }
+                    className="mt-3 h-24 w-full resize-none bg-transparent font-beVietnamPro text-sm leading-6 text-[#475569] outline-none"
+                    placeholder="Mô tả vật phẩm/dịch vụ đi kèm"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Custom Upload Images Block */}
-          <div className="absolute left-[205px] top-[1201px] z-20 flex w-[1030px] flex-col items-start gap-3">
+          <div className="absolute left-[205px] top-[1740px] z-20 flex w-[1030px] flex-col items-start gap-3">
             <label className="select-none font-beVietnamPro text-lg font-bold leading-7 text-[#1E293B]">
               Tải ảnh lên (Xưởng &amp; Sản phẩm)
             </label>
+            <p className="select-none font-beVietnamPro text-sm font-medium leading-5 text-[#64748B]">
+              Vui lòng tải từ {MIN_WORKSHOP_IMAGES} đến {MAX_WORKSHOP_IMAGES} ảnh cho workshop.
+            </p>
 
-            <div className="mt-2 flex w-full items-center justify-start gap-6">
+            <div className="mt-2 flex w-full items-center justify-start gap-6 overflow-x-auto pb-3">
               {/* Upload Button */}
-              <button
-                type="button"
-                onClick={handleAddMockPhoto}
-                className="group flex h-[228px] w-[228px] cursor-pointer flex-col items-center justify-center gap-3 rounded-[32px] border-2 border-dashed border-[#C65C39] bg-[#C65C39]/5 shadow-sm transition-all hover:bg-[#C65C39]/10 active:scale-95"
-              >
+              <label className="group flex h-[228px] w-[228px] shrink-0 cursor-pointer flex-col items-center justify-center gap-3 rounded-[32px] border-2 border-dashed border-[#C65C39] bg-[#C65C39]/5 shadow-sm transition-all hover:bg-[#C65C39]/10 active:scale-95">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#C65C39]/15 transition-colors group-hover:scale-105">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="h-6 w-6">
                     <path d="M12 5v14M5 12h14" stroke="#C65C39" strokeWidth="3" strokeLinecap="round" />
@@ -415,13 +651,13 @@ export default function CreateWorkshop() {
                 <span className="font-beVietnamPro text-sm font-bold tracking-wide text-[#C65C39]">
                   Thêm ảnh
                 </span>
-              </button>
+              </label>
 
               {/* Display list of uploaded photo previews */}
               {uploadedImages.map((img) => (
                 <div
                   key={img.id}
-                  className="group relative h-[228px] w-[228px] overflow-hidden rounded-[32px] border-3 border-[#A6341B] bg-[#E2E8F0] shadow-md"
+                  className="group relative h-[228px] w-[228px] shrink-0 overflow-hidden rounded-[32px] border-3 border-[#A6341B] bg-[#E2E8F0] shadow-md"
                 >
                   <img
                     src={img.url}
@@ -449,7 +685,7 @@ export default function CreateWorkshop() {
           </div>
 
           {/* Bottom Navigation Actions Row */}
-          <div className="absolute left-[272px] top-[1535px] z-20 flex w-[896px] items-center justify-between border-t border-t-[rgba(198,92,57,0.15)] pt-10">
+          <div className="absolute left-[272px] top-[2055px] z-20 flex w-[896px] items-center justify-between border-t border-t-[rgba(198,92,57,0.15)] pt-10">
             {/* Back button */}
             <Link
               to="/artisan-account"
@@ -476,7 +712,7 @@ export default function CreateWorkshop() {
             {/* Submit button */}
             <button
               type="button"
-              onClick={handleFormSubmit}
+              onClick={handleCreateWorkshop}
               className="flex w-fit cursor-pointer items-center gap-3 rounded-full bg-[#A6341B] px-10 py-4 font-beVietnamPro text-base font-bold text-white shadow-[0_10px_20px_rgba(166,52,27,0.25)] transition-all hover:bg-[#8D2B16] active:scale-95"
             >
               <span className="select-none text-center">Tiếp tục</span>
@@ -509,7 +745,88 @@ export default function CreateWorkshop() {
         />
       </ScrollReveal>
 
+      {showSuccessPopup && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="create-workshop-success-title"
+        >
+          <div className="w-full max-w-[460px] rounded-[24px] bg-white px-7 py-8 text-center shadow-[0_24px_80px_rgba(15,23,42,0.28)]">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#DCFCE7] text-2xl font-black text-[#15803D]">
+              ✓
+            </div>
+            <h2
+              id="create-workshop-success-title"
+              className="mt-5 font-jaro text-3xl leading-tight text-[#A6341B]"
+            >
+              Đã tạo workshop thành công
+            </h2>
+            <p className="mt-3 font-beVietnamPro text-sm leading-6 text-[#64748B]">
+              Workshop "{workshopName}" đã được lưu và có thể xem trong danh sách workshop.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <button
+                type="button"
+                onClick={() => navigate("/workshops/list")}
+                className="rounded-full bg-[#A6341B] px-6 py-3 font-beVietnamPro text-sm font-bold text-white transition-colors hover:bg-[#8f2c17]"
+              >
+                Xem danh sách workshop
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowSuccessPopup(false)}
+                className="rounded-full border border-[#CBD5E1] px-6 py-3 font-beVietnamPro text-sm font-bold text-[#475569] transition-colors hover:border-[#A6341B] hover:text-[#A6341B]"
+              >
+                Ở lại trang này
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <SiteFooter />
     </PageShell>
   );
+}
+
+function FormField({
+  inputMode,
+  label,
+  onChange,
+  placeholder,
+  value,
+}: {
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  label: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  value: string;
+}) {
+  return (
+    <label className="flex flex-col items-start gap-2">
+      <span className="select-none font-beVietnamPro text-lg font-bold leading-7 text-[#1E293B]">
+        {label}
+      </span>
+      <span className="relative flex h-16 w-full items-center overflow-hidden rounded-[48px] border border-[#E2E8F0] bg-white px-8 shadow-sm transition-colors focus-within:border-[#A6341B]/60">
+        <input
+          inputMode={inputMode}
+          type="text"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="w-full bg-transparent font-beVietnamPro text-lg font-medium text-[#0F172A] placeholder-gray-400 focus:outline-none"
+        />
+      </span>
+    </label>
+  );
+}
+
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 }

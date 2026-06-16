@@ -15,7 +15,7 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import WorkshopDetailBooking from "@/components/domain/WorkshopDetailBooking";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { getMockWorkshopDetail } from "@/utils/mockData";
+import { useWorkshopCatalog } from "@/context/WorkshopCatalogContext";
 
 const factIcons = {
   timer: Timer,
@@ -25,8 +25,9 @@ const factIcons = {
 
 export default function WorkshopDetailPage() {
   const [searchParams] = useSearchParams();
+  const { getWorkshopDetail } = useWorkshopCatalog();
   const workshopId = searchParams.get("workshop") || "default-workshop-detail";
-  const workshop = getMockWorkshopDetail(workshopId);
+  const workshop = getWorkshopDetail(workshopId);
 
   return (
     <PageShell background="heritage">
@@ -249,13 +250,6 @@ export default function WorkshopDetailPage() {
 
         <Section width="wide" className="py-20 lg:py-24">
           <ScrollReveal className="relative h-[328px] overflow-hidden px-6 py-12 text-center text-white" animation="scale-up">
-            <img
-              src={workshop.consultationImage}
-              className="absolute inset-0 h-full w-full object-cover opacity-70"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
             <div className="absolute inset-0 bg-[rgba(89,166,156,0.36)]" />
             <div className="relative mx-auto flex max-w-md flex-col items-center">
               <MessageCircle size={40} className="text-[#F4CA80]" />
