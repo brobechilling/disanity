@@ -10,7 +10,6 @@ import {
   Plus,
   Settings,
   Ticket,
-  UserRound,
   Wallet,
 } from "lucide-react";
 import PageShell from "@/components/common/PageShell";
@@ -19,11 +18,24 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { useAuth } from "@/context/AuthContext";
+import { useBooking, type ConfirmedBookingItem } from "@/context/BookingContext";
+import { useWorkshopCatalog, type CreatedWorkshop } from "@/context/WorkshopCatalogContext";
 import { mockArtisanAccount } from "@/utils/mockData";
 
 const metricIcons = [Palette, CalendarDays, Ticket, Wallet];
 
 export default function ArtisanAccount() {
+  const { ownedWorkshops } = useWorkshopCatalog();
+  const { confirmedBookings } = useBooking();
+  const ownedWorkshopIds = React.useMemo(
+    () => new Set(ownedWorkshops.map((workshop) => workshop.id)),
+    [ownedWorkshops]
+  );
+  const artisanBookings = React.useMemo(
+    () => confirmedBookings.filter((booking) => ownedWorkshopIds.has(booking.workshopId)),
+    [confirmedBookings, ownedWorkshopIds]
+  );
+
   return (
     <PageShell background="artisanAccount">
       <SiteHeader />
@@ -36,13 +48,17 @@ export default function ArtisanAccount() {
                 <AccountActions />
               </ScrollReveal>
               <ScrollReveal animation="slide-up" duration={800} delay={100}>
-                <MetricGrid />
+                <MetricGrid
+                  confirmedBookings={artisanBookings}
+                  ownedWorkshops={ownedWorkshops}
+                />
               </ScrollReveal>
               <PersonalInfo />
-              <BookingsTable />
+              <ArtisanBookingsTable bookings={artisanBookings} />
+              <BookingsTable ownedWorkshops={ownedWorkshops} />
               <Reviews />
               <ScrollReveal animation="fade-in" duration={800}>
-                <StatusNote />
+                <StatusNote workshopCount={ownedWorkshops.length} />
               </ScrollReveal>
               <ScrollReveal animation="scale-up" duration={800}>
                 <CreateWorkshopCallout />
@@ -68,7 +84,7 @@ function WelcomePanel() {
   return (
     <div className="pt-1">
       <h1 className="break-words font-jaro text-[28px] leading-tight text-[#A6341B] sm:text-4xl">
-        Xin chao, nghe nhan {displayName}!
+        Xin chào nghệ nhân {displayName}!
       </h1>
     </div>
   );
@@ -92,10 +108,40 @@ function AccountActions() {
   );
 }
 
-function MetricGrid() {
+function MetricGrid({
+  confirmedBookings,
+  ownedWorkshops,
+}: {
+  confirmedBookings: ConfirmedBookingItem[];
+  ownedWorkshops: CreatedWorkshop[];
+}) {
+  const metrics = React.useMemo(() => {
+    const totalWorkshops = ownedWorkshops.length;
+    const upcomingSessions = confirmedBookings.length;
+    const totalBookedTickets = confirmedBookings.reduce(
+      (sum, booking) => sum + booking.qty,
+      0
+    );
+    const totalBookedValue = confirmedBookings.reduce(
+      (sum, booking) => sum + booking.price * booking.qty,
+      0
+    );
+
+    return [
+      { label: "Tổng số Workshop", value: totalWorkshops.toString(), tone: "terracotta" },
+      { label: "Buổi sắp tới", value: upcomingSessions.toString(), tone: "sage" },
+      { label: "Tổng lượt đặt", value: totalBookedTickets.toString(), tone: "slate" },
+      {
+        label: "Thu nhập",
+        value: `${totalBookedValue.toLocaleString("vi-VN")}đ`,
+        tone: "terracotta",
+      },
+    ];
+  }, [confirmedBookings, ownedWorkshops]);
+
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {mockArtisanAccount.metrics.map((metric, index) => {
+      {metrics.map((metric, index) => {
         const Icon = metricIcons[index] ?? LayoutDashboard;
         return <MetricCard key={metric.label} icon={Icon} {...metric} />;
       })}
@@ -203,87 +249,162 @@ function PersonalInfo() {
   );
 }
 
-function BookingsTable() {
+function ArtisanBookingsTable({ bookings }: { bookings: ConfirmedBookingItem[] }) {
   return (
     <DashboardPanel title="Tổng lượt đặt Workshop">
-      <div className="overflow-x-auto">
-        <table className="min-w-[680px] w-full border-collapse font-beVietnamPro text-sm">
-          <thead>
-            <tr className="border-b-2 border-[#8B4513] text-left text-[#A6341B]">
-              <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Mã</th>
-              <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Khách hàng</th>
-              <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Trạng thái</th>
-              <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Giá</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockArtisanAccount.bookings.map((booking) => (
-              <tr key={booking.code} className="border-b-2 border-[#8B4513]/45">
-                <td className="px-4 py-4 font-mono text-[#64748B]">{booking.code}</td>
-                <td className="px-4 py-4">
-                  <div className="flex items-center gap-3">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#F1F5F9] text-xs font-bold text-[#0F172A]">
-                      {booking.initials}
-                    </span>
-                    <span className="font-medium text-[#0F172A]">{booking.customer}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-4">
-                  <StatusBadge status={booking.status} />
-                </td>
-                <td className="px-4 py-4 text-[#0F172A]">{booking.price}</td>
+      {bookings.length === 0 ? (
+        <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+          <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+            Chưa có lượt đặt nào cho các workshop của bạn.
+          </p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-[860px] w-full border-collapse font-beVietnamPro text-sm">
+            <thead>
+              <tr className="border-b-2 border-[#8B4513] text-left text-[#A6341B]">
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Mã đặt</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Workshop</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Số lượng</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Giá trị</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Ngày đặt</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Trạng thái</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {bookings.map((booking) => (
+                <tr key={booking.bookingId} className="border-b-2 border-[#8B4513]/45">
+                  <td className="px-4 py-4 font-mono text-xs text-[#64748B]">
+                    {booking.bookingId}
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex min-w-[240px] items-center gap-3">
+                      <img
+                        src={booking.img}
+                        alt={booking.title}
+                        className="h-12 w-12 shrink-0 rounded-md object-cover"
+                      />
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold text-[#0F172A]">{booking.title}</p>
+                        <p className="truncate text-xs text-[#64748B]">{booking.location}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 font-semibold text-[#0F172A]">{booking.qty}</td>
+                  <td className="px-4 py-4 text-[#0F172A]">
+                    {(booking.price * booking.qty).toLocaleString("vi-VN")}đ
+                  </td>
+                  <td className="px-4 py-4 text-[#0F172A]">
+                    {formatBookingDate(booking.confirmedAt)}
+                  </td>
+                  <td className="px-4 py-4">
+                    <StatusBadge status="Đã thanh toán" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </DashboardPanel>
+  );
+}
+
+function BookingsTable({ ownedWorkshops }: { ownedWorkshops: CreatedWorkshop[] }) {
+  return (
+    <DashboardPanel title="Workshop đã tạo">
+      {ownedWorkshops.length === 0 ? (
+        <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+          <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+            Bạn chưa tạo workshop nào.
+          </p>
+          <Link
+            to="/create-workshop"
+            className="mt-5 inline-flex rounded-full bg-[#A6341B] px-6 py-3 font-beVietnamPro text-sm font-bold text-white transition-colors hover:bg-[#8f2c17]"
+          >
+            Tạo workshop
+          </Link>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-[760px] w-full border-collapse font-beVietnamPro text-sm">
+            <thead>
+              <tr className="border-b-2 border-[#8B4513] text-left text-[#A6341B]">
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Workshop</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Địa điểm</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Giá</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Trạng thái</th>
+                <th className="px-4 py-4 text-base font-bold tracking-[0.08em]">Chi tiết</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ownedWorkshops.map((workshop) => (
+                <tr key={workshop.id} className="border-b-2 border-[#8B4513]/45">
+                  <td className="px-4 py-4">
+                    <div className="flex min-w-[220px] items-center gap-3">
+                      <img
+                        src={workshop.card.img}
+                        alt={workshop.card.title}
+                        className="h-12 w-12 shrink-0 rounded-md object-cover"
+                      />
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold text-[#0F172A]">{workshop.card.title}</p>
+                        <p className="truncate text-xs text-[#64748B]">{workshop.detail.category}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-[#0F172A]">{workshop.detail.location}</td>
+                  <td className="px-4 py-4 text-[#0F172A]">{workshop.card.price}</td>
+                  <td className="px-4 py-4">
+                    <StatusBadge status="Đã tạo" />
+                  </td>
+                  <td className="px-4 py-4">
+                    <Link
+                      to={`/workshops/detail?workshop=${workshop.id}`}
+                      className="font-semibold text-[#A6341B] underline-offset-4 hover:underline"
+                    >
+                      Xem
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </DashboardPanel>
   );
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const confirmed = status === "Đã xác nhận";
-
   return (
-    <span
-      className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${
-        confirmed ? "bg-[#DCFCE7] text-[#15803D]" : "bg-[#FEF3C7] text-[#B45309]"
-      }`}
-    >
+    <span className="inline-flex rounded-full bg-[#DCFCE7] px-3 py-1 text-xs font-bold text-[#15803D]">
       {status}
     </span>
   );
 }
 
 function Reviews() {
-  const circleClasses = ["bg-[#47624d]", "bg-[#D4A017]", "bg-[#B7351E]"];
-
   return (
     <DashboardPanel title="Các đánh giá từ khách hàng">
-      <div className="grid gap-7 pt-10 lg:grid-cols-3">
-        {mockArtisanAccount.reviews.map((review, index) => (
-          <article key={review.workshop} className="relative min-h-[290px] bg-[#F5F5F5] px-6 pb-6 pt-24 text-center transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:bg-[#eaeaea]">
-            <div
-              className={`absolute left-1/2 top-0 grid h-[116px] w-[116px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-white ${circleClasses[index % circleClasses.length]}`}
-            >
-              <UserRound size={22} />
-            </div>
-            <h3 className="font-jaro text-xl text-[#A6341B]">{review.author}</h3>
-            <p className="mt-5 font-beVietnamPro text-xs uppercase tracking-[0.25em] text-[#4F4F4F]">
-              {review.workshop}
-            </p>
-            <p className="mt-5 font-beVietnamPro text-sm leading-6 text-[#6E6E6E]">“{review.quote}”</p>
-          </article>
-        ))}
+      <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+        <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+          Chưa có đánh giá nào
+        </p>
       </div>
     </DashboardPanel>
   );
 }
 
-function StatusNote() {
+function StatusNote({ workshopCount }: { workshopCount: number }) {
+  const message =
+    workshopCount > 0
+      ? `Hiện tại bạn đang có ${workshopCount} workshop đã tạo. Hãy chuẩn bị thật tốt để mang trải nghiệm di sản đến với khách tham gia.`
+      : "Hiện tại bạn chưa có workshop nào. Hãy tạo workshop đầu tiên để bắt đầu chia sẻ câu chuyện di sản của bạn.";
+
   return (
     <p className="mx-auto max-w-2xl text-center font-beVietnamPro text-sm leading-5 text-[#64748B]">
-      {mockArtisanAccount.profile.statusMessage}
+      {message}
     </p>
   );
 }
@@ -333,7 +454,7 @@ function ArtisanSidebar() {
       </nav>
 
       <div className="mt-10 border-t border-white/15 pt-5 lg:mt-auto">
-        <SidebarButton icon={Plus} label="Workshop Mới" active centered />
+        <SidebarButton icon={Plus} label="Workshop Mới" to="/create-workshop" active centered />
         <SidebarButton icon={Settings} label="Cài Đặt" />
         <SidebarButton icon={LogOut} label="Đăng xuất" onClick={handleLogout} />
       </div>
@@ -396,4 +517,12 @@ function DashboardPanel({
       </section>
     </ScrollReveal>
   );
+}
+
+function formatBookingDate(value: string) {
+  return new Intl.DateTimeFormat("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(value));
 }

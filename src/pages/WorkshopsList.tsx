@@ -5,15 +5,16 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import FilterBar from "@/components/domain/FilterBar";
-import { mockWorkshops } from "@/utils/mockData";
 import UpcomingEvent from "@/components/domain/UpcomingEvent";
+import { useWorkshopCatalog } from "@/context/WorkshopCatalogContext";
 
 export default function WorkshopsList() {
   const navigate = useNavigate();
+  const { allWorkshops } = useWorkshopCatalog();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const workshops = mockWorkshops;
+  const workshops = allWorkshops;
   const workshopRows = Array.from({ length: Math.ceil(workshops.length / 3) }, (_, rowIndex) =>
     workshops.slice(rowIndex * 3, rowIndex * 3 + 3)
   );
