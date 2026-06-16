@@ -17,12 +17,20 @@ export interface BookingItem {
   date: string;
 }
 
+export interface ConfirmedBookingItem extends BookingItem {
+  bookingId: string;
+  confirmedAt: string;
+}
+
 interface BookingContextType {
   cart: BookingItem[];
+  confirmedBookings: ConfirmedBookingItem[];
   addToCart: (item: BookingItem) => void;
   updateCartItemQty: (workshopId: string, qty: number) => void;
+  updateConfirmedBookingQty: (bookingId: string, qty: number) => void;
   removeFromCart: (workshopId: string) => void;
   clearCart: () => void;
+  confirmCart: () => void;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -30,10 +38,12 @@ const BookingContext = createContext<BookingContextType | undefined>(undefined);
 export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const [cart, setCart] = useState<BookingItem[]>([]);
+  const [confirmedBookings, setConfirmedBookings] = useState<ConfirmedBookingItem[]>([]);
 
   React.useEffect(() => {
     if (!isAuthenticated) {
       setCart([]);
+      setConfirmedBookings([]);
     }
   }, [isAuthenticated]);
 
@@ -45,14 +55,48 @@ export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children })
     setCart((prev) => prev.map((item) => (item.workshopId === workshopId ? { ...item, qty } : item)));
   };
 
+  const updateConfirmedBookingQty = (bookingId: string, qty: number) => {
+    setConfirmedBookings((prev) =>
+      prev.map((item) => (item.bookingId === bookingId ? { ...item, qty } : item))
+    );
+  };
+
   const removeFromCart = (workshopId: string) => {
     setCart((prev) => prev.filter((item) => item.workshopId !== workshopId));
   };
 
   const clearCart = () => setCart([]);
 
+  const confirmCart = () => {
+    if (cart.length === 0) {
+      return;
+    }
+
+    const confirmedAt = new Date().toISOString();
+    const bookingBatch = Date.now();
+    const completedBookings = cart.map((item, index) => ({
+      ...item,
+      bookingId: `${item.workshopId}-${bookingBatch}-${index}`,
+      confirmedAt,
+    }));
+
+    setConfirmedBookings((prev) => [...prev, ...completedBookings]);
+    setCart([]);
+  };
+
   return (
-    <BookingContext.Provider value={{ cart, addToCart, updateCartItemQty, removeFromCart, clearCart }}>
+    <BookingContext.Provider
+      value={{
+        cart,
+        confirmedBookings,
+        addToCart,
+        updateCartItemQty,
+        updateConfirmedBookingQty,
+        removeFromCart,
+        clearCart,
+        confirmCart,
+      }}
+    >
       {children}
     </BookingContext.Provider>
   );

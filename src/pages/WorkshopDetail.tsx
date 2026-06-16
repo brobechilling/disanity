@@ -25,7 +25,8 @@ const factIcons = {
 
 export default function WorkshopDetailPage() {
   const [searchParams] = useSearchParams();
-  const workshop = getMockWorkshopDetail(searchParams.get("workshop"));
+  const workshopId = searchParams.get("workshop") || "default-workshop-detail";
+  const workshop = getMockWorkshopDetail(workshopId);
 
   return (
     <PageShell background="heritage">
@@ -72,7 +73,7 @@ export default function WorkshopDetailPage() {
             </ScrollReveal>
 
             <ScrollReveal animation="slide-left" duration={850} delay={120}>
-              <WorkshopDetailBooking workshop={workshop} />
+              <WorkshopDetailBooking workshop={workshop} workshopId={workshopId} />
             </ScrollReveal>
           </div>
         </Section>

@@ -15,9 +15,10 @@ import type { WorkshopDetailData } from "@/utils/mockData";
 
 interface WorkshopDetailBookingProps {
   workshop: WorkshopDetailData;
+  workshopId: string;
 }
 
-export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookingProps) {
+export default function WorkshopDetailBooking({ workshop, workshopId }: WorkshopDetailBookingProps) {
   const navigate = useNavigate();
   const { addToCart } = useBooking();
   const [guestCount, setGuestCount] = useState(workshop.defaultGuestCount);
@@ -29,8 +30,8 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
 
   const handleBooking = () => {
     addToCart({
-      id: 1,
-      workshopId: "workshop-detail",
+      id: getStableNumericId(workshopId),
+      workshopId,
       title: workshop.title,
       price: workshop.pricePerGuest,
       unitPriceText: workshop.priceText,
@@ -131,6 +132,10 @@ export default function WorkshopDetailBooking({ workshop }: WorkshopDetailBookin
       </div>
     </aside>
   );
+}
+
+function getStableNumericId(value: string) {
+  return Array.from(value).reduce((hash, char) => ((hash * 31) + char.charCodeAt(0)) >>> 0, 0);
 }
 
 function DatePickerCard({
