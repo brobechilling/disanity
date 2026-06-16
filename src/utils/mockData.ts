@@ -2,6 +2,7 @@ import { Workshop, CartItem, FAQ } from "@/types";
 
 export const mockWorkshops: Workshop[] = [
   {
+    id: "nhap-mon-gom-thanh-ha",
     title: "Nhập môn trải nghiệm làm gốm Thanh Hà",
     artist: "Trần Sông Lam",
     location: "Hội An - Đà Nẵng",
@@ -13,87 +14,62 @@ export const mockWorkshops: Workshop[] = [
     fontClass: "font-jaro",
   },
   {
-    title: "In tranh dân gian Làng Sình trên giấy dó",
-    artist: "Nguyễn Hoàng Việt",
-    location: "Huế",
-    price: "50.000đ",
-    originalPrice: "100.000đ",
-    img: "/Rectangle429(3).png",
+    id: "pottery-my-linh",
+    title: "Tạo hình gốm thủ công tại Pottery My Linh",
+    artist: "Nguyễn Mỹ Linh",
+    location: "Làng gốm Thanh Hà - Hội An",
+    price: "180.000đ",
+    originalPrice: "350.000đ",
+    img: "/mylinhpottery/image.png",
     left: 530,
     top: 585,
     fontClass: "font-jaro",
   },
   {
-    title: "Làm tranh khắc gỗ truyền thống",
-    artist: "Võ Thành Thiên",
-    location: "Huế",
-    price: "200.000đ",
-    originalPrice: "500.000đ",
-    img: "/Rectangle429(6).png",
+    id: "trinh-ceramic-handmade",
+    title: "Vẽ họa tiết Hội An cùng Trinh Ceramic Handmade",
+    artist: "Lê Trịnh An",
+    location: "Làng gốm Thanh Hà - Hội An",
+    price: "220.000đ",
+    originalPrice: "420.000đ",
+    img: "/trinhceramic/clay-hands.png",
     left: 961,
     top: 584,
     fontClass: "font-playfairDisplay",
   },
   {
-    title: "Thực Hành In Mộc Bản Tranh Đông Hồ",
-    artist: "Ngô Văn Ân",
-    location: "Bắc Ninh",
-    price: "70.000đ",
-    originalPrice: "100.000đ",
-    img: "/Rectangle429(2).png",
+    id: "chieu-house-pottery",
+    title: "Nặn chum mini tại Chieu House Pottery",
+    artist: "Phạm Chiêu Huy",
+    location: "Làng gốm Thanh Hà - Hội An",
+    price: "250.000đ",
+    originalPrice: "480.000đ",
+    img: "/chieuhouse/image.png",
     left: 100,
     top: 1173,
     fontClass: "font-playfairDisplay",
   },
   {
-    title: "Nhập môn sáng tác tranh lụa",
-    artist: "Trần Sông Lam",
-    location: "Hà Nội",
-    price: "500.000đ",
-    originalPrice: "700.000đ",
-    img: "/Rectangle429(5).png",
+    id: "hang-dung-souvenir-shop",
+    title: "Làm quà lưu niệm gốm tại Hang Dung Souvenir Shop",
+    artist: "Huỳnh Hằng Dung",
+    location: "Làng gốm Thanh Hà - Hội An",
+    price: "160.000đ",
+    originalPrice: "300.000đ",
+    img: "/Hangdung/image.png",
     left: 530,
     top: 1173,
   },
   {
-    title: "Tranh Hàng Trống – Vẽ & Phủ Màu Thủ Công",
-    artist: "Võ Thành Thiên",
-    location: "Hà Nội",
-    price: "600.000đ",
-    originalPrice: "900.000đ",
-    img: "/Rectangle429(8).png",
+    id: "gom-men-moc-thanh-ha",
+    title: "Trang trí bình gốm men mộc Thanh Hà",
+    artist: "Đoàn Nhật Nam",
+    location: "Làng gốm Thanh Hà - Hội An",
+    price: "280.000đ",
+    originalPrice: "520.000đ",
+    img: "/chitietworkshop/Rectangle25.png",
     left: 961,
     top: 1172,
-  },
-  {
-    title: "Phục dựng và tô màu tranh Kính Huế",
-    artist: "Trần Sông Lam",
-    location: "Hà Nội",
-    price: "200.000đ",
-    originalPrice: "1.000.000đ",
-    img: "/Rectangle429(1).png",
-    left: 100,
-    top: 1726,
-  },
-  {
-    title: "Trải nghiệm quy trình tạo nên tranh Kim Hoàng",
-    artist: "Nguyễn Hoàng Việt",
-    location: "Hà Nội",
-    price: "80.000đ",
-    originalPrice: "100.000đ",
-    img: "/Rectangle429(4).png",
-    left: 530,
-    top: 1726,
-  },
-  {
-    title: "Nhập môn sáng tác tranh sơn dầu",
-    artist: "Nguyễn Đăng Lướng",
-    location: "Huế",
-    price: "800.000đ",
-    originalPrice: "1.000.000đ",
-    img: "/Rectangle429(7).png",
-    left: 961,
-    top: 1725,
   },
 ];
 
@@ -571,6 +547,412 @@ export const mockWorkshopDetail: WorkshopDetailData = {
     "Nhận lịch trình cá nhân hóa từ chuyên gia văn hóa của chúng tôi.",
 };
 
+export const mockWorkshopDetails: Record<string, WorkshopDetailData> = {
+  "nhap-mon-gom-thanh-ha": mockWorkshopDetail,
+  "pottery-my-linh": {
+    ...mockWorkshopDetail,
+    title: "Tạo hình gốm thủ công tại Pottery My Linh",
+    category: "Tạo hình gốm",
+    location: "Làng gốm Thanh Hà - Hội An",
+    breadcrumb: "Workshop > Làng gốm Thanh Hà > Pottery My Linh",
+    rating: 4.8,
+    reviewCount: 64,
+    pricePerGuest: 180000,
+    priceText: "180.000đ/người",
+    guestLimit: 10,
+    galleryImages: [
+      {
+        src: "/mylinhpottery/image.png",
+        alt: "Không gian Pottery My Linh",
+        featured: true,
+      },
+      {
+        src: "/mylinhpottery/image copy.png",
+        alt: "Bàn xoay và đất sét tại Pottery My Linh",
+      },
+      {
+        src: "/mylinhpottery/image copy 2.png",
+        alt: "Sản phẩm gốm tạo hình thủ công",
+      },
+    ],
+    quickFacts: [
+      { icon: "timer", label: "3 tiếng" },
+      { icon: "languages", label: "Việt & Anh" },
+      { icon: "users", label: "Tối đa 10 khách" },
+    ],
+    introTitle: "Tạo hình gốm thủ công tại Pottery My Linh",
+    introSubtitle: "Một buổi làm quen với đất sét, bàn xoay và nhịp sống Thanh Hà",
+    introDescription:
+      "Workshop tập trung vào kỹ thuật nhào đất, giữ tâm trên bàn xoay và tạo dáng các món gốm nhỏ. Người mới sẽ được hướng dẫn từng bước để hoàn thiện một sản phẩm mộc mang về sau buổi học.",
+    introImage: "/mylinhpottery/image copy 2.png",
+    introImageAlt: "Góc trưng bày sản phẩm Pottery My Linh",
+    artisanName: "Nguyễn Mỹ Linh",
+    artisanTitle:
+      "Gặp gỡ nghệ nhân Nguyễn Mỹ Linh và học cách tạo hình gốm bằng đôi tay",
+    artisanDescription:
+      "Nghệ nhân Mỹ Linh theo nghề từ gia đình, quen với lối hướng dẫn chậm rãi và gần gũi. Chị chú trọng cảm giác tay khi chạm đất, giúp người tham gia hiểu vì sao mỗi sản phẩm gốm Thanh Hà đều có nét riêng.",
+    artisanImage: "/mylinhpottery/image copy.png",
+    artisanImageAlt: "Nghệ nhân Nguyễn Mỹ Linh trong xưởng gốm",
+    artisanStats: [
+      { value: "12 năm", label: "Kinh nghiệm" },
+      { value: "30+", label: "Mẫu gốm" },
+      { value: "40+", label: "Workshop" },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        quote:
+          "Lần đầu dùng bàn xoay nhưng được hướng dẫn rất kỹ. Thành phẩm hơi méo một chút mà nhìn lại thấy rất vui.",
+        title: "Rất hợp cho người mới",
+        author: "Nguyen Mai Anh",
+      },
+      {
+        rating: 5,
+        quote:
+          "Không gian yên tĩnh, cô Linh giải thích dễ hiểu và để tụi mình tự thử khá nhiều.",
+        title: "Một buổi chiều thư giãn",
+        author: "Tran Quoc Bao",
+      },
+      {
+        rating: 4,
+        quote:
+          "Giá ổn, trải nghiệm thực tế hơn mình nghĩ. Phần nhào đất là vui nhất.",
+        title: "Đáng thử khi đến Hội An",
+        author: "Le Khanh Vy",
+      },
+    ],
+  },
+  "trinh-ceramic-handmade": {
+    ...mockWorkshopDetail,
+    title: "Vẽ họa tiết Hội An cùng Trinh Ceramic Handmade",
+    category: "Trang trí gốm",
+    location: "Làng gốm Thanh Hà - Hội An",
+    breadcrumb: "Workshop > Làng gốm Thanh Hà > Trinh Ceramic Handmade",
+    rating: 4.7,
+    reviewCount: 58,
+    pricePerGuest: 220000,
+    priceText: "220.000đ/người",
+    guestLimit: 12,
+    galleryImages: [
+      {
+        src: "/trinhceramic/clay-hands.png",
+        alt: "Không gian Trinh Ceramic Handmade",
+        featured: true,
+      },
+      {
+        src: "/trinhceramic/artist-vase.png",
+        alt: "Nghệ nhân vẽ họa tiết xanh trên bình gốm",
+      },
+      {
+        src: "/trinhceramic/flower-vases.png",
+        alt: "Bình gốm họa tiết hoa sen tại Trinh Ceramic Handmade",
+      },
+    ],
+    quickFacts: [
+      { icon: "timer", label: "2.5 tiếng" },
+      { icon: "languages", label: "Việt & Anh" },
+      { icon: "users", label: "Tối đa 12 khách" },
+    ],
+    introTitle: "Vẽ họa tiết Hội An cùng Trinh Ceramic Handmade",
+    introSubtitle: "Trang trí gốm bằng màu, nét cọ và cảm hứng phố cổ",
+    introDescription:
+      "Bạn sẽ chọn một phôi gốm đã nung mộc, phác họa họa tiết và phủ màu thủ công. Chủ đề gợi ý xoay quanh mái ngói Hội An, hoa văn Thanh Hà và những mảng màu ấm của làng nghề.",
+    introImage: "/trinhceramic/flower-vases.png",
+    introImageAlt: "Gốm trang trí tại Trinh Ceramic Handmade",
+    includedItems: [
+      {
+        title: "Phôi gốm & màu vẽ",
+        description:
+          "Mỗi khách được chuẩn bị một phôi gốm, màu ceramic, cọ vẽ và giấy phác thảo.",
+      },
+      {
+        title: "Hướng dẫn phối họa tiết",
+        description:
+          "Nghệ nhân hỗ trợ chọn bố cục, phối màu và hoàn thiện bề mặt sản phẩm.",
+      },
+      {
+        title: "Thành phẩm cá nhân",
+        description:
+          "Sản phẩm sau buổi workshop có thể mang về làm kỷ niệm hoặc quà tặng.",
+      },
+    ],
+    artisanName: "Lê Trịnh An",
+    artisanTitle:
+      "Gặp gỡ nghệ nhân Lê Trịnh An và thử kể chuyện Hội An trên nền gốm",
+    artisanDescription:
+      "Trịnh An yêu thích những họa tiết nhỏ của phố cổ và đưa chúng vào sản phẩm gốm thủ công. Workshop của anh phù hợp với người muốn một trải nghiệm nhẹ nhàng, nhiều màu sắc và dễ tạo thành phẩm đẹp.",
+    artisanImage: "/trinhceramic/artist-vase.png",
+    artisanImageAlt: "Nghệ nhân Lê Trịnh An hướng dẫn vẽ gốm",
+    artisanStats: [
+      { value: "9 năm", label: "Kinh nghiệm" },
+      { value: "120+", label: "Họa tiết" },
+      { value: "35+", label: "Workshop" },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        quote:
+          "Mình không giỏi vẽ nhưng vẫn làm được một chiếc ly rất xinh. Anh An sửa nét rất tinh tế.",
+        title: "Dễ thương và nhiều màu sắc",
+        author: "Hoang Linh Chi",
+      },
+      {
+        rating: 4,
+        quote:
+          "Workshop nhẹ nhàng, phù hợp đi cùng bạn bè. Phôi gốm có nhiều mẫu để chọn.",
+        title: "Một trải nghiệm đáng yêu",
+        author: "Pham Gia Han",
+      },
+      {
+        rating: 5,
+        quote:
+          "Thích nhất là phần nghe kể ý nghĩa hoa văn Thanh Hà trước khi bắt đầu vẽ.",
+        title: "Có câu chuyện phía sau sản phẩm",
+        author: "Vo Minh Thu",
+      },
+    ],
+  },
+  "chieu-house-pottery": {
+    ...mockWorkshopDetail,
+    title: "Nặn chum mini tại Chieu House Pottery",
+    category: "Nặn gốm thủ công",
+    location: "Làng gốm Thanh Hà - Hội An",
+    breadcrumb: "Workshop > Làng gốm Thanh Hà > Chieu House Pottery",
+    rating: 4.9,
+    reviewCount: 73,
+    pricePerGuest: 250000,
+    priceText: "250.000đ/người",
+    guestLimit: 8,
+    galleryImages: [
+      {
+        src: "/chieuhouse/image.png",
+        alt: "Không gian Chieu House Pottery",
+        featured: true,
+      },
+      {
+        src: "/chieuhouse/image copy.png",
+        alt: "Chum gốm mini đang tạo dáng",
+      },
+      {
+        src: "/chieuhouse/image copy 2.png",
+        alt: "Bộ sản phẩm gốm tại Chieu House Pottery",
+      },
+    ],
+    quickFacts: [
+      { icon: "timer", label: "4 tiếng" },
+      { icon: "languages", label: "Việt & Anh" },
+      { icon: "users", label: "Tối đa 8 khách" },
+    ],
+    introTitle: "Nặn chum mini tại Chieu House Pottery",
+    introSubtitle: "Từ khối đất nhỏ đến dáng chum mộc mạc của làng Thanh Hà",
+    introDescription:
+      "Buổi học hướng dẫn cách chia đất, dựng thân, vuốt miệng và tạo dáng chum mini. Người tham gia sẽ hiểu thêm vì sao những vật dụng bình dị như chum, hũ, bình nước lại là linh hồn của gốm Thanh Hà.",
+    introImage: "/chieuhouse/image copy 2.png",
+    introImageAlt: "Sản phẩm chum mini trong workshop",
+    artisanName: "Phạm Chiêu Huy",
+    artisanTitle:
+      "Gặp gỡ nghệ nhân Phạm Chiêu Huy và học cách giữ dáng gốm truyền thống",
+    artisanDescription:
+      "Chiêu Huy theo đuổi các dáng gốm dân dụng Thanh Hà, đặc biệt là chum và hũ nhỏ. Anh hướng dẫn kỹ phần dựng phom để người mới cảm nhận được sự cân bằng giữa lực tay và độ ẩm của đất.",
+    artisanImage: "/chieuhouse/image copy.png",
+    artisanImageAlt: "Nghệ nhân Phạm Chiêu Huy bên bàn nặn gốm",
+    artisanStats: [
+      { value: "14 năm", label: "Kinh nghiệm" },
+      { value: "20+", label: "Dáng chum" },
+      { value: "45+", label: "Workshop" },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        quote:
+          "Phần dựng miệng chum khó hơn tưởng tượng nhưng được hướng dẫn rất kiên nhẫn.",
+        title: "Thực tế và rất đã tay",
+        author: "Dang Minh Quan",
+      },
+      {
+        rating: 5,
+        quote:
+          "Mình thích cách workshop gắn sản phẩm nhỏ với câu chuyện đồ dùng xưa của làng.",
+        title: "Có chiều sâu văn hóa",
+        author: "Nguyen Tuong Vy",
+      },
+      {
+        rating: 4,
+        quote:
+          "Không gian hơi nhỏ nhưng ấm cúng, thành phẩm mang về rất đáng yêu.",
+        title: "Trải nghiệm ấm áp",
+        author: "Bui Nhat Linh",
+      },
+    ],
+  },
+  "hang-dung-souvenir-shop": {
+    ...mockWorkshopDetail,
+    title: "Làm quà lưu niệm gốm tại Hang Dung Souvenir Shop",
+    category: "Quà lưu niệm gốm",
+    location: "Làng gốm Thanh Hà - Hội An",
+    breadcrumb: "Workshop > Làng gốm Thanh Hà > Hang Dung Souvenir Shop",
+    rating: 4.6,
+    reviewCount: 49,
+    pricePerGuest: 160000,
+    priceText: "160.000đ/người",
+    guestLimit: 14,
+    galleryImages: [
+      {
+        src: "/Hangdung/image.png",
+        alt: "Không gian Hang Dung Souvenir Shop",
+        featured: true,
+      },
+      {
+        src: "/Hangdung/image copy.png",
+        alt: "Kệ quà lưu niệm gốm Thanh Hà",
+      },
+      {
+        src: "/Hangdung/image copy 2.png",
+        alt: "Sản phẩm gốm nhỏ làm quà tặng",
+      },
+    ],
+    quickFacts: [
+      { icon: "timer", label: "2 tiếng" },
+      { icon: "languages", label: "Việt & Anh" },
+      { icon: "users", label: "Tối đa 14 khách" },
+    ],
+    introTitle: "Làm quà lưu niệm gốm tại Hang Dung Souvenir Shop",
+    introSubtitle: "Tạo một món quà nhỏ mang dấu ấn Thanh Hà và phố Hội",
+    introDescription:
+      "Workshop phù hợp với nhóm bạn, gia đình hoặc khách muốn trải nghiệm nhanh. Bạn sẽ chọn dáng gốm nhỏ, trang trí bằng màu và ký hiệu riêng để biến sản phẩm thành một món quà lưu niệm cá nhân.",
+    introImage: "/Hangdung/image copy 2.png",
+    introImageAlt: "Quà lưu niệm gốm tại Hang Dung",
+    includedItems: [
+      {
+        title: "Phôi quà lưu niệm",
+        description:
+          "Có nhiều mẫu nhỏ như chuông gió, tượng mini, ly nhỏ và thẻ treo gốm.",
+      },
+      {
+        title: "Bộ màu trang trí",
+        description:
+          "Màu, cọ, khăn lau và dụng cụ hoàn thiện bề mặt được chuẩn bị sẵn.",
+      },
+      {
+        title: "Gói thành phẩm",
+        description:
+          "Sản phẩm được hỗ trợ đóng gói đơn giản để mang về hoặc tặng bạn bè.",
+      },
+    ],
+    artisanName: "Huỳnh Hằng Dung",
+    artisanTitle:
+      "Gặp gỡ nghệ nhân Huỳnh Hằng Dung và làm món quà gốm của riêng bạn",
+    artisanDescription:
+      "Hằng Dung quen làm các sản phẩm gốm nhỏ cho khách ghé làng. Chị thích biến workshop thành một buổi trò chuyện vui, nơi mỗi món quà đều có tên người làm và một kỷ niệm riêng.",
+    artisanImage: "/Hangdung/image copy.png",
+    artisanImageAlt: "Nghệ nhân Huỳnh Hằng Dung trong cửa hàng gốm",
+    artisanStats: [
+      { value: "10 năm", label: "Kinh nghiệm" },
+      { value: "80+", label: "Mẫu quà" },
+      { value: "55+", label: "Workshop" },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        quote:
+          "Workshop nhanh, vui và hợp với gia đình có trẻ nhỏ. Thành phẩm được gói rất xinh.",
+        title: "Rất hợp để làm quà",
+        author: "Tran Bao Ngoc",
+      },
+      {
+        rating: 4,
+        quote:
+          "Mình thích sự thân thiện của cô Dung. Có nhiều mẫu nhỏ để chọn.",
+        title: "Dễ tham gia",
+        author: "Nguyen Hoang Phuc",
+      },
+      {
+        rating: 5,
+        quote:
+          "Chiếc chuông gió mình làm hơi lệch nhưng nhìn rất có duyên. Kỷ niệm đáng nhớ.",
+        title: "Nhỏ mà vui",
+        author: "Le Minh Chau",
+      },
+    ],
+  },
+  "gom-men-moc-thanh-ha": {
+    ...mockWorkshopDetail,
+    title: "Trang trí bình gốm men mộc Thanh Hà",
+    category: "Trang trí men mộc",
+    location: "Làng gốm Thanh Hà - Hội An",
+    breadcrumb: "Workshop > Làng gốm Thanh Hà > Bình gốm men mộc",
+    rating: 4.8,
+    reviewCount: 61,
+    pricePerGuest: 280000,
+    priceText: "280.000đ/người",
+    guestLimit: 9,
+    galleryImages: [
+      {
+        src: "/chitietworkshop/Rectangle25.png",
+        alt: "Bình gốm men mộc Thanh Hà",
+        featured: true,
+      },
+      {
+        src: "/chitietworkshop/Rectangle25(1).png",
+        alt: "Không gian trang trí gốm men mộc",
+      },
+      {
+        src: "/chitietworkshop/PlaceholderImage.png",
+        alt: "Chi tiết họa tiết trên bình gốm",
+      },
+    ],
+    quickFacts: [
+      { icon: "timer", label: "3.5 tiếng" },
+      { icon: "languages", label: "Việt & Anh" },
+      { icon: "users", label: "Tối đa 9 khách" },
+    ],
+    introTitle: "Trang trí bình gốm men mộc Thanh Hà",
+    introSubtitle: "Thử phủ màu, tạo vệt và giữ lại vẻ thô mộc của đất nung",
+    introDescription:
+      "Buổi workshop dành cho người muốn đi sâu hơn vào bề mặt gốm. Bạn sẽ học cách xử lý nền, tạo họa tiết đơn giản và hoàn thiện bình gốm theo tinh thần mộc mạc của Thanh Hà.",
+    introImage: "/chitietworkshop/Rectangle25(2).png",
+    introImageAlt: "Bình gốm sau khi hoàn thiện men mộc",
+    artisanName: "Đoàn Nhật Nam",
+    artisanTitle:
+      "Gặp gỡ nghệ nhân Đoàn Nhật Nam và khám phá vẻ đẹp của men mộc",
+    artisanDescription:
+      "Nhật Nam quan tâm đến sắc độ tự nhiên của đất nung và những vệt màu tiết chế. Anh hướng dẫn người tham gia quan sát bề mặt gốm, chọn nhịp cọ và giữ lại sự không hoàn hảo duyên dáng của thủ công.",
+    artisanImage: "/chitietworkshop/ImagePlaceHolder.png",
+    artisanImageAlt: "Nghệ nhân Đoàn Nhật Nam trong xưởng gốm",
+    artisanStats: [
+      { value: "11 năm", label: "Kinh nghiệm" },
+      { value: "25+", label: "Dòng men" },
+      { value: "38+", label: "Workshop" },
+    ],
+    reviews: [
+      {
+        rating: 5,
+        quote:
+          "Mình rất thích phần phối màu ít nhưng có điểm nhấn. Thành phẩm nhìn tinh tế hơn mong đợi.",
+        title: "Đẹp theo kiểu mộc",
+        author: "Pham Anh Thu",
+      },
+      {
+        rating: 5,
+        quote:
+          "Anh Nam hướng dẫn kỹ, đặc biệt là cách kiểm soát nét cọ trên nền gốm.",
+        title: "Học được nhiều kỹ thuật",
+        author: "Doan Minh Khang",
+      },
+      {
+        rating: 4,
+        quote:
+          "Buổi học vừa đủ chuyên sâu, phù hợp ai đã từng thử làm gốm cơ bản.",
+        title: "Có chiều sâu hơn workshop nhập môn",
+        author: "Vu Gia Bao",
+      },
+    ],
+  },
+};
+
+export const getMockWorkshopDetail = (workshopId: string | null) =>
+  mockWorkshopDetails[workshopId ?? ""] ?? mockWorkshopDetail;
+
 export interface ArtisanProfileStat {
   value: string;
   label: string;
@@ -730,9 +1112,9 @@ export const mockArtisanProfile: ArtisanProfileData = {
   contactQuote: "“Giữ nghề là giữ hồn đất, để ký ức còn chỗ quay về.”",
   contactHeading: "Trở thành người giữ nghề",
   contactInfo: {
-    email: "contact@disanity.com",
-    phone: "(123) 456 - 789",
-    address: "58 Middle Point Rd, San Francisco, 94124",
+    email: "disanity@gmail.com",
+    phone: "0898462817",
+    address: "Khu đô thị FPT, Đà Nẵng, Việt Nam",
   },
 };
 

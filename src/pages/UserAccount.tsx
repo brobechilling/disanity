@@ -11,7 +11,6 @@ import {
   Plus,
   Settings,
   Ticket,
-  UserRound,
   Wallet,
 } from "lucide-react";
 import PageShell from "@/components/common/PageShell";
@@ -100,9 +99,23 @@ function AccountActions() {
 }
 
 function MetricGrid() {
+  const { confirmedBookings } = useBooking();
+  const metrics = React.useMemo(() => {
+    const totalQuantity = confirmedBookings.reduce((total, item) => total + item.qty, 0);
+    const totalSpend = confirmedBookings.reduce((total, item) => total + item.price * item.qty, 0);
+    const formattedSpend = `${totalSpend.toLocaleString("vi-VN")}đ`;
+
+    return [
+      { label: "Số Workshop đã đặt", value: confirmedBookings.length.toString() },
+      { label: "Buổi sắp tới", value: confirmedBookings.length.toString() },
+      { label: "Tổng lượt đặt", value: totalQuantity.toString() },
+      { label: "Chi tiêu", value: formattedSpend },
+    ];
+  }, [confirmedBookings]);
+
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {mockUserAccount.metrics.map((metric, index) => {
+      {metrics.map((metric, index) => {
         const Icon = metricIcons[index] ?? LayoutDashboard;
         return <MetricCard key={metric.label} icon={Icon} {...metric} />;
       })}
@@ -117,7 +130,6 @@ function MetricCard({
 }: {
   label: string;
   value: string;
-  tone: string;
   icon: React.ElementType<{ size?: number; className?: string }>;
 }) {
   return (
@@ -203,10 +215,10 @@ function PersonalInfo() {
 }
 
 function UpcomingWorkshops() {
-  const { cart, updateCartItemQty } = useBooking();
+  const { confirmedBookings } = useBooking();
   const navigate = useNavigate();
-  const workshops = cart.map((item) => ({
-    id: item.workshopId,
+  const workshops = confirmedBookings.map((item) => ({
+    id: item.bookingId,
     title: item.title,
     image: item.img,
     packageName: "Trọn gói",
@@ -221,10 +233,6 @@ function UpcomingWorkshops() {
       item.date ? `Ngày ${item.date}` : "Ngày chưa chọn",
     ],
   }));
-
-  const handleQtyChange = (id: string, newQty: number) => {
-    updateCartItemQty(id, newQty);
-  };
 
   return (
     <DashboardPanel title="Các Workshop sắp tới">
@@ -268,32 +276,10 @@ function UpcomingWorkshops() {
                     </div>
                   </div>
 
-                  {/* Quantity Input */}
-                  <label className="flex h-10 w-[132px] items-center gap-2 rounded-[6px] border border-[#1F2937] bg-[#FFF] px-3 font-beVietnamPro text-sm font-semibold text-[#1F2937]">
+                  <div className="flex h-10 w-[132px] items-center gap-2 rounded-[6px] border border-[#1F2937] bg-[#FFF] px-3 font-beVietnamPro text-sm font-semibold text-[#1F2937]">
                     <span className="shrink-0">SL:</span>
-                    <input
-                      type="number"
-                      min={1}
-                      value={workshop.quantity === 0 ? "" : workshop.quantity}
-                      onChange={(e) => {
-                        const valStr = e.target.value;
-                        if (valStr === "") {
-                          handleQtyChange(workshop.id, 0);
-                        } else {
-                          const val = parseInt(valStr, 10);
-                          if (!isNaN(val)) {
-                            handleQtyChange(workshop.id, val);
-                          }
-                        }
-                      }}
-                      onBlur={() => {
-                        if (workshop.quantity < 1) {
-                          handleQtyChange(workshop.id, 1);
-                        }
-                      }}
-                      className="min-w-0 flex-1 bg-transparent text-center outline-none"
-                    />
-                  </label>
+                    <span className="min-w-0 flex-1 text-center">{workshop.quantity}</span>
+                  </div>
                 </div>
 
                 <div>
@@ -329,19 +315,16 @@ function UpcomingWorkshops() {
 function Reviews() {
   return (
     <DashboardPanel title="Các đánh giá bạn đã viết">
-      <div className="grid gap-7 pt-10 lg:grid-cols-3">
-        {mockUserAccount.reviews.map((review) => (
-          <article key={review.workshop} className="relative min-h-[290px] bg-[#F5F5F5] px-6 pb-6 pt-24 text-center transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:bg-[#eaeaea]">
-            <div className="absolute left-1/2 top-0 grid h-[116px] w-[116px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#A6341B] text-white">
-              <UserRound size={22} />
-            </div>
-            <h3 className="font-jaro text-xl text-[#A6341B]">{review.author}</h3>
-            <p className="mt-5 font-beVietnamPro text-xs uppercase tracking-[0.25em] text-[#4F4F4F]">
-              {review.workshop}
-            </p>
-            <p className="mt-5 font-beVietnamPro text-sm leading-6 text-[#6E6E6E]">“{review.quote}”</p>
-          </article>
-        ))}
+      <div className="rounded-[14px] border border-[#A6341B]/20 bg-white/45 px-6 py-10 text-center">
+        <p className="font-beVietnamPro text-base font-semibold text-[#64748B]">
+          Bạn chưa viết bài đánh giá nào
+        </p>
+        <button
+          type="button"
+          className="mt-5 rounded-[10px] bg-[#A6341B] px-6 py-3 font-roboto text-base text-white transition-colors hover:bg-[#8f2c17]"
+        >
+          Hãy viết đánh giá
+        </button>
       </div>
     </DashboardPanel>
   );
