@@ -13,10 +13,12 @@ import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import CheckoutFAQSection from "@/components/domain/CheckoutFAQSection";
 import CheckoutStepper from "@/components/domain/CheckoutStepper";
+import { useBooking } from "@/context/BookingContext";
 import { mockFAQs } from "@/utils/mockData";
 
 export default function CheckoutPayment() {
   const navigate = useNavigate();
+  const { confirmCart } = useBooking();
   const [paymentInfo, setPaymentInfo] = useState({
     lastName: "",
     firstName: "",
@@ -109,7 +111,10 @@ export default function CheckoutPayment() {
             <div className="mt-6 grid gap-3">
               <button
                 type="button"
-                onClick={() => navigate("/ticketqr")}
+                onClick={() => {
+                  confirmCart();
+                  navigate("/ticketqr");
+                }}
                 className="h-12 rounded-full bg-[#A6341B] font-beVietnamPro text-sm font-bold uppercase text-white transition-all hover:-translate-y-0.5 hover:bg-[#8B2C16] active:scale-95"
               >
                 Hoàn tất

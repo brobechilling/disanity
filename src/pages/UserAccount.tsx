@@ -99,19 +99,19 @@ function AccountActions() {
 }
 
 function MetricGrid() {
-  const { cart } = useBooking();
+  const { confirmedBookings } = useBooking();
   const metrics = React.useMemo(() => {
-    const totalQuantity = cart.reduce((total, item) => total + item.qty, 0);
-    const totalSpend = cart.reduce((total, item) => total + item.price * item.qty, 0);
+    const totalQuantity = confirmedBookings.reduce((total, item) => total + item.qty, 0);
+    const totalSpend = confirmedBookings.reduce((total, item) => total + item.price * item.qty, 0);
     const formattedSpend = `${totalSpend.toLocaleString("vi-VN")}đ`;
 
     return [
-      { label: "Số Workshop đã đặt", value: cart.length.toString() },
-      { label: "Buổi sắp tới", value: cart.length.toString() },
+      { label: "Số Workshop đã đặt", value: confirmedBookings.length.toString() },
+      { label: "Buổi sắp tới", value: confirmedBookings.length.toString() },
       { label: "Tổng lượt đặt", value: totalQuantity.toString() },
       { label: "Chi tiêu", value: formattedSpend },
     ];
-  }, [cart]);
+  }, [confirmedBookings]);
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
@@ -215,10 +215,10 @@ function PersonalInfo() {
 }
 
 function UpcomingWorkshops() {
-  const { cart, updateCartItemQty } = useBooking();
+  const { confirmedBookings } = useBooking();
   const navigate = useNavigate();
-  const workshops = cart.map((item) => ({
-    id: item.workshopId,
+  const workshops = confirmedBookings.map((item) => ({
+    id: item.bookingId,
     title: item.title,
     image: item.img,
     packageName: "Trọn gói",
@@ -233,10 +233,6 @@ function UpcomingWorkshops() {
       item.date ? `Ngày ${item.date}` : "Ngày chưa chọn",
     ],
   }));
-
-  const handleQtyChange = (id: string, newQty: number) => {
-    updateCartItemQty(id, newQty);
-  };
 
   return (
     <DashboardPanel title="Các Workshop sắp tới">
@@ -280,32 +276,10 @@ function UpcomingWorkshops() {
                     </div>
                   </div>
 
-                  {/* Quantity Input */}
-                  <label className="flex h-10 w-[132px] items-center gap-2 rounded-[6px] border border-[#1F2937] bg-[#FFF] px-3 font-beVietnamPro text-sm font-semibold text-[#1F2937]">
+                  <div className="flex h-10 w-[132px] items-center gap-2 rounded-[6px] border border-[#1F2937] bg-[#FFF] px-3 font-beVietnamPro text-sm font-semibold text-[#1F2937]">
                     <span className="shrink-0">SL:</span>
-                    <input
-                      type="number"
-                      min={1}
-                      value={workshop.quantity === 0 ? "" : workshop.quantity}
-                      onChange={(e) => {
-                        const valStr = e.target.value;
-                        if (valStr === "") {
-                          handleQtyChange(workshop.id, 0);
-                        } else {
-                          const val = parseInt(valStr, 10);
-                          if (!isNaN(val)) {
-                            handleQtyChange(workshop.id, val);
-                          }
-                        }
-                      }}
-                      onBlur={() => {
-                        if (workshop.quantity < 1) {
-                          handleQtyChange(workshop.id, 1);
-                        }
-                      }}
-                      className="min-w-0 flex-1 bg-transparent text-center outline-none"
-                    />
-                  </label>
+                    <span className="min-w-0 flex-1 text-center">{workshop.quantity}</span>
+                  </div>
                 </div>
 
                 <div>
