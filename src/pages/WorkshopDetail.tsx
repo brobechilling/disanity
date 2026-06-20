@@ -14,6 +14,7 @@ import Section from "@/components/common/Section";
 import SiteFooter from "@/components/common/SiteFooter";
 import SiteHeader from "@/components/common/SiteHeader";
 import WorkshopDetailBooking from "@/components/domain/WorkshopDetailBooking";
+import DirectionsMap from "@/components/domain/DirectionsMap";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { useWorkshopCatalog } from "@/context/WorkshopCatalogContext";
 
@@ -247,6 +248,8 @@ export default function WorkshopDetailPage() {
             ))}
           </div>
         </Section>
+
+        <DirectionsMap />
 
         <Section width="wide" className="py-20 lg:py-24">
           <ScrollReveal className="relative h-[328px] overflow-hidden px-6 py-12 text-center text-white" animation="scale-up">
