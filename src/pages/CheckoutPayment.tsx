@@ -111,8 +111,8 @@ export default function CheckoutPayment() {
             <div className="mt-6 grid gap-3">
               <button
                 type="button"
-                onClick={() => {
-                  confirmCart();
+                onClick={async () => {
+                  await confirmCart();
                   navigate("/ticketqr");
                 }}
                 className="h-12 rounded-full bg-[#A6341B] font-beVietnamPro text-sm font-bold uppercase text-white transition-all hover:-translate-y-0.5 hover:bg-[#8B2C16] active:scale-95"

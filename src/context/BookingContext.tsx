@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, type ReactNode } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { bookingsRepository } from "@/repositories/bookings.repository";
+
 
 export interface BookingItem {
   id: number;
@@ -30,22 +32,38 @@ interface BookingContextType {
   updateConfirmedBookingQty: (bookingId: string, qty: number) => void;
   removeFromCart: (workshopId: string) => void;
   clearCart: () => void;
-  confirmCart: () => void;
+  confirmCart: () => Promise<void>;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [cart, setCart] = useState<BookingItem[]>([]);
   const [confirmedBookings, setConfirmedBookings] = useState<ConfirmedBookingItem[]>([]);
 
   React.useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user?.id) {
       setCart([]);
       setConfirmedBookings([]);
+      return;
     }
-  }, [isAuthenticated]);
+
+    let isMounted = true;
+    bookingsRepository.getBookingsByUserId(user.id)
+      .then((data) => {
+        if (isMounted) {
+          setConfirmedBookings(data);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load user bookings from database:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isAuthenticated, user]);
 
   const addToCart = (item: BookingItem) => {
     setCart((prev) => [...prev.filter((i) => i.workshopId !== item.workshopId), item]);
@@ -67,7 +85,7 @@ export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const clearCart = () => setCart([]);
 
-  const confirmCart = () => {
+  const confirmCart = async () => {
     if (cart.length === 0) {
       return;
     }
@@ -79,6 +97,16 @@ export const BookingProvider: React.FC<{ children: ReactNode }> = ({ children })
       bookingId: `${item.workshopId}-${bookingBatch}-${index}`,
       confirmedAt,
     }));
+
+    if (user?.id) {
+      try {
+        for (const booking of completedBookings) {
+          await bookingsRepository.createBooking(booking, user.id);
+        }
+      } catch (error) {
+        console.error("Failed to save bookings to database:", error);
+      }
+    }
 
     setConfirmedBookings((prev) => [...prev, ...completedBookings]);
     setCart([]);
