@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usersRepository } from "@/repositories/users.repository";
 import {
   ArrowRightLeft,
   Bell,
@@ -160,20 +161,58 @@ function PersonalInfo() {
       return item;
     });
   }, [user]);
+  
   const [personalInfo, setPersonalInfo] = useState(initialPersonalInfo);
   const [editingLabel, setEditingLabel] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
 
-  React.useEffect(() => {
-    setPersonalInfo(initialPersonalInfo);
-  }, [initialPersonalInfo]);
+  useEffect(() => {
+    if (!user?.id) return;
+    
+    let isMounted = true;
+    usersRepository.getUserById(user.id)
+      .then((dbUser) => {
+        if (dbUser && isMounted) {
+          setPersonalInfo([
+            { label: "Họ và tên", value: dbUser.name },
+            { label: "Email", value: dbUser.email },
+            { label: "Địa chỉ", value: dbUser.address || "" },
+            { label: "SDT", value: dbUser.phone || "" },
+          ]);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load user profile from database:", err);
+      });
+      
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
 
-  const handleToggleEdit = (label: string, currentValue: string) => {
+  const handleToggleEdit = async (label: string, currentValue: string) => {
     if (editingLabel === label) {
-      setPersonalInfo((prev) =>
-        prev.map((item) => (item.label === label ? { ...item, value: editValue } : item))
+      const updatedList = personalInfo.map((item) =>
+        item.label === label ? { ...item, value: editValue } : item
       );
+      setPersonalInfo(updatedList);
       setEditingLabel(null);
+
+      if (user?.id) {
+        const nameItem = updatedList.find(i => i.label === "Họ và tên");
+        const addressItem = updatedList.find(i => i.label === "Địa chỉ");
+        const phoneItem = updatedList.find(i => i.label === "SDT");
+
+        try {
+          await usersRepository.updateUserProfile(user.id, {
+            name: nameItem?.value || "",
+            address: addressItem?.value || "",
+            phone: phoneItem?.value || "",
+          });
+        } catch (err) {
+          console.error("Failed to update user profile in database:", err);
+        }
+      }
     } else {
       setEditingLabel(label);
       setEditValue(currentValue);
@@ -214,6 +253,17 @@ function PersonalInfo() {
   );
 }
 
+function formatDate(dateStr: string) {
+  if (!dateStr) return "";
+  if (dateStr.includes("-")) {
+    const [year, month, day] = dateStr.split("-");
+    if (year && month && day) {
+      return `${day}/${month}/${year}`;
+    }
+  }
+  return dateStr;
+}
+
 function UpcomingWorkshops() {
   const { confirmedBookings } = useBooking();
   const navigate = useNavigate();
@@ -230,7 +280,7 @@ function UpcomingWorkshops() {
       `Địa điểm: ${item.location}`,
       `Nghệ nhân: ${item.artisan}`,
       `Thời lượng: ${item.duration}`,
-      item.date ? `Ngày ${item.date}` : "Ngày chưa chọn",
+      item.date ? `Ngày ${formatDate(item.date)}` : "Ngày chưa chọn",
     ],
   }));
 
@@ -371,6 +421,7 @@ function UserSidebar() {
 
       <nav className="mt-4 space-y-3">
         <SidebarButton icon={ArrowRightLeft} label="Chuyển qua chế độ nghệ nhân" to="/artisan-account" active />
+        <SidebarButton icon={CalendarDays} label="Lịch trình trải nghiệm" to="/user-calendar" />
         <SidebarButton icon={History} label="Lịch sử mua hàng" />
       </nav>
 
