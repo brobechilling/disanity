@@ -6,6 +6,8 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
+import { usersRepository } from "@/repositories/users.repository";
+
 
 const AUTH_STORAGE_KEY = "disanity.auth.user";
 const AUTH_STORAGE_VERSION = 1;
@@ -36,7 +38,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isAuthReady: boolean;
   isLoggingOut: boolean;
-  loginWithGoogleCredential: (credential: string) => AuthUser;
+  loginWithGoogleCredential: (credential: string) => Promise<AuthUser>;
   logout: () => void;
 }
 
@@ -56,9 +58,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<AuthUser | null>(() => readStoredAuthUser());
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const loginWithGoogleCredential = useCallback((credential: string) => {
+  const loginWithGoogleCredential = useCallback(async (credential: string) => {
     const payload = decodeGoogleCredential(credential);
     const nextUser = buildAuthUser(payload);
+    
+    try {
+      await usersRepository.upsertUser({
+        id: nextUser.id,
+        email: nextUser.email,
+        name: nextUser.name,
+        picture: nextUser.picture,
+      });
+    } catch (error) {
+      console.error("Failed to sync user with Supabase database:", error);
+    }
+
     persistAuthUser(nextUser);
     setIsLoggingOut(false);
     setUser(nextUser);

@@ -7,6 +7,7 @@ const navItems = [
   { to: "/artisans", label: "NGHỆ NHÂN", width: "w-[151px]", left: "left-[389px]" },
   { to: "/artisan-stories", label: "CÂU CHUYỆN", width: "w-[166px]", left: "left-[566px]" },
   { to: "/booking", label: "ĐẶT LỊCH RIÊNG", width: "w-[133px]", left: "left-[758px]" },
+  { to: "/user-calendar", label: "LỊCH TRÌNH", width: "w-[150px]", left: "left-[900px]" },
 ];
 
 export default function SiteHeader() {

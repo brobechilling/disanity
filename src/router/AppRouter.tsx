@@ -22,6 +22,8 @@ import ScheduleManagement from "@/pages/ScheduleManagement";
 import ArtisanAccount from "@/pages/ArtisanAccount";
 import UserAccount from "@/pages/UserAccount";
 import TicketQr from "@/pages/TicketQr";
+import UserCalendar from "@/pages/UserCalendar";
+
 
 export const AppRouter: React.FC = () => {
   return (
@@ -92,6 +94,14 @@ export const AppRouter: React.FC = () => {
           element={
             <RequireAuth>
               <UserAccount />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user-calendar"
+          element={
+            <RequireAuth>
+              <UserCalendar />
             </RequireAuth>
           }
         />
