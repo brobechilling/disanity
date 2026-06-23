@@ -12,7 +12,7 @@
   --font-dm-sans: "DM Sans", sans-serif;
   --font-courier-new: "Courier Prime", monospace;
   --font-oi: "Oi", serif;
-  --font-dfvn-freckle-face: "Freckle Face", serif;
+  --font-dfvn-freckle-face: "DFVN Freckle Face", "Freckle Face", serif;
   --font-poppins: "Poppins", sans-serif;
   --font-raleway: "Raleway", sans-serif;
 }
@@ -20,7 +20,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-be-vietnam-pro);
   --font-mono: var(--font-geist-mono);
   
   --font-jaro: var(--font-jaro);
@@ -35,6 +35,23 @@
   --font-dFVNFreckleFace: var(--font-dfvn-freckle-face);
   --font-poppins: var(--font-poppins);
   --font-raleway: var(--font-raleway);
+}
+
+/* Explicit class mappings for camelCase fonts to bypass Tailwind CSS v4 kebab-case normalization */
+[class*="font-beVietnam"] {
+  font-family: var(--font-be-vietnam-pro), sans-serif !important;
+}
+[class*="font-playfair"] {
+  font-family: var(--font-playfair-display), serif !important;
+}
+[class*="font-dMSans"] {
+  font-family: var(--font-dm-sans), sans-serif !important;
+}
+[class*="font-courier"] {
+  font-family: var(--font-courier-new), monospace !important;
+}
+[class*="font-dFVNFreckleFace"] {
+  font-family: var(--font-dfvn-freckle-face), serif !important;
 }
 
 html, body {
@@ -70,3 +87,24 @@ html, body {
   max-width: 100vw;
   box-sizing: border-box;
 }
+
+/* Custom styles for calendar page & red alerting */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(0.995);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.shadow-inner-red {
+  box-shadow: inset 0 0 12px rgba(166, 52, 27, 0.15);
+}
+

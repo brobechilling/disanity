@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Section from "@/components/common/Section";
 
 export default function UpcomingEvent() {
@@ -33,9 +33,9 @@ export default function UpcomingEvent() {
                   </p>
                 </div>
 
-                <p className="mt-1 font-dFVNFreckleFace text-[32px] uppercase leading-none tracking-[0.07em] text-[#A6341B]">
+                <p className="mt-1 font-playfairDisplay text-[32px] font-black uppercase leading-none tracking-[0.07em] text-[#A6341B]">
                   SẮC DIỆN SƠN NAM
-                </p>
+                </p>  
 
                 <p className="mt-1 text-justify font-beVietnam text-base font-medium leading-7 text-[#6E6E6E]">
                   Trải nghiệm khám phá mỹ thuật đình miếu và nghệ thuật mặt nạ hát

@@ -22,7 +22,7 @@ export default function WorkshopDetailBooking({ workshop, workshopId }: Workshop
   const navigate = useNavigate();
   const { addToCart } = useBooking();
   const [guestCount, setGuestCount] = useState(workshop.defaultGuestCount);
-  const [journeyDate, setJourneyDate] = useState("");
+  const [journeyDate, setJourneyDate] = useState("2026-06-25");
 
   const handleDecrease = () => setGuestCount((current) => Math.max(1, current - 1));
   const handleIncrease = () =>

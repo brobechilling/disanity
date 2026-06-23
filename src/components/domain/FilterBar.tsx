@@ -81,7 +81,7 @@ export default function FilterBar({ className }: { className?: string }) {
         className="ml-2 flex shrink-0 cursor-pointer items-center gap-2 rounded-full border-2 border-[#A6341B] bg-[#E0A03F] px-8 py-3 text-nowrap shadow-sm transition-all duration-200 hover:scale-105 hover:bg-[#D4902F] active:scale-95"
       >
         <FilterIcon />
-        <span className="font-beVietnamPro text-base font-extrabold leading-6 text-white">Lọc</span>
+        <span className="font-beVietnamPro text-base font-bold leading-6 text-white">Lọc</span>
       </Link>
     </div>
   );
@@ -104,7 +104,7 @@ function SelectFilter({
 }) {
   return (
     <div className="relative flex min-w-[165px] flex-1 flex-col items-start gap-2">
-      <p className="whitespace-nowrap pl-1 font-beVietnamPro text-xs font-black uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
+      <p className="whitespace-nowrap font-beVietnamPro text-xs font-black uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
         {title}
       </p>
 
@@ -153,7 +153,7 @@ function DateFilter({
         type="date"
         value={value}
         onChange={onChange}
-        className="h-11 w-full min-w-[150px] bg-transparent font-beVietnam text-lg font-bold leading-7 text-black outline-none transition-colors hover:text-[#A6341B] focus:text-[#A6341B]"
+        className="h-11 w-full min-w-[150px] bg-transparent font-beVietnamPro text-lg font-bold leading-7 text-black outline-none transition-colors hover:text-[#A6341B] focus:text-[#A6341B]"
       />
     </label>
   );

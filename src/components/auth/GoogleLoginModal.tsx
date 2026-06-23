@@ -84,14 +84,14 @@ export default function GoogleLoginModal({ open, onClose }: GoogleLoginModalProp
     googleId.initialize({
       client_id: clientId,
       auto_select: false,
-      callback: (response) => {
+      callback: async (response) => {
         if (!response.credential) {
           setError("Google khong tra ve credential hop le.");
           return;
         }
 
         try {
-          loginWithGoogleCredential(response.credential);
+          await loginWithGoogleCredential(response.credential);
         } catch {
           setError("Khong the doc thong tin dang nhap Google.");
         }
