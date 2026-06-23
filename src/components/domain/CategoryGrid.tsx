@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
@@ -28,8 +29,9 @@ export default function CategoryGrid({ className }: { className?: string }) {
       {/* Category Cards */}
       <div className="absolute left-1/2 top-0 h-[500px] w-[1240px] -translate-x-1/2">
         {categories.map((cat, idx) => (
-          <div
+          <Link
             key={cat.title}
+            to="/workshops/list"
             className="absolute top-0 h-[500px] w-[397px] cursor-pointer overflow-hidden rounded-[25px] transition-all duration-500"
             onMouseEnter={() => setHoveredIdx(idx)}
             onMouseLeave={() => setHoveredIdx(null)}
@@ -46,10 +48,10 @@ export default function CategoryGrid({ className }: { className?: string }) {
               alt={cat.title}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(108,11,11,0.7)] via-[rgba(0,0,0,0.2)] to-transparent opacity-80 transition-opacity duration-350" />
-            <p className="pointer-events-none absolute inset-x-0 bottom-8 z-20 px-8 text-center font-beVietnamPro text-[34px] font-extrabold leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+            <p className="pointer-events-none absolute inset-x-0 bottom-8 z-20 px-8 text-center font-jaro text-[48px] leading-[42px] text-[#FEF3B1] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
               {cat.label}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
 

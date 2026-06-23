@@ -58,16 +58,16 @@ export default function ArtisanStories() {
               </div>
 
               {/* Absolute Text Blocks on the Right */}
-              <p className="absolute left-[716px] top-36 z-20 h-[76px] w-[520px] font-dMSans text-[28px] font-bold leading-[38px] text-[#FEF3B1]">
+              <p className="absolute left-[716px] top-36 z-20 h-[76px] w-[520px]  text-[28px] font-bold leading-[38px] text-[#FEF3B1]">
                 Nữ nghệ nhân gìn giữ, “thắp sáng” đèn ông sao
               </p>
-              <p className="absolute left-[716px] top-[232px] z-20 h-[90px] w-[520px] text-justify font-dMSans text-lg font-light leading-[30px] text-[#FEF3B1]/90">
+              <p className="absolute left-[716px] top-[232px] z-20 h-[90px] w-[520px] text-justify  text-lg font-light leading-[30px] text-[#FEF3B1]/90">
                 Nghệ nhân Nguyễn Thị Tuyến tại làng Hậu Ái (Hà Nội) giữ gìn nghề truyền thống, miệt mài “thắp sáng” cho những cây đèn ông sao mỗi dịp Trung thu về.
               </p>
-              <p className="absolute left-[716px] top-[392px] z-20 h-5 w-[117px] font-dMSans text-xl font-light uppercase leading-5 tracking-wider text-[#FEF3B1] opacity-80">
+              <p className="absolute left-[716px] top-[392px] z-20 h-5 w-[117px]  text-xl font-light leading-5 tracking-wider text-[#FEF3B1] opacity-80">
                 Bài viết
               </p>
-              <p className="absolute left-[716px] top-[424px] z-20 h-5 w-64 font-dMSans text-xl font-bold leading-5 text-[#FEF3B1]">
+              <p className="absolute left-[716px] top-[424px] z-20 h-5 w-64  text-xl font-bold leading-5 text-[#FEF3B1]">
                 HỒNG PHÚC
               </p>
 
@@ -144,10 +144,10 @@ export default function ArtisanStories() {
         {/* 3. Heritage Showcase Columns Section */}
         <Section width="screen" gutter="none" className="mt-[162px]">
           <div className="relative mx-auto h-[783px] w-[1440px] max-w-full overflow-visible">
-            <p className="absolute left-0 top-0 h-[46px] w-full whitespace-nowrap text-center font-jaro text-[64px] uppercase leading-[46px] tracking-wide text-[#000]">
-              LÀNG NGHỀ - DI SẢN
+            <p className="absolute left-0 top-0 h-[46px] w-full whitespace-nowrap text-center font-jaro text-[64px] leading-[46px] tracking-wide text-[#000]">
+              LÀNG NGHỀ & DI SẢN
             </p>
-            <p className="absolute left-[416px] top-[62px] h-[60px] w-[614px] text-center font-dMSans text-lg font-light leading-[30px] text-[#555]">
+            <p className="absolute left-[416px] top-[62px] h-[60px] w-[614px] text-center text-lg font-light leading-[30px] text-[#555]">
               Những góc nhìn độc đáo, cận cảnh về đời sống làng quê Việt Nam qua ống kính nghệ thuật của các nhiếp ảnh gia.
             </p>
 
