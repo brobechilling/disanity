@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import RequireAuth from "@/components/auth/RequireAuth";
+import { trackPageView } from "@/lib/googleAnalytics";
 
 // Import flattened page components
 import Home from "@/pages/Home";
@@ -26,6 +27,7 @@ export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <GoogleAnalyticsTracker />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-workshop" element={<CreateWorkshop />} />
@@ -105,6 +107,23 @@ const ScrollToTop: React.FC = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, search]);
+
+  return null;
+};
+
+const GoogleAnalyticsTracker: React.FC = () => {
+  const { pathname, search, hash } = useLocation();
+  const page = `${pathname}${search}${hash}`;
+  const lastTrackedPage = React.useRef<string | null>(null);
+
+  React.useEffect(() => {
+    if (lastTrackedPage.current === page) {
+      return;
+    }
+
+    lastTrackedPage.current = page;
+    trackPageView(page);
+  }, [page]);
 
   return null;
 };
