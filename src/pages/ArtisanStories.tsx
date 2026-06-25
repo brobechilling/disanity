@@ -25,7 +25,7 @@ export default function ArtisanStories() {
             <p className="absolute left-0 top-0 h-[46px] w-[685px] font-jaro text-[64px] uppercase leading-[46px] tracking-wide text-[#000]">
               CÂU CHUYỆN NGHỆ NHÂN
             </p>
-            <p className="absolute left-0 top-[62px] h-[60px] w-[500px] font-dMSans text-lg font-light leading-[30px] text-[#757575]">
+            <p className="absolute left-0 top-[62px] h-[60px] w-[500px]  text-lg font-light leading-[30px] text-[#757575]">
               Những mảnh ký ức nghề, tinh thần truyền lửa sống động qua từng dòng ghi chép và hình ảnh chân thực.
             </p>
 
@@ -90,7 +90,7 @@ export default function ArtisanStories() {
             </p>
 
             {/* Dynamic Review Quote based on active selected traveler */}
-            <p className="absolute left-[180px] top-[126px] h-[160px] w-[780px] text-center font-dMSans text-[22px] font-medium italic leading-10 text-[#555] transition-all duration-300">
+            <p className="absolute left-[180px] top-[126px] h-[160px] w-[780px] text-center  text-[22px] font-medium italic leading-10 text-[#555] transition-all duration-300">
               “ {testimonials[activeTestimonial].quote} ”
             </p>
 
@@ -126,12 +126,12 @@ export default function ArtisanStories() {
                     />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <p className={`font-dMSans text-lg font-bold leading-5 transition-colors ${
+                    <p className={` text-lg font-bold leading-5 transition-colors ${
                       isActive ? "text-[#A6341B]" : "text-[#000] group-hover:text-[#A6341B]/80"
                     }`}>
                       {test.name}
                     </p>
-                    <p className="font-dMSans text-sm leading-[18px] text-[#696969]">
+                    <p className=" text-sm leading-[18px] text-[#696969]">
                       {test.role}
                     </p>
                   </div>
@@ -161,10 +161,10 @@ export default function ArtisanStories() {
                   alt="Heritage 1"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-12 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="font-dMSans text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
+                  <p className=" text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
                     Sophie Moore
                   </p>
-                  <p className="mt-1 font-dMSans text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
+                  <p className="mt-1  text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
                     Ceo &amp; Co-Founder
                   </p>
                 </div>
@@ -178,10 +178,10 @@ export default function ArtisanStories() {
                   alt="Heritage 2"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-12 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="font-dMSans text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
+                  <p className=" text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
                     Sophie Moore
                   </p>
-                  <p className="mt-1 font-dMSans text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
+                  <p className="mt-1  text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
                     Ceo &amp; Co-Founder
                   </p>
                 </div>
@@ -195,10 +195,10 @@ export default function ArtisanStories() {
                   alt="Heritage 3"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-12 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="font-dMSans text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
+                  <p className=" text-[28px] font-bold leading-[38px] text-[#FFF] drop-shadow-md">
                     Sophie Moore
                   </p>
-                  <p className="mt-1 font-dMSans text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
+                  <p className="mt-1  text-sm font-medium uppercase leading-[18px] tracking-[0.1em] text-[#FFF] opacity-90">
                     Ceo &amp; Co-Founder
                   </p>
                 </div>

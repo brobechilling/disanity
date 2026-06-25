@@ -241,8 +241,8 @@ function BookingFormCard({
 
         <div className="flex flex-col justify-center">
           <div className="text-center font-beVietnamPro text-[#B33721]">
-            <p className="text-lg font-black uppercase">Chọn workshop.</p>
-            <div className="mt-2 flex items-center justify-center gap-8 text-xs font-black">
+            <p className="text-lg font-bold uppercase">Chọn workshop.</p>
+            <div className="mt-2 flex items-center justify-center gap-8 font-bold">
               <span>&lt; Quay lại</span>
               <span>Tiếp &gt;</span>
             </div>
@@ -307,8 +307,8 @@ function CalendarPanel({
   return (
     <div className="min-h-[500px] border-[#d8cbb7] bg-white/18 p-6 lg:border-r lg:p-8 transition-all duration-300 hover:bg-white/30 hover:-translate-y-1">
       <div className="text-center font-beVietnamPro text-[#B33721]">
-        <h2 className="text-lg font-black uppercase">Chọn ngày.</h2>
-        <div className="relative mt-1 flex items-center justify-center gap-5 text-xs font-black uppercase">
+        <h2 className="text-lg font-bold uppercase">Chọn ngày.</h2>
+        <div className="relative mt-1 flex items-center justify-center gap-5 font-bold uppercase">
           <button type="button" onClick={() => onSelectAdjacentMonth(-1)} aria-label="Tháng trước">
             &lt;
           </button>
@@ -438,8 +438,8 @@ function TimePanel({
   return (
     <div className="flex min-h-[500px] flex-col bg-white/18 p-6 lg:p-8 transition-all duration-300 hover:bg-white/30 hover:-translate-y-1">
       <div className="text-center font-beVietnamPro text-[#B33721]">
-        <h2 className="text-lg font-black uppercase">Chọn giờ.</h2>
-        <div className="mt-1 flex items-center justify-center gap-4 text-xs font-black uppercase">
+        <h2 className="text-lg font-bold uppercase">Chọn giờ.</h2>
+        <div className="mt-1 flex items-center justify-center gap-4  font-bold uppercase">
           <button type="button" onClick={() => onSelectAdjacentDay(-1)} aria-label="Ngày trước">
             &lt;
           </button>
@@ -454,7 +454,7 @@ function TimePanel({
       <div className="mt-12 space-y-7">
         {mockBookingTimeSlots.map((slot) => (
           <div key={slot.period} className="grid gap-3 sm:grid-cols-[88px_1fr] sm:items-center">
-            <p className="font-beVietnamPro text-xs font-black text-[#B33721]">{slot.period}</p>
+            <p className="font-beVietnamPro font-bold text-[#B33721]">{slot.period}</p>
             <div className="flex flex-wrap gap-3">
               {slot.times.map((time) => {
                 const isSelected = selectedTime === time;
@@ -484,7 +484,7 @@ function TimePanel({
       </div>
 
       <div className="mt-auto rounded-md border border-[#D4A017] bg-[#F7CA75] p-3">
-        <div className="flex flex-col gap-3 font-beVietnamPro text-xs font-black text-[#B33721] sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 font-beVietnamPro font-bold text-[#B33721] sm:flex-row sm:items-center">
           <span>Đã chọn:</span>
           <span>{selectedDate}</span>
           <span className="hidden sm:inline">•</span>
@@ -492,7 +492,7 @@ function TimePanel({
           <button
             type="button"
             onClick={onBooking}
-            className="ml-auto inline-flex h-8 min-w-[112px] items-center justify-center rounded-md bg-[#B33721] px-5 font-beVietnamPro text-xs font-black uppercase text-white transition-transform hover:-translate-y-0.5 active:scale-95"
+            className="ml-auto inline-flex h-8 min-w-[112px] items-center justify-center rounded-md bg-[#B33721] px-5 font-beVietnamPro text-xs uppercase text-white transition-transform hover:-translate-y-0.5 active:scale-95"
           >
             Đặt vé
           </button>
@@ -560,13 +560,13 @@ function WorkshopInfoCard({
       </InfoSection>
 
       <div className="mt-6 rounded-md border border-[#D4A017] bg-[#F7CA75] p-3 lg:hidden">
-        <p className="font-beVietnamPro text-xs font-black text-[#B33721]">
+        <p className="font-beVietnamPro font-bold text-[#B33721]">
           Đã chọn: {selectedDate} · {selectedTime}
         </p>
         <button
           type="button"
           onClick={onBooking}
-          className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md bg-[#B33721] font-beVietnamPro text-xs font-black uppercase text-white"
+          className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md bg-[#B33721] font-beVietnamPro text-xs uppercase text-white"
         >
           <Ticket size={16} />
           Đặt vé
@@ -579,7 +579,7 @@ function WorkshopInfoCard({
 function InfoSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-6 font-beVietnamPro text-xs leading-5 text-[#636363] transition-all duration-300 hover:bg-[#e8dcc8]/40 hover:-translate-y-0.5 p-3 rounded-xl">
-      <h3 className="mb-2 text-lg font-black uppercase leading-6 text-[#B33721]">
+      <h3 className="mb-2 text-lg font-bold uppercase leading-6 text-[#B33721]">
         {title}
       </h3>
       {children}
