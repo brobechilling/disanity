@@ -106,7 +106,7 @@ export default function Artisans() {
               <div className="group absolute left-0 top-0 h-[202px] w-[636px]">
                 {/* Gold/Yellow Card */}
                 <div className="absolute left-[36px] top-[36px] h-[166px] w-[600px] rounded-[12px] border border-black/5 bg-[#E0A03F] pt-[25px] pr-8 pl-[56px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover:scale-[1.01]">
-                  <p className="font-beVietnamPro text-[28px] font-extrabold uppercase tracking-wide text-[#A6341B]">
+                  <p className="font-beVietnamPro text-[28px] font-bold uppercase tracking-wide text-[#A6341B]">
                     GÌN GIỮ TINH HOA
                   </p>
                   <p className="mt-2 font-beVietnam text-base font-medium leading-[26px] text-[#505050]">
@@ -123,7 +123,7 @@ export default function Artisans() {
               <div className="group absolute left-[150px] top-[301px] h-[202px] w-[636px]">
                 {/* Gold/Yellow Card */}
                 <div className="absolute left-[36px] top-[36px] h-[166px] w-[600px] rounded-[12px] border border-black/5 bg-[#E0A03F] pt-[25px] pr-8 pl-[56px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover:scale-[1.01]">
-                  <p className="font-beVietnamPro text-[28px] font-extrabold uppercase tracking-wide text-[#A6341B]">
+                  <p className="font-beVietnamPro text-[28px] font-bold uppercase tracking-wide text-[#A6341B]">
                     TRUYỀN DẠY &amp; LAN TOẢ
                   </p>
                   <p className="mt-2 font-beVietnam text-base font-medium leading-[26px] text-[#505050]">
@@ -140,7 +140,7 @@ export default function Artisans() {
               <div className="group absolute left-5 top-[604px] h-[202px] w-[636px]">
                 {/* Gold/Yellow Card */}
                 <div className="absolute left-[36px] top-[36px] h-[166px] w-[600px] rounded-[12px] border border-black/5 bg-[#E0A03F] pt-[25px] pr-8 pl-[56px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover:scale-[1.01]">
-                  <p className="font-beVietnamPro text-[28px] font-extrabold uppercase tracking-wide text-[#A6341B]">
+                  <p className="font-beVietnamPro text-[28px] font-bold uppercase tracking-wide text-[#A6341B]">
                     SÁNG TẠO &amp; THÍCH ỨNG
                   </p>
                   <p className="mt-2 font-beVietnam text-base font-medium leading-[26px] text-[#505050]">

@@ -104,7 +104,7 @@ function SelectFilter({
 }) {
   return (
     <div className="relative flex min-w-[165px] flex-1 flex-col items-start gap-2">
-      <p className="whitespace-nowrap font-beVietnamPro text-xs font-black uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
+      <p className="whitespace-nowrap font-beVietnamPro font-bold uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
         {title}
       </p>
 
@@ -146,7 +146,7 @@ function DateFilter({
 }) {
   return (
     <label className="flex min-w-[150px] flex-[0.9] flex-col items-start gap-2">
-      <span className="whitespace-nowrap pl-1 font-beVietnamPro text-xs font-black uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
+      <span className="whitespace-nowrap pl-1 font-beVietnamPro font-bold uppercase leading-4 tracking-[0.08em] text-[#A6341B]">
         Ngày
       </span>
       <input
